@@ -45,27 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdjacencyList.cs" />
-    <Compile Include="AdjacencyMatrix.cs" />
-    <Compile Include="Dijkstras.cs" />
-    <Compile Include="GraphWindow.cs">
+    <Compile Include="Classes go here %3b%29\AdjacencyList.cs" />
+    <Compile Include="Classes go here %3b%29\AdjacencyMatrix.cs" />
+    <Compile Include="Classes go here %3b%29\Algorithms\Dijkstras.cs" />
+    <Compile Include="Classes go here %3b%29\GraphWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphWindow.Designer.cs">
+    <Compile Include="Classes go here %3b%29\GraphWindow.Designer.cs">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Kruskals.cs" />
-    <Compile Include="Prims.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Classes go here %3b%29\Algorithms\Kruskals.cs" />
+    <Compile Include="Classes go here %3b%29\Algorithms\Prims.cs" />
+    <Compile Include="Classes go here %3b%29\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GraphWindow.resx">
+    <EmbeddedResource Include="Classes go here %3b%29\GraphWindow.resx">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
