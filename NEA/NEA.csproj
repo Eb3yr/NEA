@@ -45,12 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjacencyList.cs" />
+    <Compile Include="AdjacencyMatrix.cs" />
+    <Compile Include="Dijkstras.cs" />
     <Compile Include="GraphWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GraphWindow.Designer.cs">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Kruskals.cs" />
+    <Compile Include="Prims.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
