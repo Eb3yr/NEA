@@ -13,7 +13,10 @@ namespace NEA
 {
     public partial class GraphWindow<T> : Form
     {
-        Dictionary<T, NodeCoords> NodeDict;
+        Dictionary<T, NodeCoords> NodeDict; //Tested as a list, works as a list, please don't break :)
+        protected SolidBrush nodeBrush;
+        protected Pen p;
+        protected Graphics g;
         public struct NodeCoords
         {
             public int centreX;
@@ -28,6 +31,10 @@ namespace NEA
         {
             InitializeComponent();
             NodeDict = new Dictionary<T, NodeCoords>();
+            this.Location = new Point(0, 0);
+            this.Size = new Size(1600, 1250);
+            p = new Pen(Color.Red, 5);
+            nodeBrush = new SolidBrush(Color.Red); //Nodes be red yo
         }
 
         private void GraphWindow_Load(object sender, EventArgs e)
@@ -36,17 +43,13 @@ namespace NEA
         }
         private void GraphWindow_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            Pen p = new Pen(Color.Red, 5);
+            g = e.Graphics;
             CalculateNodeCoords(g, p);
 
         }
         private void CalculateNodeCoords(Graphics g, Pen p) //Change name
-        {
-            
-            this.Location = new Point(0, 0);
-            this.Size = new Size(1600, 1250);
-            int vertices = 36;
+        {   
+            int vertices = 5;
             int buffer = 50;
             int radius = 360; //make this dependent on the size of the window - smallest of width or height, then some maths to make it fit
             int nodeRadius = 40;
@@ -65,22 +68,21 @@ namespace NEA
                 Console.WriteLine("yComponent = " + yComponent);
                 DrawNode((int)(centrePoint.Width / 1.2) + xComponent, (int)(centrePoint.Height / 1.2) + yComponent, nodeRadius, g, p); //Maths hard, make use of buffer to find borders
 
-
-                
-            
             }
 
-           
         }
         private void DrawNode(int xCoord, int yCoord, int radius, Graphics g, Pen p)
         {
             Rectangle rect = new Rectangle(xCoord - radius, yCoord - radius, radius, radius);
-            g.DrawEllipse(p, rect);
+            g.FillEllipse(nodeBrush, rect);
 
             //Calculate the rectangle the contains the circle of centre xCoord, yCoord, and specified radius
 
             //Make a dictionary of nodes for this graph which gets refreshed every time there's a change in the number of nodes in the graph (updating only when the form is used)
             //Then I can draw the name of each node in the circles
+
+
+            //Make ellipses fill not outline, draw nodes on top of edges and labels on top of both or else things will go funky
         }
         private void GraphWindow_Resize(object sender, EventArgs e)
         {
