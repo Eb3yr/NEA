@@ -45,25 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes go here %3b%29\AdjacencyList.cs" />
-    <Compile Include="Classes go here %3b%29\AdjacencyMatrix.cs" />
-    <Compile Include="Classes go here %3b%29\Algorithms\Dijkstras.cs" />
-    <Compile Include="Classes go here %3b%29\GraphWindow.cs">
+    <Compile Include="Classes go here\AdjacencyList.cs" />
+    <Compile Include="Classes go here\AdjacencyMatrix.cs" />
+    <Compile Include="Classes go here\Algorithms\Dijkstras.cs" />
+    <Compile Include="Classes go here\Algorithms\KruskalsNew.cs" />
+    <Compile Include="Classes go here\GraphWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes go here %3b%29\GraphWindow.Designer.cs">
+    <Compile Include="Classes go here\GraphWindow.Designer.cs">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes go here %3b%29\Algorithms\Kruskals.cs" />
-    <Compile Include="Classes go here %3b%29\Algorithms\Prims.cs" />
-    <Compile Include="Classes go here %3b%29\Program.cs" />
+    <Compile Include="Classes go here\Algorithms\Kruskals.cs" />
+    <Compile Include="Classes go here\Algorithms\Prims.cs" />
+    <Compile Include="Classes go here\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Classes go here %3b%29\GraphWindow.resx">
+    <EmbeddedResource Include="Classes go here\GraphWindow.resx">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
