@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEA
+namespace NEA.Classes_go_here
 {
     public class AdjacencyMatrix<T> //Make it set all edges to false until it adds edges
     {

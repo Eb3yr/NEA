@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEA
+namespace NEA.Classes_go_here.Algorithms
 {
     public class Prims<T> //Must be undirected, make warnings later and ensure it will ONLY run if undirected!
     {

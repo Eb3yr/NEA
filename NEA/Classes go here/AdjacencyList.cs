@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NEA
+namespace NEA.Classes_go_here
 {
     public class AdjacencyList<T>
     {
@@ -14,15 +14,19 @@ namespace NEA
         public AdjacencyList()
         {
             adjList = new Dictionary<T, Dictionary<T, double>>();
-            isDirected = true;
+            isDirected = false;
         }
         public bool IsConnected()
         {
             return default;
         }
-        public bool IsDirected() //To prevent accidental manipulation of isDirected from breaking things. Use this to block algorithms from running is isDirected = true. Not implemented to algorithms yet!
+        public bool IsDirected() //To prevent accidental manipulation of isDirected from breaking things. Use this to block algorithms from running if isDirected = true. Not implemented to algorithms yet!
         {
             return isDirected;
+        }
+        public void MakeUndirected() //May result in a loss of data in graphs where there are connections from A -> B and B -> A with different weights. Add a disclaimer!
+        {
+
         }
         public bool AreCycles() //Doing a depth first search that returns true if it detects a cycle
         {
@@ -299,6 +303,10 @@ namespace NEA
             {
                 adjList[destinationNode].Add(nodeKey, weight);
             }
+            else
+            {
+                isDirected = true;
+            }
         }
         public void RemoveNode(T nodeKey) //I can't even remember if this works, check it lol
         {
@@ -317,11 +325,11 @@ namespace NEA
                 }
             }
         }
-        public void RemoveEdge(T nodeKey, T destinationNode)
+        public void RemoveEdge(T nodeKey, T destinationNode) //Add error handling
         {
             adjList[nodeKey].Remove(destinationNode);
         }
-        public void ViewNodeInfo()
+        public void ViewNodeInfo() //Placeholder, may not be used
         {
 
         }

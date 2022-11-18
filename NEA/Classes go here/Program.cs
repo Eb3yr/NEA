@@ -4,16 +4,18 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NEA //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
+namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
 {
     class Program //Go through every class and tidy up, move declaring vars to start etc etc.
     {
+        public static Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
+        public AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot
         private static void OpenForm()
         {
             GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
             Application.Run(theForm);
         }
-        static void Main(string[] args)
+        public void Startup()
         {
             Thread thread = new Thread(new ThreadStart(OpenForm));
             thread.Start(); //I feel like GOD
@@ -23,27 +25,27 @@ namespace NEA //Split some stuff up into smaller subroutines in any algorithm no
             //https://www.codeproject.com/Questions/700159/How-to-pass-data-to-a-thread-on-runtime-in-csharp
             //https://www.codeproject.com/Articles/9836/Managing-shared-resource-access-in-NET-multi-threa amazing guy from India 17 years ago once said
 
-            AdjacencyList<string> adjList = new AdjacencyList<string>();
+            mainAdjacencyList = new AdjacencyList<string>();
 
-            adjList.AddNode("A");
-            adjList.AddNode("B");
-            adjList.AddNode("C");
-            adjList.AddNode("D");
-            adjList.AddNode("E");
-            adjList.AddNode("F");
+            mainAdjacencyList.AddNode("A");
+            mainAdjacencyList.AddNode("B");
+            mainAdjacencyList.AddNode("C");
+            mainAdjacencyList.AddNode("D");
+            mainAdjacencyList.AddNode("E");
+            mainAdjacencyList.AddNode("F");
 
-            adjList.AddEdge("B", "A", 10, false);
-            adjList.AddEdge("C", "A", 7, false);
-            adjList.AddEdge("C", "B", 4, false);
-            adjList.AddEdge("D", "C", 19.7, false); //MST = 30.7
-            adjList.AddEdge("E", "F", 8, false);
-            adjList.AddEdge("E", "D", 3, false);
-            adjList.AddEdge("F", "A", 5, false); //MST = 27 for {A, B, C, D, E, F}
-
-
+            mainAdjacencyList.AddEdge("B", "A", 10, false);
+            mainAdjacencyList.AddEdge("C", "A", 7, false);
+            mainAdjacencyList.AddEdge("C", "B", 4, false);
+            mainAdjacencyList.AddEdge("D", "C", 19.7, false); //MST = 30.7
+            mainAdjacencyList.AddEdge("E", "F", 8, false);
+            mainAdjacencyList.AddEdge("E", "D", 3, false);
+            mainAdjacencyList.AddEdge("F", "A", 5, false); //MST = 27 for {A, B, C, D, E, F}
 
 
-            Kruskals<string> kruskals = new Kruskals<string>(adjList);
+
+
+            Kruskals<string> kruskals = new Kruskals<string>(mainAdjacencyList);
             Console.WriteLine("MST = ");
             Console.WriteLine(kruskals.FindMST());
 
@@ -134,6 +136,23 @@ namespace NEA //Split some stuff up into smaller subroutines in any algorithm no
             //} while (quit == false);
 
             Console.ReadLine();
+        }
+        static void Go(string[] args)
+        {
+            //Loads of mess going on, I'm trying to make mainAdjacencyList readable from GraphWindow.cs
+
+
+            //This is the entry point. Since there isn't an instance of the Program class, it's kinda breaking being able to access the mainAdjacencyList
+            //This way I'm making an instance of program and then going on to mess about with that
+        }
+    }
+    class Start
+    {
+        static Program initProgram;
+        static void Main(string[] args)
+        {
+            initProgram = new Program();
+            initProgram.Startup();
         }
     }
 }

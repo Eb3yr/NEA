@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEA
+namespace NEA.Classes_go_here.Algorithms
 {
     public class Dijkstras<T> //Doesn't need to be undirected, just need to be careful
     {
