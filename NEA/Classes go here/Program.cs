@@ -4,27 +4,18 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class.
+namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
 {
     class Program //Go through every class and tidy up, move declaring vars to start etc etc.
     {
-        public Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
-        
-        
-        public void Startup()
-        {
-            
-        }
-    }
-    class Start
-    {
-        public static AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot be written to outside of this class
+        public static Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
+        //public AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot
         private static void OpenForm()
         {
             GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
             Application.Run(theForm);
         }
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Thread thread = new Thread(new ThreadStart(OpenForm));
             thread.Start(); //I feel like GOD
@@ -34,7 +25,7 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             //https://www.codeproject.com/Questions/700159/How-to-pass-data-to-a-thread-on-runtime-in-csharp
             //https://www.codeproject.com/Articles/9836/Managing-shared-resource-access-in-NET-multi-threa amazing guy from India 17 years ago once said
 
-            mainAdjacencyList = new AdjacencyList<string>();
+            AdjacencyList<string> mainAdjacencyList = new AdjacencyList<string>();
 
             mainAdjacencyList.AddNode("A");
             mainAdjacencyList.AddNode("B");
@@ -146,6 +137,7 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
 
             Console.ReadLine();
         }
+    }
     }
 }
 

@@ -23,7 +23,7 @@ namespace NEA.Classes_go_here
         public GraphWindow()
         {
             InitializeComponent();
-            
+
             this.Location = new Point(0, 0);
             this.Size = new Size(1600, 1250);
 
@@ -84,8 +84,8 @@ namespace NEA.Classes_go_here
 
                 //Remove DrawNode, call that in a separate more centralised class, CalculateNodeCoords should exclusively calculate, not cause it to draw
                 DrawNode(new Point((int)(centrePoint.Width / 1.2) + xComponent, (int)(centrePoint.Height / 1.2) + yComponent), nodeRadius); //Maths hard, make use of buffer to find borders
-                //1.2 is an arbitrary number I came up with to make it fit on the screen semi-reasonably. Make the maths work later
-                
+                                                                                                                                            //1.2 is an arbitrary number I came up with to make it fit on the screen semi-reasonably. Make the maths work later
+
             }
 
         }
