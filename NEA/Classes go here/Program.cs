@@ -4,18 +4,27 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
+namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class.
 {
     class Program //Go through every class and tidy up, move declaring vars to start etc etc.
     {
-        public static Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
-        public AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot
+        public Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
+        
+        
+        public void Startup()
+        {
+            
+        }
+    }
+    class Start
+    {
+        public static AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot be written to outside of this class
         private static void OpenForm()
         {
             GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
             Application.Run(theForm);
         }
-        public void Startup()
+        static void Main(string[] args)
         {
             Thread thread = new Thread(new ThreadStart(OpenForm));
             thread.Start(); //I feel like GOD
@@ -136,23 +145,6 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             //} while (quit == false);
 
             Console.ReadLine();
-        }
-        static void Go(string[] args)
-        {
-            //Loads of mess going on, I'm trying to make mainAdjacencyList readable from GraphWindow.cs
-
-
-            //This is the entry point. Since there isn't an instance of the Program class, it's kinda breaking being able to access the mainAdjacencyList
-            //This way I'm making an instance of program and then going on to mess about with that
-        }
-    }
-    class Start
-    {
-        static Program initProgram;
-        static void Main(string[] args)
-        {
-            initProgram = new Program();
-            initProgram.Startup();
         }
     }
 }

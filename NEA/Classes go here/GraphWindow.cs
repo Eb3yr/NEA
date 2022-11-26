@@ -15,9 +15,11 @@ namespace NEA.Classes_go_here
     {
         protected Dictionary<T, Point> nodeDict; //Tested as a list, works as a list, please don't break :)
         protected List<(T root, T destination, double edgeWeight)> currentEdgeList;
-        protected SolidBrush nodeBrush, edgeBrush;
-        protected Pen p;
+        protected SolidBrush nodeBrush, textBrush;
+        protected Pen edgePen;
+        protected Font textFont; //https://learn.microsoft.com/en-us/dotnet/api/system.drawing.font.-ctor?view=dotnet-plat-ext-7.0#system-drawing-font-ctor(system-string-system-single)
         protected Graphics g;
+        protected int fontSize;
         public GraphWindow()
         {
             InitializeComponent();
@@ -25,32 +27,22 @@ namespace NEA.Classes_go_here
             this.Location = new Point(0, 0);
             this.Size = new Size(1600, 1250);
 
-            currentEdgeList = 
+            //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable sounds good.
             nodeDict = new Dictionary<T, Point>();
-            p = new Pen(Color.DarkCyan, 5); //For text?
+            edgePen = new Pen(Color.Orange); //Edges are orange
             nodeBrush = new SolidBrush(Color.Red); //Nodes are red
-            edgeBrush = new SolidBrush(Color.Orange); //Edges are orange (wish it were blue)
+            textBrush = new SolidBrush(Color.DarkGray); //Text is dark gray
+            fontSize = 14; //A constant to define the size of node names and edge weights
+            //Use an actual Font class for this later
             //Need alternate brushes for nodes and edges when they're selected
         }
-        public GraphWindow(List<T> inNodeNames)
-        {
-            InitializeComponent();
-
-            this.Location = new Point(0, 0);
-            this.Size = new Size(1600, 1250);
-
+        public void InNodeNames(List<T> inNodeNames) //make sure this doesn't break by doing it multiple times
+        {                                            //TryAdd isn't in this version so I need to deal with it myself
             foreach (T i in inNodeNames)
             {
                 nodeDict.Add(i, new Point());
             }
-
-            nodeDict = new Dictionary<T, Point>();
-            p = new Pen(Color.DarkCyan, 5); //For text?
-            nodeBrush = new SolidBrush(Color.Red); //Nodes are red
-            edgeBrush = new SolidBrush(Color.Orange); //Edges are orange (wish it were blue)
-            //Need alternate brushes for nodes and edges when they're selected
         }
-
         private void GraphWindow_Load(object sender, EventArgs e) //Does stuff on loading
         {
 
@@ -58,7 +50,7 @@ namespace NEA.Classes_go_here
         private void GraphWindow_Paint(object sender, PaintEventArgs e) //Keep things centralised around here
         {
             g = e.Graphics;
-            CalculateNodeCoords(g, p);
+            CalculateNodeCoords();
 
             if (nodeDict.Count == 0)
             {
@@ -66,16 +58,14 @@ namespace NEA.Classes_go_here
             }
             else //Add some better error handling later, this is all for debugging purposes and this shouldn't be able to trigger in the final program
             {
-                DrawEdge();
+                DrawEdge(new Point(), new Point());
             }
 
-
-
         }
-        private void CalculateNodeCoords(Graphics g, Pen p) //Turn individual coordinates to a Point struct, or pre-generate a Rectangle struct
+        private void CalculateNodeCoords() //Turn individual coordinates to a Point struct, or pre-generate a Rectangle struct
         {
-            int vertices = nodeDict.Count; //Bye bye ocean
-            int buffer = 50;
+            int vertices = nodeDict.Count;
+            int buffer = 50; //Use this :)
             int radius = 360; //Radius of regular shape. Make this dependent on the size of the window - smallest of width or height, then some maths to make it fit
             int nodeRadius = 40;
             int xComponent = 0, yComponent = 0;
@@ -96,15 +86,16 @@ namespace NEA.Classes_go_here
                 DrawNode(new Point((int)(centrePoint.Width / 1.2) + xComponent, (int)(centrePoint.Height / 1.2) + yComponent), nodeRadius); //Maths hard, make use of buffer to find borders
                 //1.2 is an arbitrary number I came up with to make it fit on the screen semi-reasonably. Make the maths work later
                 
-
-
-
             }
 
         }
         private void DrawEdge(Point start, Point end)
         {
-            g.DrawLine(p, start, end);
+            g.DrawLine(edgePen, start, end);
+
+            Point midPoint = new Point((start.X + end.X) / 2, (start.Y + end.Y) / 2);
+            //Then offset midPoint depending on the length of the string, and the font size
+            g.DrawString("test", textFont, textBrush, midPoint);
         }
         private void DrawNode(Point coords, int radius)
         {
