@@ -25,7 +25,7 @@ namespace NEA.Classes_go_here
             InitializeComponent();
 
             this.Location = new Point(0, 0);
-            this.Size = new Size(1600, 1250);
+            //this.Size = new Size(1600, 1250);
 
             //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable sounds good.
             nodeDict = new Dictionary<T, Point>();

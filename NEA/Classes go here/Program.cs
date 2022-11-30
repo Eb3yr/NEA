@@ -15,15 +15,21 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
             Application.Run(theForm);
         }
+        private static void OpenForm1()
+        {
+            GUIWindow theForm = new GUIWindow(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
+            Application.Run(theForm);
+        }
         public static void Main(string[] args)
         {
-            Thread thread = new Thread(new ThreadStart(OpenForm));
-            thread.Start(); //I feel like GOD
+            //A lot of things are about to get made obsolete in this class as I'm in the process of moving to the new GUIWindow.cs
 
-            //https://www.albahari.com/threading/#_Passing_Data_to_a_Thread
-            //https://www.albahari.com/threading/part2.aspx#_Locking
-            //https://www.codeproject.com/Questions/700159/How-to-pass-data-to-a-thread-on-runtime-in-csharp
-            //https://www.codeproject.com/Articles/9836/Managing-shared-resource-access-in-NET-multi-threa amazing guy from India 17 years ago once said
+            Thread thread = new Thread(new ThreadStart(OpenForm));
+            thread.Start(); //Opens the form on a separate thread so that console can be used.
+            //Will be removing console and replacing it with a new forms GUI, but this will still apply for opening the GraphWindow from the GUIWindow
+
+            Thread thread2 = new Thread(new ThreadStart(OpenForm1));
+            thread2.Start();
 
             AdjacencyList<string> mainAdjacencyList = new AdjacencyList<string>();
 
@@ -49,96 +55,34 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             Console.WriteLine("MST = ");
             Console.WriteLine(kruskals.FindMST());
 
-            //Prims<string> prims = new Prims<string>(adjList);
-
-            //prims.CycleTest();
-
-            //Console.WriteLine(prims.FindMST());
-
-            //adjList.toAdjMatrix();
-
-            //bool quit = false;
-            //int input;
-            //Prims<string> prims = new Prims<string>(adjList);
-
-            //Console.WriteLine("Interact with the menu by entering the number of the option and pressing enter");
-            //Thread.Sleep(2000);
-            //do //Primitive menu
-            //{
-            //    Console.Clear();
-            //    Console.WriteLine();
-            //    Console.WriteLine("1. Add new node\n2. Remove node\n3. Add new edge\n4. Remove edge\n5. Print adjacency list\n6. Do Prims\n\n7. DFS the adjlist\n9. Exit");
-            //    input = int.Parse(Console.ReadLine());
-            //    Console.WriteLine();
-
-            //    switch (input)
-            //    {
-            //        case 1:
-            //            adjList.AddNode();
-            //            break;
-
-            //        case 2:
-            //            Console.WriteLine("Which node do you want to remove?");
-            //            string nodeToRemove = Console.ReadLine();
-            //            try
-            //            {
-            //                adjList.RemoveNode(nodeToRemove);
-            //            }
-            //            catch (Exception e)
-            //            {
-            //                Console.WriteLine("Try removing all edges connected to this node first!");
-            //            }
-            //            break;
-
-            //        case 3:
-            //            adjList.AddEdge();
-            //            break;
-
-            //        case 4:
-            //            Console.WriteLine("Which edge do you want to remove?");
-            //            Console.WriteLine("Source node: ");
-            //            string srcNode = Console.ReadLine();
-            //            Console.WriteLine("Destination node: ");
-            //            string dstNode = Console.ReadLine();
-            //            Console.WriteLine("Is bidirectional? Y/N");
-            //            adjList.RemoveEdge(srcNode, dstNode);
-
-            //            if (Console.ReadLine().ToUpper() == "Y")
-            //            {
-            //                try
-            //                {
-            //                    adjList.RemoveEdge(dstNode, srcNode);
-            //                }
-            //                catch (Exception e) { };
-            //            }
-            //            break;
-
-            //        case 5:
-            //            adjList.PrintAdjList();
-            //            break;
-
-            //        case 6:
-            //            prims.SetAdjList(adjList);
-            //            Console.WriteLine("MST calculated through Prims algorithm is " + prims.FindMST());
-            //            Console.ReadLine();
-            //            break;
-
-            //        case 7:
-            //            Console.WriteLine("Are cycles: " + adjList.AreCycles());
-            //            Console.ReadLine();
-            //            break;
-
-            //        case 9:
-            //            quit = true;
-            //            break;
-            //    }
-
-            //} while (quit == false);
-
             Console.ReadLine();
         }
-    }
     }
 }
 
 //Don't forget to go through and remove joke comments at the end of the project
+
+//This is how a template forms app opens the form, from a Program.cs class:
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using System.Windows.Forms;
+
+//namespace WindowsFormsApp1
+//{
+//    internal static class Program
+//    {
+//        /// <summary>
+//        /// The main entry point for the application.
+//        /// </summary>
+//        [STAThread]
+//        static void Main()
+//        {
+//            Application.EnableVisualStyles();
+//            Application.SetCompatibleTextRenderingDefault(false);
+//            Application.Run(new Form1());
+//        }
+//    }
+//}
