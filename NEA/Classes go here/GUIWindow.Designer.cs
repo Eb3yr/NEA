@@ -28,63 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ColumnHeader columnHeader2;
-            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("a");
-            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ColumnHeader DestNodesColumn;
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+            "a",
+            "wgawghagawgawg"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
             "b",
             "A, 17",
             "D, 14"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("c");
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("c");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
             "d",
             "A, 3",
             "B, 6",
             "C. 4"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("e");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("f");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("g");
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.CheckBoxHasWeight = new System.Windows.Forms.CheckBox();
             this.CheckBoxIsDirected = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label1 = new System.Windows.Forms.Label();
+            this.ListViewOfNodes = new System.Windows.Forms.ListView();
+            this.SrcNodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.SaveGraph = new System.Windows.Forms.Button();
             this.LoadGraph = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
+            this.FilePathLabel = new System.Windows.Forms.Label();
             this.SaveAsGraphLocally = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.IsSaveToVar = new System.Windows.Forms.CheckBox();
             this.IsSaveToLocal = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.UpdateMsgLabel = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.EdgeWeightTextBox = new System.Windows.Forms.TextBox();
+            this.DestNodeTextBox = new System.Windows.Forms.TextBox();
+            this.SrcNodeTextBox = new System.Windows.Forms.TextBox();
+            this.IsDeleteNode = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.SaveFileDialogue = new System.Windows.Forms.SaveFileDialog();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.UpdateAdjListButton = new System.Windows.Forms.Button();
+            this.LoadFileDialogue = new System.Windows.Forms.OpenFileDialog();
+            DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
-            // columnHeader2
+            // DestNodesColumn
             // 
-            columnHeader2.Text = "Adjacent Nodes";
-            columnHeader2.Width = 96;
+            DestNodesColumn.Text = "Adjacent Nodes";
+            DestNodesColumn.Width = 251;
             // 
             // listBox1
             // 
@@ -118,18 +119,6 @@
             this.CheckBoxIsDirected.Text = "Graph is directed";
             this.CheckBoxIsDirected.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(561, 155);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
@@ -138,51 +127,49 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 7;
             // 
-            // listView1
+            // ListViewOfNodes
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            columnHeader2,
-            this.columnHeader3});
-            this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem25,
-            listViewItem26,
-            listViewItem27,
-            listViewItem28});
-            this.listView1.Location = new System.Drawing.Point(15, 34);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(362, 97);
-            this.listView1.TabIndex = 9;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.ListViewOfNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.SrcNodeColumn,
+            DestNodesColumn});
+            this.ListViewOfNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ListViewOfNodes.HideSelection = false;
+            listViewItem15.StateImageIndex = 0;
+            listViewItem16.StateImageIndex = 0;
+            listViewItem17.StateImageIndex = 0;
+            listViewItem18.StateImageIndex = 0;
+            listViewItem19.StateImageIndex = 0;
+            listViewItem20.StateImageIndex = 0;
+            listViewItem21.StateImageIndex = 0;
+            this.ListViewOfNodes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20,
+            listViewItem21});
+            this.ListViewOfNodes.Location = new System.Drawing.Point(15, 34);
+            this.ListViewOfNodes.MultiSelect = false;
+            this.ListViewOfNodes.Name = "ListViewOfNodes";
+            this.ListViewOfNodes.Size = new System.Drawing.Size(362, 97);
+            this.ListViewOfNodes.TabIndex = 9;
+            this.ListViewOfNodes.UseCompatibleStateImageBehavior = false;
+            this.ListViewOfNodes.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // SrcNodeColumn
             // 
-            this.columnHeader1.Text = "Nodes";
-            this.columnHeader1.Width = 88;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Width = 96;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(478, 301);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Add or delete nodes here:";
+            this.SrcNodeColumn.Text = "Nodes";
+            this.SrcNodeColumn.Width = 90;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 18);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 13);
+            this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 13;
-            this.label2.Text = "Select nodes to edit";
+            this.label2.Text = "Graph controls";
             // 
             // label3
             // 
@@ -214,35 +201,6 @@
             this.label5.Text = "Make sure I\'m using labels not text boxes (stuff can be entered in them) wher app" +
     "licable!";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(399, 359);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 17);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Add node";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(399, 382);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(84, 17);
-            this.checkBox2.TabIndex = 18;
-            this.checkBox2.Text = "Delete node";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(380, 329);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(313, 13);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "When one of add/delete is checked, set the other to unchecked";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -255,20 +213,11 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(558, 139);
+            this.label8.Location = new System.Drawing.Point(558, 140);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(88, 13);
+            this.label8.Size = new System.Drawing.Size(91, 13);
             this.label8.TabIndex = 21;
-            this.label8.Text = "Number of nodes";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(701, 84);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
-            this.label9.TabIndex = 22;
-            this.label9.Text = "label9";
+            this.label8.Text = "Number of nodes:";
             // 
             // SaveGraph
             // 
@@ -290,14 +239,14 @@
             this.LoadGraph.UseVisualStyleBackColor = true;
             this.LoadGraph.Click += new System.EventHandler(this.LoadGraph_Click);
             // 
-            // label10
+            // FilePathLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(94, 422);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(281, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "File path: C:\\\\Documents (set this as default file path later)";
+            this.FilePathLabel.AutoSize = true;
+            this.FilePathLabel.Location = new System.Drawing.Point(94, 422);
+            this.FilePathLabel.Name = "FilePathLabel";
+            this.FilePathLabel.Size = new System.Drawing.Size(50, 13);
+            this.FilePathLabel.TabIndex = 25;
+            this.FilePathLabel.Text = "File path:";
             // 
             // SaveAsGraphLocally
             // 
@@ -321,12 +270,15 @@
             // IsSaveToVar
             // 
             this.IsSaveToVar.AutoSize = true;
+            this.IsSaveToVar.Checked = true;
+            this.IsSaveToVar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.IsSaveToVar.Location = new System.Drawing.Point(141, 359);
             this.IsSaveToVar.Name = "IsSaveToVar";
             this.IsSaveToVar.Size = new System.Drawing.Size(103, 17);
             this.IsSaveToVar.TabIndex = 29;
             this.IsSaveToVar.Text = "Save to variable";
             this.IsSaveToVar.UseVisualStyleBackColor = true;
+            this.IsSaveToVar.MouseClick += new System.Windows.Forms.MouseEventHandler(this.IsSaveToVar_MouseClick);
             // 
             // IsSaveToLocal
             // 
@@ -337,6 +289,7 @@
             this.IsSaveToLocal.TabIndex = 30;
             this.IsSaveToLocal.Text = "Save to local storage";
             this.IsSaveToLocal.UseVisualStyleBackColor = true;
+            this.IsSaveToLocal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.IsSaveToLocal_MouseClick);
             // 
             // label12
             // 
@@ -347,14 +300,14 @@
             this.label12.TabIndex = 31;
             this.label12.Text = "Source node name";
             // 
-            // label13
+            // UpdateMsgLabel
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(296, 259);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
-            this.label13.TabIndex = 32;
-            this.label13.Text = "label13";
+            this.UpdateMsgLabel.AutoSize = true;
+            this.UpdateMsgLabel.Location = new System.Drawing.Point(130, 225);
+            this.UpdateMsgLabel.Name = "UpdateMsgLabel";
+            this.UpdateMsgLabel.Size = new System.Drawing.Size(196, 13);
+            this.UpdateMsgLabel.TabIndex = 32;
+            this.UpdateMsgLabel.Text = "This says what the previous comand did";
             // 
             // label14
             // 
@@ -374,36 +327,37 @@
             this.label15.TabIndex = 34;
             this.label15.Text = "Destination node name";
             // 
-            // textBox1
+            // EdgeWeightTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(133, 189);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 35;
+            this.EdgeWeightTextBox.Location = new System.Drawing.Point(133, 189);
+            this.EdgeWeightTextBox.Name = "EdgeWeightTextBox";
+            this.EdgeWeightTextBox.Size = new System.Drawing.Size(100, 20);
+            this.EdgeWeightTextBox.TabIndex = 35;
             // 
-            // textBox2
+            // DestNodeTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(133, 163);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 36;
+            this.DestNodeTextBox.Location = new System.Drawing.Point(133, 163);
+            this.DestNodeTextBox.Name = "DestNodeTextBox";
+            this.DestNodeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.DestNodeTextBox.TabIndex = 36;
             // 
-            // textBox3
+            // SrcNodeTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(133, 137);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 37;
+            this.SrcNodeTextBox.Location = new System.Drawing.Point(133, 137);
+            this.SrcNodeTextBox.Name = "SrcNodeTextBox";
+            this.SrcNodeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.SrcNodeTextBox.TabIndex = 37;
             // 
-            // checkBox3
+            // IsDeleteNode
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(275, 140);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(80, 17);
-            this.checkBox3.TabIndex = 38;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.IsDeleteNode.AutoSize = true;
+            this.IsDeleteNode.Location = new System.Drawing.Point(275, 140);
+            this.IsDeleteNode.Name = "IsDeleteNode";
+            this.IsDeleteNode.Size = new System.Drawing.Size(84, 17);
+            this.IsDeleteNode.TabIndex = 38;
+            this.IsDeleteNode.Text = "Delete node";
+            this.IsDeleteNode.UseVisualStyleBackColor = true;
+            this.IsDeleteNode.CheckedChanged += new System.EventHandler(this.IsDeleteNode_CheckedChanged);
             // 
             // checkBox4
             // 
@@ -425,49 +379,88 @@
             this.checkBox5.Text = "checkBox5";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
+            // SaveFileDialogue
+            // 
+            this.SaveFileDialogue.DefaultExt = "GRAPH";
+            this.SaveFileDialogue.FileName = "myGraph.GRAPH";
+            this.SaveFileDialogue.Filter = ".GRAPH|*.GRAPH";
+            this.SaveFileDialogue.RestoreDirectory = true;
+            this.SaveFileDialogue.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialogue_FileOk);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(558, 192);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(127, 13);
+            this.label9.TabIndex = 41;
+            this.label9.Text = "Minimum Spanning Tree: ";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(558, 166);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(94, 13);
+            this.label16.TabIndex = 42;
+            this.label16.Text = "Number of edges: ";
+            // 
+            // UpdateAdjListButton
+            // 
+            this.UpdateAdjListButton.Location = new System.Drawing.Point(25, 220);
+            this.UpdateAdjListButton.Name = "UpdateAdjListButton";
+            this.UpdateAdjListButton.Size = new System.Drawing.Size(75, 23);
+            this.UpdateAdjListButton.TabIndex = 43;
+            this.UpdateAdjListButton.Text = "Update";
+            this.UpdateAdjListButton.UseVisualStyleBackColor = true;
+            this.UpdateAdjListButton.Click += new System.EventHandler(this.UpdateAdjListButton_Click);
+            // 
+            // LoadFileDialogue
+            // 
+            this.LoadFileDialogue.DefaultExt = "GRAPH";
+            this.LoadFileDialogue.FileName = "myGraph.GRAPH";
+            this.LoadFileDialogue.Filter = ".GRAPH|*.GRAPH";
+            this.LoadFileDialogue.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileDialogue_FileOk);
+            // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 639);
+            this.Controls.Add(this.UpdateAdjListButton);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.IsDeleteNode);
+            this.Controls.Add(this.SrcNodeTextBox);
+            this.Controls.Add(this.DestNodeTextBox);
+            this.Controls.Add(this.EdgeWeightTextBox);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
+            this.Controls.Add(this.UpdateMsgLabel);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.IsSaveToLocal);
             this.Controls.Add(this.IsSaveToVar);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.SaveAsGraphLocally);
-            this.Controls.Add(this.label10);
+            this.Controls.Add(this.FilePathLabel);
             this.Controls.Add(this.LoadGraph);
             this.Controls.Add(this.SaveGraph);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.ListViewOfNodes);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.CheckBoxIsDirected);
             this.Controls.Add(this.CheckBoxHasWeight);
             this.Controls.Add(this.listBox1);
             this.Name = "GUIWindow";
             this.Text = "GUIWindow";
             this.Load += new System.EventHandler(this.GUIWindow_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,39 +471,36 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.CheckBox CheckBoxHasWeight;
         private System.Windows.Forms.CheckBox CheckBoxIsDirected;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListView ListViewOfNodes;
+        private System.Windows.Forms.ColumnHeader SrcNodeColumn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button SaveGraph;
         private System.Windows.Forms.Button LoadGraph;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label FilePathLabel;
         private System.Windows.Forms.Button SaveAsGraphLocally;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox IsSaveToVar;
         private System.Windows.Forms.CheckBox IsSaveToLocal;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label UpdateMsgLabel;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.TextBox EdgeWeightTextBox;
+        private System.Windows.Forms.TextBox DestNodeTextBox;
+        private System.Windows.Forms.TextBox SrcNodeTextBox;
+        private System.Windows.Forms.CheckBox IsDeleteNode;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.SaveFileDialog SaveFileDialogue;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button UpdateAdjListButton;
+        private System.Windows.Forms.OpenFileDialog LoadFileDialogue;
     }
 }
