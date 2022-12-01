@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("a");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ColumnHeader columnHeader2;
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("a");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem(new string[] {
             "b",
             "A, 17",
             "D, 14"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("c");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("c");
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem(new string[] {
             "d",
             "A, 3",
             "B, 6",
             "C. 4"}, -1);
-            System.Windows.Forms.ColumnHeader columnHeader2;
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.CheckBoxHasWeight = new System.Windows.Forms.CheckBox();
             this.CheckBoxIsDirected = new System.Windows.Forms.CheckBox();
@@ -59,14 +59,32 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.SaveGraph = new System.Windows.Forms.Button();
+            this.LoadGraph = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.SaveAsGraphLocally = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
+            this.IsSaveToVar = new System.Windows.Forms.CheckBox();
+            this.IsSaveToLocal = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Adjacent Nodes";
+            columnHeader2.Width = 96;
             // 
             // listBox1
             // 
@@ -128,11 +146,11 @@
             this.columnHeader3});
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16});
-            this.listView1.Location = new System.Drawing.Point(375, 220);
+            listViewItem25,
+            listViewItem26,
+            listViewItem27,
+            listViewItem28});
+            this.listView1.Location = new System.Drawing.Point(15, 34);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(362, 97);
             this.listView1.TabIndex = 9;
@@ -144,11 +162,6 @@
             this.columnHeader1.Text = "Nodes";
             this.columnHeader1.Width = 88;
             // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Adjacent Nodes";
-            columnHeader2.Width = 96;
-            // 
             // columnHeader3
             // 
             this.columnHeader3.Width = 96;
@@ -156,7 +169,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 161);
+            this.label1.Location = new System.Drawing.Point(478, 301);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 10;
@@ -165,11 +178,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(372, 204);
+            this.label2.Location = new System.Drawing.Point(13, 18);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 13;
-            this.label2.Text = "select nodes to edit";
+            this.label2.Text = "Select nodes to edit";
             // 
             // label3
             // 
@@ -204,7 +217,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 182);
+            this.checkBox1.Location = new System.Drawing.Point(399, 359);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(72, 17);
             this.checkBox1.TabIndex = 17;
@@ -214,7 +227,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(16, 200);
+            this.checkBox2.Location = new System.Drawing.Point(399, 382);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(84, 17);
             this.checkBox2.TabIndex = 18;
@@ -224,7 +237,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 132);
+            this.label6.Location = new System.Drawing.Point(380, 329);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(313, 13);
             this.label6.TabIndex = 19;
@@ -235,9 +248,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(558, 18);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.Size = new System.Drawing.Size(65, 13);
             this.label7.TabIndex = 20;
-            this.label7.Text = "Algorithm List";
+            this.label7.Text = "Algorithm list";
             // 
             // label8
             // 
@@ -257,41 +270,44 @@
             this.label9.TabIndex = 22;
             this.label9.Text = "label9";
             // 
-            // button1
+            // SaveGraph
             // 
-            this.button1.Location = new System.Drawing.Point(16, 359);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(182, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Save graph to temporary variable";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SaveGraph.Location = new System.Drawing.Point(16, 359);
+            this.SaveGraph.Name = "SaveGraph";
+            this.SaveGraph.Size = new System.Drawing.Size(106, 23);
+            this.SaveGraph.TabIndex = 23;
+            this.SaveGraph.Text = "Save graph";
+            this.SaveGraph.UseVisualStyleBackColor = true;
+            this.SaveGraph.Click += new System.EventHandler(this.SaveToTempVar_Click);
             // 
-            // button2
+            // LoadGraph
             // 
-            this.button2.Location = new System.Drawing.Point(16, 388);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(182, 23);
-            this.button2.TabIndex = 24;
-            this.button2.Text = "Save graph to local storage";
-            this.button2.UseVisualStyleBackColor = true;
+            this.LoadGraph.Location = new System.Drawing.Point(16, 388);
+            this.LoadGraph.Name = "LoadGraph";
+            this.LoadGraph.Size = new System.Drawing.Size(106, 23);
+            this.LoadGraph.TabIndex = 24;
+            this.LoadGraph.Text = "Load Graph";
+            this.LoadGraph.UseVisualStyleBackColor = true;
+            this.LoadGraph.Click += new System.EventHandler(this.LoadGraph_Click);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 460);
+            this.label10.Location = new System.Drawing.Point(94, 422);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(281, 13);
             this.label10.TabIndex = 25;
             this.label10.Text = "File path: C:\\\\Documents (set this as default file path later)";
             // 
-            // button3
+            // SaveAsGraphLocally
             // 
-            this.button3.Location = new System.Drawing.Point(15, 417);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 26;
-            this.button3.Text = "Save as";
-            this.button3.UseVisualStyleBackColor = true;
+            this.SaveAsGraphLocally.Location = new System.Drawing.Point(16, 417);
+            this.SaveAsGraphLocally.Name = "SaveAsGraphLocally";
+            this.SaveAsGraphLocally.Size = new System.Drawing.Size(72, 23);
+            this.SaveAsGraphLocally.TabIndex = 26;
+            this.SaveAsGraphLocally.Text = "Save as...";
+            this.SaveAsGraphLocally.UseVisualStyleBackColor = true;
+            this.SaveAsGraphLocally.Click += new System.EventHandler(this.SaveAsGraphLocally_Click);
             // 
             // label11
             // 
@@ -302,16 +318,135 @@
             this.label11.TabIndex = 27;
             this.label11.Text = "Make a selectable list of graphs (adjlists) to select and edit individually";
             // 
+            // IsSaveToVar
+            // 
+            this.IsSaveToVar.AutoSize = true;
+            this.IsSaveToVar.Location = new System.Drawing.Point(141, 359);
+            this.IsSaveToVar.Name = "IsSaveToVar";
+            this.IsSaveToVar.Size = new System.Drawing.Size(103, 17);
+            this.IsSaveToVar.TabIndex = 29;
+            this.IsSaveToVar.Text = "Save to variable";
+            this.IsSaveToVar.UseVisualStyleBackColor = true;
+            // 
+            // IsSaveToLocal
+            // 
+            this.IsSaveToLocal.AutoSize = true;
+            this.IsSaveToLocal.Location = new System.Drawing.Point(141, 382);
+            this.IsSaveToLocal.Name = "IsSaveToLocal";
+            this.IsSaveToLocal.Size = new System.Drawing.Size(126, 17);
+            this.IsSaveToLocal.TabIndex = 30;
+            this.IsSaveToLocal.Text = "Save to local storage";
+            this.IsSaveToLocal.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 140);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(97, 13);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Source node name";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(296, 259);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 32;
+            this.label13.Text = "label13";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 192);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 13);
+            this.label14.TabIndex = 33;
+            this.label14.Text = "Edge weight";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 166);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(116, 13);
+            this.label15.TabIndex = 34;
+            this.label15.Text = "Destination node name";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(133, 189);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 35;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(133, 163);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 36;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(133, 137);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 37;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(275, 140);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(80, 17);
+            this.checkBox3.TabIndex = 38;
+            this.checkBox3.Text = "checkBox3";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(275, 166);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(80, 17);
+            this.checkBox4.TabIndex = 39;
+            this.checkBox4.Text = "checkBox4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(275, 192);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(80, 17);
+            this.checkBox5.TabIndex = 40;
+            this.checkBox5.Text = "checkBox5";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 639);
+            this.Controls.Add(this.checkBox5);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.IsSaveToLocal);
+            this.Controls.Add(this.IsSaveToVar);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.SaveAsGraphLocally);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.LoadGraph);
+            this.Controls.Add(this.SaveGraph);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -359,10 +494,23 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SaveGraph;
+        private System.Windows.Forms.Button LoadGraph;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button SaveAsGraphLocally;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox IsSaveToVar;
+        private System.Windows.Forms.CheckBox IsSaveToLocal;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

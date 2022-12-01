@@ -57,6 +57,12 @@
     </Compile>
     <Compile Include="Classes go here\Algorithms\Kruskals.cs" />
     <Compile Include="Classes go here\Algorithms\Prims.cs" />
+    <Compile Include="Classes go here\GUIWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes go here\GUIWindow.Designer.cs">
+      <DependentUpon>GUIWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes go here\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,6 +72,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Classes go here\GraphWindow.resx">
       <DependentUpon>GraphWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes go here\GUIWindow.resx">
+      <DependentUpon>GUIWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -29,6 +29,7 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             //Will be removing console and replacing it with a new forms GUI, but this will still apply for opening the GraphWindow from the GUIWindow
 
             Thread thread2 = new Thread(new ThreadStart(OpenForm1));
+            thread2.SetApartmentState(ApartmentState.STA); //Needed to be able to use the save as and load thingy
             thread2.Start();
 
             AdjacencyList<string> mainAdjacencyList = new AdjacencyList<string>();
