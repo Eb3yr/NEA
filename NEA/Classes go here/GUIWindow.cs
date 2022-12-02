@@ -47,6 +47,8 @@ namespace NEA
             SaveFileDialogue.ShowDialog();
             SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, then closes it so the program doesn't die
             //Add protection for empty file names
+            //https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+            
             //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
         }
 
