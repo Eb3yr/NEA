@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.ColumnHeader DestNodesColumn;
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "a",
             "wgawghagawgawg"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "b",
             "A, 17",
             "D, 14"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("c");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("c");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "d",
             "A, 3",
             "B, 6",
             "C. 4"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("e");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("f");
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("g");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("e");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("f");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("g");
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.CheckBoxHasWeight = new System.Windows.Forms.CheckBox();
             this.CheckBoxIsDirected = new System.Windows.Forms.CheckBox();
@@ -71,14 +71,16 @@
             this.EdgeWeightTextBox = new System.Windows.Forms.TextBox();
             this.DestNodeTextBox = new System.Windows.Forms.TextBox();
             this.SrcNodeTextBox = new System.Windows.Forms.TextBox();
-            this.IsDeleteNode = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.SaveFileDialogue = new System.Windows.Forms.SaveFileDialog();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.UpdateAdjListButton = new System.Windows.Forms.Button();
             this.LoadFileDialogue = new System.Windows.Forms.OpenFileDialog();
+            this.CheckBoxEditEdges = new System.Windows.Forms.CheckBox();
+            this.CheckBoxEditNodes = new System.Windows.Forms.CheckBox();
+            this.CheckBoxDelete = new System.Windows.Forms.CheckBox();
+            this.CheckBoxUpdate = new System.Windows.Forms.CheckBox();
+            this.CheckBoxAdd = new System.Windows.Forms.CheckBox();
             DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
@@ -134,25 +136,25 @@
             DestNodesColumn});
             this.ListViewOfNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListViewOfNodes.HideSelection = false;
-            listViewItem15.StateImageIndex = 0;
-            listViewItem16.StateImageIndex = 0;
-            listViewItem17.StateImageIndex = 0;
-            listViewItem18.StateImageIndex = 0;
-            listViewItem19.StateImageIndex = 0;
-            listViewItem20.StateImageIndex = 0;
-            listViewItem21.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
+            listViewItem13.StateImageIndex = 0;
+            listViewItem14.StateImageIndex = 0;
             this.ListViewOfNodes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem15,
-            listViewItem16,
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20,
-            listViewItem21});
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14});
             this.ListViewOfNodes.Location = new System.Drawing.Point(15, 34);
             this.ListViewOfNodes.MultiSelect = false;
             this.ListViewOfNodes.Name = "ListViewOfNodes";
-            this.ListViewOfNodes.Size = new System.Drawing.Size(362, 97);
+            this.ListViewOfNodes.Size = new System.Drawing.Size(391, 97);
             this.ListViewOfNodes.TabIndex = 9;
             this.ListViewOfNodes.UseCompatibleStateImageBehavior = false;
             this.ListViewOfNodes.View = System.Windows.Forms.View.Details;
@@ -348,37 +350,6 @@
             this.SrcNodeTextBox.Size = new System.Drawing.Size(100, 20);
             this.SrcNodeTextBox.TabIndex = 37;
             // 
-            // IsDeleteNode
-            // 
-            this.IsDeleteNode.AutoSize = true;
-            this.IsDeleteNode.Location = new System.Drawing.Point(275, 140);
-            this.IsDeleteNode.Name = "IsDeleteNode";
-            this.IsDeleteNode.Size = new System.Drawing.Size(84, 17);
-            this.IsDeleteNode.TabIndex = 38;
-            this.IsDeleteNode.Text = "Delete node";
-            this.IsDeleteNode.UseVisualStyleBackColor = true;
-            this.IsDeleteNode.CheckedChanged += new System.EventHandler(this.IsDeleteNode_CheckedChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(275, 166);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(80, 17);
-            this.checkBox4.TabIndex = 39;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(275, 192);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(80, 17);
-            this.checkBox5.TabIndex = 40;
-            this.checkBox5.Text = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
             // SaveFileDialogue
             // 
             this.SaveFileDialogue.DefaultExt = "GRAPH";
@@ -422,17 +393,78 @@
             this.LoadFileDialogue.Filter = ".GRAPH|*.GRAPH";
             this.LoadFileDialogue.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileDialogue_FileOk);
             // 
+            // CheckBoxEditEdges
+            // 
+            this.CheckBoxEditEdges.AutoSize = true;
+            this.CheckBoxEditEdges.Location = new System.Drawing.Point(328, 166);
+            this.CheckBoxEditEdges.Name = "CheckBoxEditEdges";
+            this.CheckBoxEditEdges.Size = new System.Drawing.Size(77, 17);
+            this.CheckBoxEditEdges.TabIndex = 48;
+            this.CheckBoxEditEdges.Text = "Edit Edges";
+            this.CheckBoxEditEdges.UseVisualStyleBackColor = true;
+            this.CheckBoxEditEdges.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxEditEdges_MouseClick);
+            // 
+            // CheckBoxEditNodes
+            // 
+            this.CheckBoxEditNodes.AutoSize = true;
+            this.CheckBoxEditNodes.Checked = true;
+            this.CheckBoxEditNodes.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CheckBoxEditNodes.Location = new System.Drawing.Point(328, 139);
+            this.CheckBoxEditNodes.Name = "CheckBoxEditNodes";
+            this.CheckBoxEditNodes.Size = new System.Drawing.Size(78, 17);
+            this.CheckBoxEditNodes.TabIndex = 47;
+            this.CheckBoxEditNodes.Text = "Edit Nodes";
+            this.CheckBoxEditNodes.UseVisualStyleBackColor = true;
+            this.CheckBoxEditNodes.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxEditNodes_MouseClick);
+            // 
+            // CheckBoxDelete
+            // 
+            this.CheckBoxDelete.AutoSize = true;
+            this.CheckBoxDelete.Location = new System.Drawing.Point(261, 192);
+            this.CheckBoxDelete.Name = "CheckBoxDelete";
+            this.CheckBoxDelete.Size = new System.Drawing.Size(57, 17);
+            this.CheckBoxDelete.TabIndex = 46;
+            this.CheckBoxDelete.Text = "Delete";
+            this.CheckBoxDelete.UseVisualStyleBackColor = true;
+            this.CheckBoxDelete.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxDelete_MouseClick);
+            // 
+            // CheckBoxUpdate
+            // 
+            this.CheckBoxUpdate.AutoSize = true;
+            this.CheckBoxUpdate.Location = new System.Drawing.Point(261, 166);
+            this.CheckBoxUpdate.Name = "CheckBoxUpdate";
+            this.CheckBoxUpdate.Size = new System.Drawing.Size(61, 17);
+            this.CheckBoxUpdate.TabIndex = 45;
+            this.CheckBoxUpdate.Text = "Update";
+            this.CheckBoxUpdate.UseVisualStyleBackColor = true;
+            this.CheckBoxUpdate.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxUpdate_MouseClick);
+            // 
+            // CheckBoxAdd
+            // 
+            this.CheckBoxAdd.AutoSize = true;
+            this.CheckBoxAdd.Checked = true;
+            this.CheckBoxAdd.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CheckBoxAdd.Location = new System.Drawing.Point(261, 140);
+            this.CheckBoxAdd.Name = "CheckBoxAdd";
+            this.CheckBoxAdd.Size = new System.Drawing.Size(48, 17);
+            this.CheckBoxAdd.TabIndex = 44;
+            this.CheckBoxAdd.Text = "Add ";
+            this.CheckBoxAdd.UseVisualStyleBackColor = true;
+            this.CheckBoxAdd.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxAdd_MouseClick);
+            // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 639);
+            this.Controls.Add(this.CheckBoxEditEdges);
+            this.Controls.Add(this.CheckBoxEditNodes);
+            this.Controls.Add(this.CheckBoxDelete);
+            this.Controls.Add(this.CheckBoxUpdate);
+            this.Controls.Add(this.CheckBoxAdd);
             this.Controls.Add(this.UpdateAdjListButton);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.IsDeleteNode);
             this.Controls.Add(this.SrcNodeTextBox);
             this.Controls.Add(this.DestNodeTextBox);
             this.Controls.Add(this.EdgeWeightTextBox);
@@ -494,13 +526,15 @@
         private System.Windows.Forms.TextBox EdgeWeightTextBox;
         private System.Windows.Forms.TextBox DestNodeTextBox;
         private System.Windows.Forms.TextBox SrcNodeTextBox;
-        private System.Windows.Forms.CheckBox IsDeleteNode;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.SaveFileDialog SaveFileDialogue;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button UpdateAdjListButton;
         private System.Windows.Forms.OpenFileDialog LoadFileDialogue;
+        private System.Windows.Forms.CheckBox CheckBoxEditEdges;
+        private System.Windows.Forms.CheckBox CheckBoxEditNodes;
+        private System.Windows.Forms.CheckBox CheckBoxDelete;
+        private System.Windows.Forms.CheckBox CheckBoxUpdate;
+        private System.Windows.Forms.CheckBox CheckBoxAdd;
     }
 }

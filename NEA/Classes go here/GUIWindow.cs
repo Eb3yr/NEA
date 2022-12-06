@@ -26,7 +26,7 @@ namespace NEA
 
         private void GUIWindow_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void SaveToTempVar_Click(object sender, EventArgs e)
@@ -39,16 +39,16 @@ namespace NEA
             {
                 //Save to local storage instead
             }
-            
+
         }
 
         private void SaveAsGraphLocally_Click(object sender, EventArgs e)
         {
             SaveFileDialogue.ShowDialog();
             SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, then closes it so the program doesn't die
-            //Add protection for empty file names
-            //https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
-            
+                                                 //Add protection for empty file names
+                                                 //https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+
             //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
         }
 
@@ -84,23 +84,11 @@ namespace NEA
             IsSaveToVar.Checked = !IsSaveToLocal.Checked;
         }
 
-        private void IsDeleteNode_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsDeleteNode.Checked == true)
-            {
-                UpdateAdjListButton.Text = "Delete";
-            }
-            else
-            {
-                UpdateAdjListButton.Text = "Update";
-            }
-        }
-
         private void UpdateAdjListButton_Click(object sender, EventArgs e)
         {
             if (SrcNodeTextBox.Text.Trim().Length == 0 && DestNodeTextBox.Text.Trim().Length == 0 && EdgeWeightTextBox.Text.Trim().Length == 0) //If the entered text is empty, either no characters or only whitespace
             {
-                UpdateMsgLabel.Text = "Please fill all fields!";
+                UpdateMsgLabel.Text = "Please fill all necessary fields!";
             }
             else
             {
@@ -116,6 +104,87 @@ namespace NEA
         private void LoadFileDialogue_FileOk(object sender, CancelEventArgs e)
         {
             FilePathLabel.Text = "File path: " + LoadFileDialogue.FileName;
+        }
+
+        private void CheckBoxEditNodes_MouseClick(object sender, MouseEventArgs e)
+        {
+            CheckBoxEditEdges.Checked = !CheckBoxEditEdges.Checked;
+        }
+        private void CheckBoxEditEdges_MouseClick(object sender, MouseEventArgs e)
+        {
+            CheckBoxEditNodes.Checked = !CheckBoxEditNodes.Checked;
+        }
+
+
+        private void CheckBoxAdd_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (CheckBoxAdd.Checked == true)
+            {
+                if (CheckBoxUpdate.Checked == CheckBoxAdd.Checked)
+                {
+                    CheckBoxUpdate.Checked = !CheckBoxUpdate.Checked;
+                }
+                if (CheckBoxDelete.Checked == CheckBoxAdd.Checked)
+                {
+                    CheckBoxDelete.Checked = !CheckBoxDelete.Checked;
+                }
+            }
+            else
+            {
+                CheckBoxAdd.Checked = true;
+            }
+            IsButtonDelete();
+        }
+        private void CheckBoxUpdate_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (CheckBoxUpdate.Checked == true)
+            {
+                if (CheckBoxAdd.Checked = CheckBoxUpdate.Checked)
+                {
+                    CheckBoxAdd.Checked = !CheckBoxAdd.Checked;
+                }
+                if (CheckBoxDelete.Checked == CheckBoxUpdate.Checked)
+                {
+                    CheckBoxDelete.Checked = !CheckBoxDelete.Checked;
+                }
+            }
+            else
+            {
+                CheckBoxUpdate.Checked = true;
+            }
+            IsButtonDelete();
+        }
+        private void CheckBoxDelete_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (CheckBoxDelete.Checked == true)
+            {
+
+                if (CheckBoxAdd.Checked = CheckBoxDelete.Checked)
+                {
+                    CheckBoxAdd.Checked = !CheckBoxAdd.Checked;
+                }
+                if (CheckBoxUpdate.Checked == CheckBoxDelete.Checked)
+                {
+                    CheckBoxUpdate.Checked = !CheckBoxUpdate.Checked;
+                }
+            }
+            else
+            {
+                CheckBoxDelete.Checked = true;
+            }
+            IsButtonDelete();
+        }
+        private void IsButtonDelete() //Ensures the button for updating the graph has the right text
+        {
+            switch (CheckBoxDelete.Checked)
+            {
+                case true:
+                    UpdateAdjListButton.Text = "Delete";
+                    break;
+                case false:
+                    UpdateAdjListButton.Text = "Update";
+                    break;
+            }
         }
 
         //Adding new columns to lists in the GUI
