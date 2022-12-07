@@ -28,23 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ColumnHeader DestNodesColumn;
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "a",
-            "wgawghagawgawg"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
-            "b",
-            "A, 17",
-            "D, 14"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("c");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
-            "d",
-            "A, 3",
-            "B, 6",
-            "C. 4"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("e");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("f");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("g");
+            this.DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.CheckBoxHasWeight = new System.Windows.Forms.CheckBox();
             this.CheckBoxIsDirected = new System.Windows.Forms.CheckBox();
@@ -64,10 +48,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.IsSaveToVar = new System.Windows.Forms.CheckBox();
             this.IsSaveToLocal = new System.Windows.Forms.CheckBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.SrcNodeLabel = new System.Windows.Forms.Label();
             this.UpdateMsgLabel = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.EdgeWeightLabel = new System.Windows.Forms.Label();
+            this.DestNodeLabel = new System.Windows.Forms.Label();
             this.EdgeWeightTextBox = new System.Windows.Forms.TextBox();
             this.DestNodeTextBox = new System.Windows.Forms.TextBox();
             this.SrcNodeTextBox = new System.Windows.Forms.TextBox();
@@ -81,13 +65,12 @@
             this.CheckBoxDelete = new System.Windows.Forms.CheckBox();
             this.CheckBoxUpdate = new System.Windows.Forms.CheckBox();
             this.CheckBoxAdd = new System.Windows.Forms.CheckBox();
-            DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // DestNodesColumn
             // 
-            DestNodesColumn.Text = "Adjacent Nodes";
-            DestNodesColumn.Width = 251;
+            this.DestNodesColumn.Text = "Adjacent Nodes";
+            this.DestNodesColumn.Width = 296;
             // 
             // listBox1
             // 
@@ -133,24 +116,9 @@
             // 
             this.ListViewOfNodes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.SrcNodeColumn,
-            DestNodesColumn});
+            this.DestNodesColumn});
             this.ListViewOfNodes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListViewOfNodes.HideSelection = false;
-            listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
-            listViewItem10.StateImageIndex = 0;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.StateImageIndex = 0;
-            listViewItem13.StateImageIndex = 0;
-            listViewItem14.StateImageIndex = 0;
-            this.ListViewOfNodes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14});
             this.ListViewOfNodes.Location = new System.Drawing.Point(15, 34);
             this.ListViewOfNodes.MultiSelect = false;
             this.ListViewOfNodes.Name = "ListViewOfNodes";
@@ -162,7 +130,7 @@
             // SrcNodeColumn
             // 
             this.SrcNodeColumn.Text = "Nodes";
-            this.SrcNodeColumn.Width = 90;
+            this.SrcNodeColumn.Width = 91;
             // 
             // label2
             // 
@@ -229,7 +197,7 @@
             this.SaveGraph.TabIndex = 23;
             this.SaveGraph.Text = "Save graph";
             this.SaveGraph.UseVisualStyleBackColor = true;
-            this.SaveGraph.Click += new System.EventHandler(this.SaveToTempVar_Click);
+            this.SaveGraph.Click += new System.EventHandler(this.SaveGraph_Click);
             // 
             // LoadGraph
             // 
@@ -263,11 +231,11 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(505, 398);
+            this.label11.Location = new System.Drawing.Point(22, 270);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(334, 13);
+            this.label11.Size = new System.Drawing.Size(223, 13);
             this.label11.TabIndex = 27;
-            this.label11.Text = "Make a selectable list of graphs (adjlists) to select and edit individually";
+            this.label11.Text = "Dynamically change visibility  of various boxes";
             // 
             // IsSaveToVar
             // 
@@ -293,41 +261,41 @@
             this.IsSaveToLocal.UseVisualStyleBackColor = true;
             this.IsSaveToLocal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.IsSaveToLocal_MouseClick);
             // 
-            // label12
+            // SrcNodeLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 140);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(97, 13);
-            this.label12.TabIndex = 31;
-            this.label12.Text = "Source node name";
+            this.SrcNodeLabel.AutoSize = true;
+            this.SrcNodeLabel.Location = new System.Drawing.Point(13, 140);
+            this.SrcNodeLabel.Name = "SrcNodeLabel";
+            this.SrcNodeLabel.Size = new System.Drawing.Size(97, 13);
+            this.SrcNodeLabel.TabIndex = 31;
+            this.SrcNodeLabel.Text = "Source node name";
             // 
             // UpdateMsgLabel
             // 
             this.UpdateMsgLabel.AutoSize = true;
             this.UpdateMsgLabel.Location = new System.Drawing.Point(130, 225);
             this.UpdateMsgLabel.Name = "UpdateMsgLabel";
-            this.UpdateMsgLabel.Size = new System.Drawing.Size(196, 13);
+            this.UpdateMsgLabel.Size = new System.Drawing.Size(203, 13);
             this.UpdateMsgLabel.TabIndex = 32;
-            this.UpdateMsgLabel.Text = "This says what the previous comand did";
+            this.UpdateMsgLabel.Text = "This states what the previous comand did";
             // 
-            // label14
+            // EdgeWeightLabel
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 192);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(66, 13);
-            this.label14.TabIndex = 33;
-            this.label14.Text = "Edge weight";
+            this.EdgeWeightLabel.AutoSize = true;
+            this.EdgeWeightLabel.Location = new System.Drawing.Point(12, 192);
+            this.EdgeWeightLabel.Name = "EdgeWeightLabel";
+            this.EdgeWeightLabel.Size = new System.Drawing.Size(66, 13);
+            this.EdgeWeightLabel.TabIndex = 33;
+            this.EdgeWeightLabel.Text = "Edge weight";
             // 
-            // label15
+            // DestNodeLabel
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 166);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(116, 13);
-            this.label15.TabIndex = 34;
-            this.label15.Text = "Destination node name";
+            this.DestNodeLabel.AutoSize = true;
+            this.DestNodeLabel.Location = new System.Drawing.Point(13, 166);
+            this.DestNodeLabel.Name = "DestNodeLabel";
+            this.DestNodeLabel.Size = new System.Drawing.Size(116, 13);
+            this.DestNodeLabel.TabIndex = 34;
+            this.DestNodeLabel.Text = "Destination node name";
             // 
             // EdgeWeightTextBox
             // 
@@ -380,9 +348,9 @@
             // 
             this.UpdateAdjListButton.Location = new System.Drawing.Point(25, 220);
             this.UpdateAdjListButton.Name = "UpdateAdjListButton";
-            this.UpdateAdjListButton.Size = new System.Drawing.Size(75, 23);
+            this.UpdateAdjListButton.Size = new System.Drawing.Size(85, 23);
             this.UpdateAdjListButton.TabIndex = 43;
-            this.UpdateAdjListButton.Text = "Update";
+            this.UpdateAdjListButton.Text = "Add Node";
             this.UpdateAdjListButton.UseVisualStyleBackColor = true;
             this.UpdateAdjListButton.Click += new System.EventHandler(this.UpdateAdjListButton_Click);
             // 
@@ -468,10 +436,10 @@
             this.Controls.Add(this.SrcNodeTextBox);
             this.Controls.Add(this.DestNodeTextBox);
             this.Controls.Add(this.EdgeWeightTextBox);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
+            this.Controls.Add(this.DestNodeLabel);
+            this.Controls.Add(this.EdgeWeightLabel);
             this.Controls.Add(this.UpdateMsgLabel);
-            this.Controls.Add(this.label12);
+            this.Controls.Add(this.SrcNodeLabel);
             this.Controls.Add(this.IsSaveToLocal);
             this.Controls.Add(this.IsSaveToVar);
             this.Controls.Add(this.label11);
@@ -519,10 +487,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox IsSaveToVar;
         private System.Windows.Forms.CheckBox IsSaveToLocal;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label SrcNodeLabel;
         private System.Windows.Forms.Label UpdateMsgLabel;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label EdgeWeightLabel;
+        private System.Windows.Forms.Label DestNodeLabel;
         private System.Windows.Forms.TextBox EdgeWeightTextBox;
         private System.Windows.Forms.TextBox DestNodeTextBox;
         private System.Windows.Forms.TextBox SrcNodeTextBox;
@@ -536,5 +504,6 @@
         private System.Windows.Forms.CheckBox CheckBoxDelete;
         private System.Windows.Forms.CheckBox CheckBoxUpdate;
         private System.Windows.Forms.CheckBox CheckBoxAdd;
+        private System.Windows.Forms.ColumnHeader DestNodesColumn;
     }
 }

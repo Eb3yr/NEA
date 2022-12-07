@@ -13,8 +13,8 @@ using System.IO;
 namespace NEA
 {
     public partial class GUIWindow : Form
-    {
-        protected object currentAdjList;
+    { //Go through and organise methods into regions and put them in a sensible order to improve readability
+        protected object currentAdjList; //Object rather than AdjacencyList<T> so that I can specify the type T in the constructor
         protected object savedAdjList;
         public GUIWindow()
         {
@@ -29,7 +29,9 @@ namespace NEA
 
         }
 
-        private void SaveToTempVar_Click(object sender, EventArgs e)
+        #region Saving and Loading
+
+        private void SaveGraph_Click(object sender, EventArgs e)
         {
             if (IsSaveToVar.Checked == true)
             {
@@ -38,17 +40,22 @@ namespace NEA
             else
             {
                 //Save to local storage instead
+                WriteFileToLocal();
             }
 
         }
 
         private void SaveAsGraphLocally_Click(object sender, EventArgs e)
         {
+            Stream fileStream = null;
             SaveFileDialogue.ShowDialog();
-            SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, then closes it so the program doesn't die
-                                                 //Add protection for empty file names
-                                                 //https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+            Console.WriteLine("SaveFile dialogue opened");
+            
+            fileStream = SaveFileDialogue.OpenFile(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
 
+            WriteFileToLocal();
+            fileStream.Close(); //Otherwise files stay open, things break
+            
             //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
         }
 
@@ -73,6 +80,11 @@ namespace NEA
             }
         }
 
+        private void WriteFileToLocal()
+        {
+            //Write the file
+        }
+
         private void IsSaveToVar_MouseClick(object sender, MouseEventArgs e) //DO NOT use the CheckedChange event, it'll end up generating a CheckedChange event for the other check box and cause a stack overflow
         {
             //Save to var is initially set to true to prevent these getting out of sync. Make sure this is impossible to break later, but it doesn't seem to break now
@@ -82,18 +94,6 @@ namespace NEA
         private void IsSaveToLocal_MouseClick(object sender, MouseEventArgs e)
         {
             IsSaveToVar.Checked = !IsSaveToLocal.Checked;
-        }
-
-        private void UpdateAdjListButton_Click(object sender, EventArgs e)
-        {
-            if (SrcNodeTextBox.Text.Trim().Length == 0 && DestNodeTextBox.Text.Trim().Length == 0 && EdgeWeightTextBox.Text.Trim().Length == 0) //If the entered text is empty, either no characters or only whitespace
-            {
-                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-            }
-            else
-            {
-                //Operate normally adding/removing/updating Adjacency List using inputted data from the text boxes
-            }
         }
 
         private void SaveFileDialogue_FileOk(object sender, CancelEventArgs e)
@@ -106,13 +106,164 @@ namespace NEA
             FilePathLabel.Text = "File path: " + LoadFileDialogue.FileName;
         }
 
+        #endregion
+
+        private void UpdateAdjListButton_Click(object sender, EventArgs e)
+        {
+            //Obsolete:
+            //if (SrcNodeTextBox.Text.Trim().Length == 0 && DestNodeTextBox.Text.Trim().Length == 0 && EdgeWeightTextBox.Text.Trim().Length == 0) //If the entered text is empty, either no characters or only whitespace
+            //{
+            //    UpdateMsgLabel.Text = "Please fill all necessary fields!";
+            //}
+            //else
+            //{
+            //    //Operate normally adding/removing/updating Adjacency List using inputted data from the text boxes
+            //}
+
+            //Add checks for the necessary fields not being empty, these checks are the if-else statements with .Text.Trim().Length == 0
+            switch (CheckBoxEditNodes.Checked)
+            {
+                case true: //Editing nodes
+                    switch (UpdateAdjListButton.Text)
+                    {
+                        case "Add": //Add node
+                            if (SrcNodeTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                }
+                            }
+                            break;
+
+                        case "Update": //Update note
+                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                }
+                            }
+                            break;
+
+                        case "Delete": //Delete node
+                            if (SrcNodeTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                }
+                            }
+                            break;
+                    }
+                    break;
+
+                case false: //Editing edges
+                    switch (UpdateAdjListButton.Text)
+                    {
+                        case "Add":
+                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                }
+                            }
+                            break;
+
+                        case "Update":
+                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                }
+                            }
+                            break;
+
+                        case "Delete":
+                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
+                            {
+                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            }
+                            else
+                            {
+                                //Run it
+                                try
+                                {
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                                    //Could I add a help tooltip on which data types should be used?
+                                }
+                            }
+                            break;
+                    }
+                    break;
+            }
+
+            
+        }
+
+
         private void CheckBoxEditNodes_MouseClick(object sender, MouseEventArgs e)
         {
             CheckBoxEditEdges.Checked = !CheckBoxEditEdges.Checked;
+            GetButtonText();
+            SetVisibleInputBoxes();
         }
         private void CheckBoxEditEdges_MouseClick(object sender, MouseEventArgs e)
         {
             CheckBoxEditNodes.Checked = !CheckBoxEditNodes.Checked;
+            GetButtonText();
+            SetVisibleInputBoxes();
         }
 
 
@@ -133,7 +284,8 @@ namespace NEA
             {
                 CheckBoxAdd.Checked = true;
             }
-            IsButtonDelete();
+            GetButtonText();
+            SetVisibleInputBoxes();
         }
         private void CheckBoxUpdate_MouseClick(object sender, MouseEventArgs e)
         {
@@ -152,7 +304,8 @@ namespace NEA
             {
                 CheckBoxUpdate.Checked = true;
             }
-            IsButtonDelete();
+            GetButtonText();
+            SetVisibleInputBoxes();
         }
         private void CheckBoxDelete_MouseClick(object sender, MouseEventArgs e)
         {
@@ -172,17 +325,109 @@ namespace NEA
             {
                 CheckBoxDelete.Checked = true;
             }
-            IsButtonDelete();
+            GetButtonText();
+            SetVisibleInputBoxes();
         }
-        private void IsButtonDelete() //Ensures the button for updating the graph has the right text
+        private void GetButtonText() //Ensures the button for updating the graph has the right text
         {
+            string newText = "";
             switch (CheckBoxDelete.Checked)
             {
                 case true:
-                    UpdateAdjListButton.Text = "Delete";
+                    newText += "Delete";
                     break;
+
                 case false:
-                    UpdateAdjListButton.Text = "Update";
+                    switch (CheckBoxAdd.Checked)
+                    {
+                        case true:
+                            newText += "Add";
+                            break;
+                        case false:
+                            newText += "Update";
+                            break;
+                    }
+                    break;
+            }
+
+            switch (CheckBoxEditNodes.Checked)
+            {
+                case true:
+                    newText += " Node";
+                    break;
+
+                case false:
+                    newText += " Edge";
+                    break;
+            }
+
+            UpdateAdjListButton.Text = newText;
+        }
+
+        private void SetVisibleInputBoxes()
+        {
+            //Set the visibility of various inputs here, call after anything changing the check boxes "Add, Update, Delete, Edit Nodes, Edit Edges"
+
+            switch (UpdateAdjListButton.Text)
+            {
+                case "Add Node": //Add node
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "Destination Node Name";
+                    DestNodeLabel.Visible = false;
+                    DestNodeTextBox.Visible = false;
+                    EdgeWeightLabel.Visible = false;
+                    EdgeWeightTextBox.Visible = false;
+                    break;
+
+                case "Update Node": //Update note
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "New Node Name";
+                    DestNodeLabel.Visible = true;
+                    DestNodeTextBox.Visible = true;
+                    EdgeWeightLabel.Visible = false;
+                    EdgeWeightTextBox.Visible = false;
+                    break;
+
+                case "Delete Node": //Delete node
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "Destination Node Name";
+                    DestNodeLabel.Visible = false;
+                    DestNodeTextBox.Visible = false;
+                    EdgeWeightLabel.Visible = false;
+                    EdgeWeightTextBox.Visible = false;
+                    break;
+
+                case "Add Edge":
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "Destination Node Name";
+                    DestNodeLabel.Visible = true;
+                    DestNodeTextBox.Visible = true;
+                    EdgeWeightLabel.Visible = true;
+                    EdgeWeightTextBox.Visible = true;
+                    break;
+
+                case "Update Edge":
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "Destination Node Name";
+                    DestNodeLabel.Visible = true;
+                    DestNodeTextBox.Visible = true;
+                    EdgeWeightLabel.Visible = true;
+                    EdgeWeightTextBox.Visible = true;
+                    break;
+
+                case "Delete Edge":
+                    SrcNodeLabel.Visible = true;
+                    SrcNodeTextBox.Visible = true;
+                    DestNodeLabel.Text = "Destination Node Name";
+                    DestNodeLabel.Visible = true;
+                    DestNodeTextBox.Visible = true;
+                    EdgeWeightLabel.Visible = false;
+                    EdgeWeightTextBox.Visible = false;
                     break;
             }
         }
