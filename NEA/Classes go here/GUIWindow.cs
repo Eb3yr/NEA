@@ -14,14 +14,15 @@ namespace NEA
 {
     public partial class GUIWindow : Form
     { //Go through and organise methods into regions and put them in a sensible order to improve readability
-        protected object currentAdjList; //Object rather than AdjacencyList<T> so that I can specify the type T in the constructor
-        protected object savedAdjList;
+        protected AdjacencyList<string> currentAdjList;
+        protected AdjacencyList<string> savedAdjList;
+        protected AdjacencyList<string> tempAdjList;
         public GUIWindow()
         {
             InitializeComponent();
 
             //It's setuppin' time
-            currentAdjList = new AdjacencyList<string>(); //Going with string for now, might add a selectable list to choose which variable you use but there isn't really much point right now
+            currentAdjList = new AdjacencyList<string>(); //Going with string for now, other types don't currently offer any advantage
         }
 
         private void GUIWindow_Load(object sender, EventArgs e)
@@ -47,16 +48,19 @@ namespace NEA
 
         private void SaveAsGraphLocally_Click(object sender, EventArgs e)
         {
-            Stream fileStream = null;
-            SaveFileDialogue.ShowDialog();
-            Console.WriteLine("SaveFile dialogue opened");
-            
-            fileStream = SaveFileDialogue.OpenFile(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+            if (IsSaveToLocal.Checked == true)
+            {
+                Stream fileStream = null;
+                SaveFileDialogue.ShowDialog();
+                Console.WriteLine("SaveFile dialogue opened");
 
-            WriteFileToLocal();
-            fileStream.Close(); //Otherwise files stay open, things break
-            
-            //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
+                fileStream = SaveFileDialogue.OpenFile(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+
+                WriteFileToLocal();
+                fileStream.Close(); //Otherwise files stay open, things break
+
+                //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
+            }
         }
 
         private void LoadGraph_Click(object sender, EventArgs e)
@@ -110,148 +114,153 @@ namespace NEA
 
         private void UpdateAdjListButton_Click(object sender, EventArgs e)
         {
-            //Obsolete:
-            //if (SrcNodeTextBox.Text.Trim().Length == 0 && DestNodeTextBox.Text.Trim().Length == 0 && EdgeWeightTextBox.Text.Trim().Length == 0) //If the entered text is empty, either no characters or only whitespace
-            //{
-            //    UpdateMsgLabel.Text = "Please fill all necessary fields!";
-            //}
-            //else
-            //{
-            //    //Operate normally adding/removing/updating Adjacency List using inputted data from the text boxes
-            //}
+            tempAdjList = currentAdjList; //Try-catch needs to be able to revert the graph to its previous state if something goes wrong mid-execution
 
-            //Add checks for the necessary fields not being empty, these checks are the if-else statements with .Text.Trim().Length == 0
+            //Checks for necessary fields not being empty are the if-else statements with .Text.Trim().Length == 0
+            //I could probably make it more secure by using the Checked property of the relevant tick boxes, but this is a bit easier and is dependent on the checked state of the relevant tick boxes
+            switch (UpdateAdjListButton.Text)
+            {
+                case "Add Node": //Add node
+                    if (SrcNodeTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+                            currentAdjList.AddNode(SrcNodeTextBox.Text);
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                        }
+                    }
+                    break;
+
+                case "Update Node": //Update note
+                    if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                        }
+                    }
+                    break;
+
+                case "Delete Node": //Delete node
+                    if (SrcNodeTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                        }
+                    }
+                    break;
+
+                case "Add Edge":
+                    if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                        }
+                    }
+                    break;
+
+                case "Update Edge":
+                    if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                        }
+                    }
+                    break;
+
+                case "Delete Ege":
+                    if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
+                    {
+                        UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                    }
+                    else
+                    {
+                        //Run it
+                        try
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
+                            RevertFailedUpdate(tempAdjList);
+                            //Could I add a help tooltip on which data types should be used?
+                        }
+                    }
+                    break;
+            }
+
             switch (CheckBoxEditNodes.Checked)
             {
                 case true: //Editing nodes
-                    switch (UpdateAdjListButton.Text)
-                    {
-                        case "Add": //Add node
-                            if (SrcNodeTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                }
-                            }
-                            break;
-
-                        case "Update": //Update note
-                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                }
-                            }
-                            break;
-
-                        case "Delete": //Delete node
-                            if (SrcNodeTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                }
-                            }
-                            break;
-                    }
-                    break;
+                    
 
                 case false: //Editing edges
                     switch (UpdateAdjListButton.Text)
                     {
-                        case "Add":
-                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                }
-                            }
-                            break;
-
-                        case "Update":
-                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                }
-                            }
-                            break;
-
-                        case "Delete":
-                            if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
-                            {
-                                UpdateMsgLabel.Text = "Please fill all necessary fields!";
-                            }
-                            else
-                            {
-                                //Run it
-                                try
-                                {
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    UpdateMsgLabel.Text = "Invalid input(s). Please use the correct data types for each field!";
-                                    //Could I add a help tooltip on which data types should be used?
-                                }
-                            }
-                            break;
+                        
                     }
                     break;
             }
 
             
         }
-
+        private void RevertFailedUpdate(AdjacencyList<string> inTempAdjList)
+        {
+            currentAdjList = inTempAdjList;
+        }
 
         private void CheckBoxEditNodes_MouseClick(object sender, MouseEventArgs e)
         {

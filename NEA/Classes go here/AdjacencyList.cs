@@ -308,6 +308,14 @@ namespace NEA.Classes_go_here
                 isDirected = true;
             }
         }
+        public void EditNode()
+        {
+
+        }
+        public void EditEdge()
+        {
+
+        }
         public void RemoveNode(T nodeKey) //I can't even remember if this works, check it lol
         {
             foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList)
