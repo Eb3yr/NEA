@@ -30,8 +30,8 @@
         {
             this.DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.CheckBoxHasWeight = new System.Windows.Forms.CheckBox();
-            this.CheckBoxIsDirected = new System.Windows.Forms.CheckBox();
+            this.HasWeightCheckBox = new System.Windows.Forms.CheckBox();
+            this.IsDirectedCheckBox = new System.Windows.Forms.CheckBox();
             this.ListViewOfNodes = new System.Windows.Forms.ListView();
             this.SrcNodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@
             this.CheckBoxDelete = new System.Windows.Forms.CheckBox();
             this.CheckBoxUpdate = new System.Windows.Forms.CheckBox();
             this.CheckBoxAdd = new System.Windows.Forms.CheckBox();
-            this.ShowGraphButon = new System.Windows.Forms.Button();
+            this.ShowGraphButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // DestNodesColumn
@@ -80,26 +80,27 @@
             this.listBox1.Size = new System.Drawing.Size(227, 43);
             this.listBox1.TabIndex = 0;
             // 
-            // CheckBoxHasWeight
+            // HasWeightCheckBox
             // 
-            this.CheckBoxHasWeight.AutoSize = true;
-            this.CheckBoxHasWeight.Location = new System.Drawing.Point(561, 83);
-            this.CheckBoxHasWeight.Name = "CheckBoxHasWeight";
-            this.CheckBoxHasWeight.Size = new System.Drawing.Size(655, 17);
-            this.CheckBoxHasWeight.TabIndex = 3;
-            this.CheckBoxHasWeight.Text = "Graph has weight - is this necessary? Maybe change it to toggle showing weights o" +
+            this.HasWeightCheckBox.AutoSize = true;
+            this.HasWeightCheckBox.Location = new System.Drawing.Point(561, 106);
+            this.HasWeightCheckBox.Name = "HasWeightCheckBox";
+            this.HasWeightCheckBox.Size = new System.Drawing.Size(655, 17);
+            this.HasWeightCheckBox.TabIndex = 3;
+            this.HasWeightCheckBox.Text = "Graph has weight - is this necessary? Maybe change it to toggle showing weights o" +
     "n the visual graph (but not tabular, too much effort)";
-            this.CheckBoxHasWeight.UseVisualStyleBackColor = true;
+            this.HasWeightCheckBox.UseVisualStyleBackColor = true;
+            this.HasWeightCheckBox.Visible = false;
             // 
-            // CheckBoxIsDirected
+            // IsDirectedCheckBox
             // 
-            this.CheckBoxIsDirected.AutoSize = true;
-            this.CheckBoxIsDirected.Location = new System.Drawing.Point(561, 106);
-            this.CheckBoxIsDirected.Name = "CheckBoxIsDirected";
-            this.CheckBoxIsDirected.Size = new System.Drawing.Size(106, 17);
-            this.CheckBoxIsDirected.TabIndex = 4;
-            this.CheckBoxIsDirected.Text = "Graph is directed";
-            this.CheckBoxIsDirected.UseVisualStyleBackColor = true;
+            this.IsDirectedCheckBox.AutoSize = true;
+            this.IsDirectedCheckBox.Location = new System.Drawing.Point(561, 83);
+            this.IsDirectedCheckBox.Name = "IsDirectedCheckBox";
+            this.IsDirectedCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.IsDirectedCheckBox.TabIndex = 4;
+            this.IsDirectedCheckBox.Text = "Graph is directed";
+            this.IsDirectedCheckBox.UseVisualStyleBackColor = true;
             // 
             // ListViewOfNodes
             // 
@@ -223,7 +224,7 @@
             // UpdateMsgLabel
             // 
             this.UpdateMsgLabel.AutoSize = true;
-            this.UpdateMsgLabel.Location = new System.Drawing.Point(130, 225);
+            this.UpdateMsgLabel.Location = new System.Drawing.Point(132, 225);
             this.UpdateMsgLabel.Name = "UpdateMsgLabel";
             this.UpdateMsgLabel.Size = new System.Drawing.Size(203, 13);
             this.UpdateMsgLabel.TabIndex = 32;
@@ -251,7 +252,7 @@
             // 
             // EdgeWeightTextBox
             // 
-            this.EdgeWeightTextBox.Location = new System.Drawing.Point(133, 189);
+            this.EdgeWeightTextBox.Location = new System.Drawing.Point(135, 189);
             this.EdgeWeightTextBox.Name = "EdgeWeightTextBox";
             this.EdgeWeightTextBox.Size = new System.Drawing.Size(100, 20);
             this.EdgeWeightTextBox.TabIndex = 35;
@@ -259,7 +260,7 @@
             // 
             // DestNodeTextBox
             // 
-            this.DestNodeTextBox.Location = new System.Drawing.Point(133, 163);
+            this.DestNodeTextBox.Location = new System.Drawing.Point(135, 163);
             this.DestNodeTextBox.Name = "DestNodeTextBox";
             this.DestNodeTextBox.Size = new System.Drawing.Size(100, 20);
             this.DestNodeTextBox.TabIndex = 36;
@@ -267,7 +268,7 @@
             // 
             // SrcNodeTextBox
             // 
-            this.SrcNodeTextBox.Location = new System.Drawing.Point(133, 137);
+            this.SrcNodeTextBox.Location = new System.Drawing.Point(135, 137);
             this.SrcNodeTextBox.Name = "SrcNodeTextBox";
             this.SrcNodeTextBox.Size = new System.Drawing.Size(100, 20);
             this.SrcNodeTextBox.TabIndex = 37;
@@ -374,21 +375,22 @@
             this.CheckBoxAdd.UseVisualStyleBackColor = true;
             this.CheckBoxAdd.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBoxAdd_MouseClick);
             // 
-            // ShowGraphButon
+            // ShowGraphButton
             // 
-            this.ShowGraphButon.Location = new System.Drawing.Point(25, 273);
-            this.ShowGraphButon.Name = "ShowGraphButon";
-            this.ShowGraphButon.Size = new System.Drawing.Size(85, 23);
-            this.ShowGraphButon.TabIndex = 49;
-            this.ShowGraphButon.Text = "Show Graph";
-            this.ShowGraphButon.UseVisualStyleBackColor = true;
+            this.ShowGraphButton.Location = new System.Drawing.Point(25, 273);
+            this.ShowGraphButton.Name = "ShowGraphButton";
+            this.ShowGraphButton.Size = new System.Drawing.Size(85, 23);
+            this.ShowGraphButton.TabIndex = 49;
+            this.ShowGraphButton.Text = "Show Graph";
+            this.ShowGraphButton.UseVisualStyleBackColor = true;
+            this.ShowGraphButton.Click += new System.EventHandler(this.ShowGraphButon_Click);
             // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(923, 483);
-            this.Controls.Add(this.ShowGraphButon);
+            this.ClientSize = new System.Drawing.Size(803, 483);
+            this.Controls.Add(this.ShowGraphButton);
             this.Controls.Add(this.CheckBoxEditEdges);
             this.Controls.Add(this.CheckBoxEditNodes);
             this.Controls.Add(this.CheckBoxDelete);
@@ -414,12 +416,11 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ListViewOfNodes);
-            this.Controls.Add(this.CheckBoxIsDirected);
-            this.Controls.Add(this.CheckBoxHasWeight);
+            this.Controls.Add(this.IsDirectedCheckBox);
+            this.Controls.Add(this.HasWeightCheckBox);
             this.Controls.Add(this.listBox1);
             this.Name = "GUIWindow";
             this.Text = "GUIWindow";
-            this.Load += new System.EventHandler(this.GUIWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,8 +429,8 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.CheckBox CheckBoxHasWeight;
-        private System.Windows.Forms.CheckBox CheckBoxIsDirected;
+        private System.Windows.Forms.CheckBox HasWeightCheckBox;
+        private System.Windows.Forms.CheckBox IsDirectedCheckBox;
         private System.Windows.Forms.ListView ListViewOfNodes;
         private System.Windows.Forms.ColumnHeader SrcNodeColumn;
         private System.Windows.Forms.Label label2;
@@ -459,6 +460,6 @@
         private System.Windows.Forms.CheckBox CheckBoxUpdate;
         private System.Windows.Forms.CheckBox CheckBoxAdd;
         private System.Windows.Forms.ColumnHeader DestNodesColumn;
-        private System.Windows.Forms.Button ShowGraphButon;
+        private System.Windows.Forms.Button ShowGraphButton;
     }
 }

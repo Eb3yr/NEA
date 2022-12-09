@@ -61,7 +61,7 @@ namespace NEA.Classes_go_here
         }
         public void RemoveNode()
         {
-
+            //Not implemented
         }
         public void RemoveEdge(T inRoot, T inDestination)
         {

@@ -36,13 +36,20 @@ namespace NEA.Classes_go_here
             //Use an actual Font class for this later
             //Need alternate brushes for nodes and edges when they're selected
         }
-        public void InNodeNames(List<T> inNodeNames) //make sure this doesn't break by doing it multiple times
-        {                                            //TryAdd isn't in this version so I need to deal with it myself
-            foreach (T i in inNodeNames)
+
+        public void UpdateAdjList(AdjacencyList<T> inAdjList) //Overwrites existing information in nodeDict and currentEdgeList
+        {
+            //Need to fix later
+
+            nodeDict = new Dictionary<T, Point>();
+            foreach (T i in inAdjList.adjList.Keys)
             {
                 nodeDict.Add(i, new Point());
             }
+            currentEdgeList = inAdjList.ToEdgeList();
+            this.Refresh();
         }
+
         private void GraphWindow_Load(object sender, EventArgs e) //Does stuff on loading
         {
 
@@ -95,7 +102,7 @@ namespace NEA.Classes_go_here
 
             Point midPoint = new Point((start.X + end.X) / 2, (start.Y + end.Y) / 2);
             //Then offset midPoint depending on the length of the string, and the font size
-            g.DrawString("test", textFont, textBrush, midPoint);
+            g.DrawString("test", textFont, textBrush, midPoint); //big error here when drawing: null exception of Font. On instantiation all of these need to be generated!
         }
         private void DrawNode(Point coords, int radius)
         {
@@ -112,7 +119,7 @@ namespace NEA.Classes_go_here
         }
         private void GraphWindow_Resize(object sender, EventArgs e)
         {
-            this.Invalidate(); //Sends a thingy that calls a paint event, basically just redraws everything when you resize the window (good) (we like that) 
+            this.Refresh();
         }
     }
 }

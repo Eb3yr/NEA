@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "GraphWindow";
             this.Text = "GraphWindow";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.GraphWindow_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphWindow_Paint);
             this.Resize += new System.EventHandler(this.GraphWindow_Resize);

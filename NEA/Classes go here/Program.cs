@@ -10,11 +10,11 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
     {
         public static Program program { get; protected set; } //Other classes need to be able to do program.mainAdjacencyList, so it's read-only outside of Program()
         //public AdjacencyList<string> mainAdjacencyList { get; protected set; } //Differentiating its name from the adjacency lists in other classes. Can be read by any class but cannot
-        private static void OpenForm()
-        {
-            GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
-            Application.Run(theForm);
-        }
+        //private static void OpenForm()
+        //{
+        //    GraphWindow<string> theForm = new GraphWindow<string>(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
+        //    Application.Run(theForm);
+        //}
         private static void OpenForm1()
         {
             GUIWindow theForm = new GUIWindow(); //Change later so the generic type can vary between any Value type (microsoft docs it if you forget :) )
@@ -24,8 +24,8 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
         {
             //A lot of things are about to get made obsolete in this class as I'm in the process of moving to the new GUIWindow.cs
 
-            Thread thread = new Thread(new ThreadStart(OpenForm));
-            thread.Start(); //Opens the form on a separate thread so that console can be used.
+            //Thread thread = new Thread(new ThreadStart(OpenForm));
+            //thread.Start(); //Opens the form on a separate thread so that console can be used.
             //Will be removing console and replacing it with a new forms GUI, but this will still apply for opening the GraphWindow from the GUIWindow
 
             Thread thread2 = new Thread(new ThreadStart(OpenForm1));
