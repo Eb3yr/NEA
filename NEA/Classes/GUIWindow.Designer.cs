@@ -1,4 +1,4 @@
-﻿namespace NEA
+﻿namespace NEA.Classes
 {
     partial class GUIWindow
     {
@@ -97,9 +97,10 @@
             this.IsDirectedCheckBox.AutoSize = true;
             this.IsDirectedCheckBox.Location = new System.Drawing.Point(561, 83);
             this.IsDirectedCheckBox.Name = "IsDirectedCheckBox";
-            this.IsDirectedCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.IsDirectedCheckBox.Size = new System.Drawing.Size(474, 17);
             this.IsDirectedCheckBox.TabIndex = 4;
-            this.IsDirectedCheckBox.Text = "Graph is directed";
+            this.IsDirectedCheckBox.Text = "Graph is directed - need to handle this later, function to make graph undirected " +
+    "that overwrites?";
             this.IsDirectedCheckBox.UseVisualStyleBackColor = true;
             // 
             // ListViewOfNodes

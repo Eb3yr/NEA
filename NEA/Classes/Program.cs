@@ -1,10 +1,11 @@
-﻿using System;
+﻿using NEA.Classes.Algorithms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
+namespace NEA.Classes //Split some stuff up into smaller subroutines in any algorithm no matter the class. AQA likes that apparently.
 {
     class Program //Go through every class and tidy up, move declaring vars to start etc etc.
     {
@@ -22,6 +23,10 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
         }
         public static void Main(string[] args)
         {
+            //To hide Console.WriteLine()s in the complete build, just change the NEA.csproj properties file to a windows application from a console application. No console will open, debug writelines wont be shown
+
+
+
             //A lot of things are about to get made obsolete in this class as I'm in the process of moving to the new GUIWindow.cs
 
             //Thread thread = new Thread(new ThreadStart(OpenForm));
@@ -48,8 +53,6 @@ namespace NEA.Classes_go_here.Algorithms //Split some stuff up into smaller subr
             mainAdjacencyList.AddEdge("E", "F", 8, false);
             mainAdjacencyList.AddEdge("E", "D", 3, false);
             mainAdjacencyList.AddEdge("F", "A", 5, false); //MST = 27 for {A, B, C, D, E, F}
-
-
 
 
             Kruskals<string> kruskals = new Kruskals<string>(mainAdjacencyList);

@@ -1,5 +1,4 @@
-﻿using NEA.Classes_go_here;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace NEA
+namespace NEA.Classes
 {
-    public partial class GUIWindow : Form
+    public partial class GUIWindow : Form //Might make it generic and parse in String in Program.cs
     { //Go through and organise methods into regions and put them in a sensible order to improve readability
         protected AdjacencyList<string> currentAdjList;
         protected AdjacencyList<string> savedAdjList;
@@ -231,51 +230,52 @@ namespace NEA
             if (IsSaveToLocal.Checked == true)
             {
                 SaveFileDialogue.ShowDialog();
-                Console.WriteLine("SaveFile dialogue opened");
 
-                SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+                //SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
 
                 //This writes even if the dialogue was cancelled out of!
                 try
                 {
-                    WriteFileToLocal();
+                    //WriteFileToLocal();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error writing to file! Add an error message somewhere on the form later");
                 }
-                //fileStream.Close(); //Otherwise files stay open, things break
-
-                //https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog.openfile?view=windowsdesktop-7.0
             }
         }
 
         private void LoadGraph_Click(object sender, EventArgs e)
         {
-            if (IsSaveToVar.Checked == true)
+            if (savedAdjList != null) //if instantiated
             {
-                if (savedAdjList != null) //if instantiated
-                {
-                    currentAdjList = savedAdjList;
-                }
-                else
-                {
-                    //Make an error message appear!
-                }
-                //Doesn't do anything if there's nothing in the saved adjacency list to prevent accidental data loss
+                currentAdjList = savedAdjList;
             }
             else
             {
-                LoadFileDialogue.ShowDialog();
-                LoadFileDialogue.OpenFile().Close();
-
-                LoadFromFile();
+                //Make an error message appear!
             }
+            //Doesn't do anything if there's nothing in the saved adjacency list to prevent accidental data loss
+            LoadFileDialogue.ShowDialog();
         }
         private void LoadFromFile()
         {
+            currentAdjList = new AdjacencyList<string>();
+            string[] tempListOuter, tempListInner, individualEdge;
             string[] fileData = File.ReadAllLines(LoadFileDialogue.FileName);
-
+            
+            foreach (string i in fileData)
+            {
+                tempListOuter = i.Split('|');
+                tempListInner = tempListOuter[1].Split(';');
+                currentAdjList.AddNode(tempListOuter[0]);
+                
+                foreach (string f in tempListInner)
+                {
+                    individualEdge = f.Split(',');
+                    currentAdjList.AddEdge(tempListOuter[0], individualEdge[0], double.Parse(individualEdge[1]), true);
+                }
+            }
         }
         private void WriteFileToLocal()
         {
@@ -337,11 +337,14 @@ namespace NEA
         private void SaveFileDialogue_FileOk(object sender, CancelEventArgs e)
         {
             FilePathLabel.Text = "File path: " + SaveFileDialogue.FileName;
-            //WriteFileToLocal();
+            SaveFileDialogue.OpenFile().Close();
+            WriteFileToLocal();
         }
 
         private void LoadFileDialogue_FileOk(object sender, CancelEventArgs e)
         {
+            LoadFileDialogue.OpenFile().Close();
+            LoadFromFile();
             FilePathLabel.Text = "File path: " + LoadFileDialogue.FileName;
         }
 
@@ -359,6 +362,7 @@ namespace NEA
             //Referencing something that doesn't exist
             //Trying to add a node or edge that already exists
 
+            //Bug with updating nodes: Says invalid, then on the second click it works. Subsequent clicks work even though that node no longer exists too???
 
             if (SrcNodeTextBox.Text.Trim().Length == 0 && DestNodeTextBox.Text.Trim().Length == 0 && EdgeWeightTextBox.Text.Trim().Length == 0) //If the entered text is empty, either no characters or only whitespace
             {
@@ -382,6 +386,7 @@ namespace NEA
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;
@@ -398,11 +403,17 @@ namespace NEA
                         {
                             try
                             {
-                                currentAdjList.EditNode(SrcNodeTextBox.Text, DestNodeTextBox.Text);
+                                bool found = currentAdjList.EditNode(SrcNodeTextBox.Text, DestNodeTextBox.Text);
+                                if (!found)
+                                {
+                                    UpdateMsgLabel.Text = "Please enter an existing source node";
+                                }
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
+                                Console.WriteLine(ex.ToString());
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;
                             }
@@ -422,6 +433,7 @@ namespace NEA
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;
@@ -442,6 +454,7 @@ namespace NEA
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;
@@ -462,6 +475,7 @@ namespace NEA
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;
@@ -482,6 +496,7 @@ namespace NEA
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine(ex.ToString());
                                 UpdateMsgLabel.Text = "Invalid input(s)";
                                 RevertFailedUpdate(tempAdjList);
                                 success = false;

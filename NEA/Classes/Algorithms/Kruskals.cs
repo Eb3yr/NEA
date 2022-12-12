@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEA.Classes_go_here.Algorithms
+namespace NEA.Classes.Algorithms
 {
     public class Kruskals<T> //Everything MUST be undirected, so make the MST tree undirected, and make the class not run if the graph is undirected.
     {

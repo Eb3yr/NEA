@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NEA.Classes_go_here
+namespace NEA.Classes
 {
     public partial class GraphWindow<T> : Form
     {

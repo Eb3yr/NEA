@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEA.Classes_go_here.Algorithms
+namespace NEA.Classes.Algorithms
 {
     public class KruskalsNew<T>
     {

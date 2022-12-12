@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NEA.Classes_go_here
+namespace NEA.Classes
 {
     public class AdjacencyList<T>
     {
@@ -147,11 +147,14 @@ namespace NEA.Classes_go_here
                 isDirected = true;
             }
         }
-        public void EditNode(T nodeKey, T newNodeName)
+        public bool EditNode(T nodeKey, T newNodeName)
         {
             //Copied with slight modifications from RemoveNode() class
             //Should remove each entry with references to the old node name, and add new ones
-            foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList)
+
+            //'in adjList.ToList()' instead of just 'in adjList' otherwise the collection is modified, which cannot happen in a foreach, and throws an exception
+            bool found = false;
+            foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList.ToList())
             {
                 foreach (T f in i.Value.Keys) //Checking each list of adjacent nodes in adjacency list
                 {
@@ -159,14 +162,17 @@ namespace NEA.Classes_go_here
                     {
                         adjList[i.Key].Add(newNodeName, adjList[i.Key][f]);
                         adjList[i.Key].Remove(f); //Removes any references to the node to be removed in the neighbouring nodes list of other nodes
+                        
                     }
                 }
                 if (i.Key.Equals(nodeKey)) //Checking each key in adjacency list
                 {
                     adjList.Add(newNodeName, i.Value); //Adds the new node with the old node's data
                     adjList.Remove(i.Key); //Removes the old node in the adjacency list
+                    found = true;
                 }
             }
+            return found; //Essentially just returning whether or not the swap took place - eg if the specified node does not exist
         }
         public void EditEdge(T srcNode, T destNode, double newWeight)
         {

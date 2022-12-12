@@ -1,4 +1,4 @@
-﻿namespace NEA.Classes_go_here
+﻿namespace NEA.Classes
 {
     partial class GraphWindow<T>
     {
