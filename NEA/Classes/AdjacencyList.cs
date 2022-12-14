@@ -274,8 +274,8 @@ namespace NEA.Classes
             }
 
             adjMatrixReal = new AdjacencyMatrix<T>(nodeNames.Length);
-            adjMatrixReal.WriteNodeNames(nodeNames);
-            adjMatrixReal.WriteAdjMatrix(adjMatrix);
+            adjMatrixReal.WriteToNodeNames(nodeNames);
+            adjMatrixReal.WriteToAdjMatrix(adjMatrix);
 
             return adjMatrixReal;
         }

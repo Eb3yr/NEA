@@ -80,6 +80,7 @@ namespace NEA.Classes.Algorithms
             } while (!breakFlag); //Break to exit only when no more valid edges exist (when GetSmallestEdge's ref found comes back as false)
 
             MST = MSTVal;
+            minSpanTree = graph.ToAdjList();
             return MSTVal; //IT WORKS!!!!!
         }
         public double GetMST() //In case the MST is needed again and not saved to another variable, call this instea of running the algorithm again

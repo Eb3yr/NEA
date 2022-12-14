@@ -144,5 +144,9 @@ namespace NEA.Classes.Algorithms
             }
             return sum;
         }
+        public AdjacencyList<T> GetMSTAdjList()
+        {
+            return default;
+        }
     }
 }

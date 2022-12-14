@@ -390,7 +390,7 @@
             this.ShowGraphButton.TabIndex = 49;
             this.ShowGraphButton.Text = "Show graph";
             this.ShowGraphButton.UseVisualStyleBackColor = true;
-            this.ShowGraphButton.Click += new System.EventHandler(this.ShowGraphButon_Click);
+            this.ShowGraphButton.Click += new System.EventHandler(this.ShowGraphButton_Click);
             // 
             // label1
             // 
@@ -407,7 +407,7 @@
             // 
             this.RunAlgorithmButton.Location = new System.Drawing.Point(561, 214);
             this.RunAlgorithmButton.Name = "RunAlgorithmButton";
-            this.RunAlgorithmButton.Size = new System.Drawing.Size(91, 23);
+            this.RunAlgorithmButton.Size = new System.Drawing.Size(100, 23);
             this.RunAlgorithmButton.TabIndex = 52;
             this.RunAlgorithmButton.Text = "Run algorithm";
             this.RunAlgorithmButton.UseVisualStyleBackColor = true;
@@ -435,7 +435,7 @@
             // 
             this.ReLoadOriginalButton.Location = new System.Drawing.Point(561, 244);
             this.ReLoadOriginalButton.Name = "ReLoadOriginalButton";
-            this.ReLoadOriginalButton.Size = new System.Drawing.Size(88, 23);
+            this.ReLoadOriginalButton.Size = new System.Drawing.Size(100, 23);
             this.ReLoadOriginalButton.TabIndex = 55;
             this.ReLoadOriginalButton.Text = "Re-load original";
             this.ReLoadOriginalButton.UseVisualStyleBackColor = true;

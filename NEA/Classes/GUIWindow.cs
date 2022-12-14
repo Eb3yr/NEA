@@ -619,7 +619,7 @@ namespace NEA.Classes
             currentAdjList = inTempAdjList;
         }
 
-        private void ShowGraphButon_Click(object sender, EventArgs e)
+        private void ShowGraphButton_Click(object sender, EventArgs e)
         {
             switch (ShowGraphButton.Text.ToLower())
             {
@@ -638,41 +638,44 @@ namespace NEA.Classes
 
         private void RunAlgorithmButton_Click(object sender, EventArgs e)
         {
-            ReLoadOriginalButton.Show();
-
-            try
+            if (ReLoadOriginalButton.Visible == false)
             {
-                switch (AlgorithmListBox.SelectedItem)
+                ReLoadOriginalButton.Show();
+                try
                 {
-                    case "Kruskals":
-                        Console.WriteLine("Kruskals isn't implemented yet, sorry!");
-                        KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
-                        MST = KruskalsAlgorithm.FindMST();
-                        SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
-                        break;
+                    switch (AlgorithmListBox.SelectedItem)
+                    {
+                        case "Kruskals":
+                            Console.WriteLine("Kruskals isn't implemented yet, sorry!");
+                            //KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
+                            //MST = KruskalsAlgorithm.FindMST();
+                            //SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
+                            break;
 
-                    case "Prims":
-                        PrimsAlgorithm = new Prims<string>(currentAdjList);
-                        PrimsAlgorithm.SetAdjList(currentAdjList);
-                        MST = PrimsAlgorithm.FindMST();
-                        SwitchCurrentAndSaved(PrimsAlgorithm.GetMSTAdjList());
-                        break;
+                        case "Prims":
+                            PrimsAlgorithm = new Prims<string>(currentAdjList);
+                            PrimsAlgorithm.SetAdjList(currentAdjList);
+                            MST = PrimsAlgorithm.FindMST();
+                            SwitchCurrentAndSaved(PrimsAlgorithm.GetMSTAdjList());
+                            break;
 
-                    case "Dijkstras":
-                        Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
-                        break;
+                        case "Dijkstras":
+                            Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
+                            break;
 
-                    case null:
-                        ReLoadOriginalButton.Hide();
-                        Console.WriteLine("Please select an algorithm!");
-                        break;
+                        case null:
+                            ReLoadOriginalButton.Hide();
+                            Console.WriteLine("Please select an algorithm!");
+                            break;
+                    }
+
                 }
-                
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Reload the original graph!");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Reload the original graph!");
-            }
+        
             UpdateListView();
             UpdateStats();
 

@@ -96,15 +96,27 @@ namespace NEA.Classes
         //Make more methods
         public AdjacencyList<T> ToAdjList()
         {
+            AdjacencyList<T> adjList = new AdjacencyList<T>();
             //ahhhhhhhhhhhhhh
             //down then along
 
+            foreach (T i in nodeNames)
+            {
+                adjList.AddNode(i);
+            }
 
+            for (int i = 0; i < nodeNames.Length; i++)
+            {
+                for (int f = 0; f < nodeNames.Length; f++)
+                {
+                    if (adjMatrix[i, f].exists == true)
+                    {
+                        adjList.AddEdge(nodeNames[i], nodeNames[f], adjMatrix[i, f].weight, true); //I really hope this is the right way round
+                    }
+                }
+            }
 
-
-
-
-            return default;
+            return adjList;
         }
     }
 }
