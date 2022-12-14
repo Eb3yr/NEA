@@ -9,8 +9,9 @@ namespace NEA.Classes
     public class AdjacencyMatrix<T> //Make it set all edges to false until it adds edges
     {
         public (double weight, bool exists)[,] adjMatrix { get; private set; } //Makes adjMatrix readable from outside of the class but only writable from inside the class
-        public T[] nodeNames; //Public to make easier to interact with. Will not be editing, only reading, from outside the class.
-        public AdjacencyMatrix(int size)
+        public T[] nodeNames { get; private set; }
+        //Down then along
+    public AdjacencyMatrix(int size)
         {
             adjMatrix = new (double, bool)[size, size];
             nodeNames = new T[size];
@@ -21,11 +22,11 @@ namespace NEA.Classes
             adjMatrix = inAdjMatrix;
         }
 
-        public void WriteAdjMatrix((double, bool)[,] inAdjMatrix)
+        public void WriteToAdjMatrix((double, bool)[,] inAdjMatrix)
         {
             adjMatrix = inAdjMatrix;
         }
-        public void WriteNodeNames(T[] inNodeNames)
+        public void WriteToNodeNames(T[] inNodeNames)
         {
             nodeNames = inNodeNames;
         }
@@ -93,5 +94,17 @@ namespace NEA.Classes
             return smallestNode;
         }
         //Make more methods
+        public AdjacencyList<T> ToAdjList()
+        {
+            //ahhhhhhhhhhhhhh
+            //down then along
+
+
+
+
+
+
+            return default;
+        }
     }
 }

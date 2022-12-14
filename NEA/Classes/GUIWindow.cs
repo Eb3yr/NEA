@@ -8,15 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using NEA.Classes.Algorithms;
 
 namespace NEA.Classes
 {
     public partial class GUIWindow : Form //Might make it generic and parse in String in Program.cs
     { //Go through and organise methods into regions and put them in a sensible order to improve readability
-        protected AdjacencyList<string> currentAdjList;
-        protected AdjacencyList<string> savedAdjList;
-        protected AdjacencyList<string> tempAdjList;
+        protected AdjacencyList<string> currentAdjList, savedAdjList, tempAdjList, MSTAdjList;
         protected GraphWindow<string> graphWindow;
+        protected Kruskals<string> KruskalsAlgorithm;
+        protected Prims<string> PrimsAlgorithm;
+        protected Dijkstras<string> DijkstrasAlgorithm;
+        protected double MST;
+
         public GUIWindow()
         {
             InitializeComponent();
@@ -24,6 +28,7 @@ namespace NEA.Classes
             //It's setuppin' time
             currentAdjList = new AdjacencyList<string>(); //Going with string for now, other types don't currently offer any advantage
             graphWindow = new GraphWindow<string>();
+            MST = -1;
         }
 
         #region Handling Check Boxes
@@ -230,17 +235,14 @@ namespace NEA.Classes
             if (IsSaveToLocal.Checked == true)
             {
                 SaveFileDialogue.ShowDialog();
-
-                //SaveFileDialogue.OpenFile().Close(); //Gives me an IO stream, add protection for empty file names, https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
-
-                //This writes even if the dialogue was cancelled out of!
                 try
                 {
-                    //WriteFileToLocal();
+                    //Does WriteFileToLocal(); in the SaveFileDialogue_FileOk() method so that it only occurs on a successful selection
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error writing to file! Add an error message somewhere on the form later");
+                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine("Error writing to file!");
                 }
             }
         }
@@ -253,7 +255,7 @@ namespace NEA.Classes
             }
             else
             {
-                //Make an error message appear!
+                Console.WriteLine("Erorr loading from file!");
             }
             //Doesn't do anything if there's nothing in the saved adjacency list to prevent accidental data loss
             LoadFileDialogue.ShowDialog();
@@ -263,23 +265,46 @@ namespace NEA.Classes
             currentAdjList = new AdjacencyList<string>();
             string[] tempListOuter, tempListInner, individualEdge;
             string[] fileData = File.ReadAllLines(LoadFileDialogue.FileName);
-            
-            foreach (string i in fileData)
+
+            if (fileData.Length > 0)
             {
-                tempListOuter = i.Split('|');
-                tempListInner = tempListOuter[1].Split(';');
-                currentAdjList.AddNode(tempListOuter[0]);
-                
-                foreach (string f in tempListInner)
+                foreach (string i in fileData)
                 {
-                    individualEdge = f.Split(',');
-                    currentAdjList.AddEdge(tempListOuter[0], individualEdge[0], double.Parse(individualEdge[1]), true);
+                    tempListOuter = i.Split('|');
+                    tempListInner = tempListOuter[1].Split(';');
+                    currentAdjList.AddNode(tempListOuter[0]);
+
+                    foreach (string f in tempListInner)
+                    {
+                        individualEdge = f.Split(',');
+                        try
+                        {
+                            currentAdjList.AddEdge(tempListOuter[0], individualEdge[0], double.Parse(individualEdge[1]), true);
+                        }
+                        catch (Exception ex)
+                        {
+                            //Error loading adjacent nodes for a source node from the file
+                            //Should only be happening if there are no adjacent nodes
+                        }
+                    }
                 }
+
+                UpdateListView(); //Because the graph may have just changed
             }
+            else
+            {
+                Console.WriteLine("Filedata is empty!");
+            }
+            
         }
         private void WriteFileToLocal()
         {
             Console.WriteLine("\nwriting:");
+
+            File.WriteAllLines(SaveFileDialogue.FileName, CreateListOfLines().ToArray()); //Will overwrite pre-existing files of this name. Need to test if it overwrites or just appends
+        }
+        private List<string> CreateListOfLines() //Used for writing to files and for repopulating the list view of the adjacency list
+        {
             List<string> listOfLines = new List<string>();
             string tempStr = "";
             foreach (var i in currentAdjList.adjList)
@@ -301,11 +326,7 @@ namespace NEA.Classes
                 Console.WriteLine(tempStr);
                 tempStr = "";
             }
-
-            
-
-
-            File.WriteAllLines(SaveFileDialogue.FileName, listOfLines.ToArray()); //Will overwrite pre-existing files of this name. Need to test if it overwrites or just appends
+            return listOfLines;
         }
 
         #region File Format Explanation
@@ -512,13 +533,86 @@ namespace NEA.Classes
                 //Do this in each case and make it more specific if I have the time
                 UpdateMsgLabel.Text = "Successfully updated graph";
                 graphWindow.UpdateAdjList(currentAdjList);
+                UpdateListView();
+                UpdateStats();
             }
 
             UpdateListView();
         }
+        private void UpdateStats()
+        {
+            int counter = 0;
+            NoOfNodesLabel.Text = "Number of nodes: " + currentAdjList.adjList.Count();
+
+            foreach (var i in currentAdjList.adjList)
+            {
+                counter += i.Value.Count();
+            }
+            NoOfEdgesLabel.Text = "Number of edges: " + counter;
+            MSTSizeLabel.Text = "Minimum Spanning Tree: " + MST;
+        }
         private void UpdateListView()
         {
-            //Make listview show the graph in all of its tabular glory
+            //Makes listview show the graph in all of its tabular glory
+            //Code partially cloned from LoadFromFile(), but modified to suit modifying the list view rather than creating a new adjacency list
+
+            List<string> listOfLines = CreateListOfLines();
+            string[] tempListOuter, tempListInner, individualEdge;
+            string[] row; //Should be 2 columns. A list as graphs under construction will not have edges yet, which throws errors if not handled properly
+            string tempString;
+            bool EdgesExist = false;
+
+            ListViewOfNodes.Items.Clear();
+
+            Console.WriteLine("Printing off the listOfLines: ");
+            foreach (string i in listOfLines)
+            {
+                Console.WriteLine(i);
+            }
+
+            foreach (string i in listOfLines)
+            {
+                row = new string[2]; //2 columns in the listview showing the adjacency list
+                tempString = "";
+                EdgesExist = false;
+
+                tempListOuter = i.Split('|');
+                tempListInner = tempListOuter[1].Split(';');
+
+                row[0] = tempListOuter[0];
+
+                foreach (string f in tempListInner)
+                {
+                    try
+                    {
+                        individualEdge = f.Split(',');
+                        if (f == tempListInner[tempListInner.Count() - 1])
+                        {
+                            tempString += "(" + individualEdge[0] + ", " + individualEdge[1] + ")"; //Last element, doesn't add a ", " to the end
+                        }
+                        else
+                        {
+                            tempString += "(" + individualEdge[0] + ", " + individualEdge[1] + "), ";
+                            
+                        }
+                        EdgesExist = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        //Exception should only occur if there are no edges in the graph. Exception handling isn't the most efficient way of doing it, but it works.
+                    }
+                }
+                if (EdgesExist)
+                {
+                    row[1] = tempString;
+                }
+                else
+                {
+                    row[1] = "";
+                }
+
+                ListViewOfNodes.Items.Add(new ListViewItem(row));
+            }
         }
         private void RevertFailedUpdate(AdjacencyList<string> inTempAdjList)
         {
@@ -527,19 +621,87 @@ namespace NEA.Classes
 
         private void ShowGraphButon_Click(object sender, EventArgs e)
         {
-            switch (ShowGraphButton.Text)
+            switch (ShowGraphButton.Text.ToLower())
             {
-                case "Show Graph":
+                case "show graph":
                     graphWindow.UpdateAdjList(currentAdjList);
                     graphWindow.Visible = true;
-                    ShowGraphButton.Text = "Hide Graph";
+                    ShowGraphButton.Text = "Hide graph";
                     break;
 
-                case "Hide Graph":
+                case "hide graph":
                     graphWindow.Visible = false;
-                    ShowGraphButton.Text = "Show Graph";
+                    ShowGraphButton.Text = "Show graph";
                     break;
             }
+        }
+
+        private void RunAlgorithmButton_Click(object sender, EventArgs e)
+        {
+            ReLoadOriginalButton.Show();
+
+            try
+            {
+                switch (AlgorithmListBox.SelectedItem)
+                {
+                    case "Kruskals":
+                        Console.WriteLine("Kruskals isn't implemented yet, sorry!");
+                        KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
+                        MST = KruskalsAlgorithm.FindMST();
+                        SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
+                        break;
+
+                    case "Prims":
+                        PrimsAlgorithm = new Prims<string>(currentAdjList);
+                        PrimsAlgorithm.SetAdjList(currentAdjList);
+                        MST = PrimsAlgorithm.FindMST();
+                        SwitchCurrentAndSaved(PrimsAlgorithm.GetMSTAdjList());
+                        break;
+
+                    case "Dijkstras":
+                        Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
+                        break;
+
+                    case null:
+                        ReLoadOriginalButton.Hide();
+                        Console.WriteLine("Please select an algorithm!");
+                        break;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Reload the original graph!");
+            }
+            UpdateListView();
+            UpdateStats();
+
+        }
+        private void SwitchCurrentAndSaved(AdjacencyList<string> inAdjList)
+        {
+            MSTAdjList = currentAdjList;
+            currentAdjList = inAdjList;
+
+        }
+
+        private void AlgorithmListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((string)AlgorithmListBox.SelectedItem == "Dijkstras")
+            {
+
+            }
+            else
+            {
+                //Hide dijkstras-specific stuff
+            }
+        }
+
+        private void ReLoadOriginalButton_Click(object sender, EventArgs e)
+        {
+            currentAdjList = MSTAdjList;
+            ReLoadOriginalButton.Hide();
+            UpdateListView();
+            UpdateStats();
         }
 
         #endregion

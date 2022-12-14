@@ -17,7 +17,7 @@ namespace NEA.Classes
         protected List<(T root, T destination, double edgeWeight)> currentEdgeList;
         protected SolidBrush nodeBrush, textBrush;
         protected Pen edgePen;
-        protected Font textFont; //https://learn.microsoft.com/en-us/dotnet/api/system.drawing.font.-ctor?view=dotnet-plat-ext-7.0#system-drawing-font-ctor(system-string-system-single)
+        protected Font textFont;
         protected Graphics g;
         protected int fontSize;
         public GraphWindow()
@@ -32,6 +32,7 @@ namespace NEA.Classes
             edgePen = new Pen(Color.Orange); //Edges are orange
             nodeBrush = new SolidBrush(Color.Red); //Nodes are red
             textBrush = new SolidBrush(Color.DarkGray); //Text is dark gray
+            textFont = DefaultFont;
             fontSize = 14; //A constant to define the size of node names and edge weights
             //Use an actual Font class for this later
             //Need alternate brushes for nodes and edges when they're selected
@@ -72,7 +73,7 @@ namespace NEA.Classes
         private void CalculateNodeCoords() //Turn individual coordinates to a Point struct, or pre-generate a Rectangle struct
         {
             int vertices = nodeDict.Count;
-            int buffer = 50; //Use this :)
+            int buffer = 50; //Use this somewhere :)
             int radius = 360; //Radius of regular shape. Make this dependent on the size of the window - smallest of width or height, then some maths to make it fit
             int nodeRadius = 40;
             int xComponent = 0, yComponent = 0;

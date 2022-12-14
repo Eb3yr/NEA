@@ -55,9 +55,9 @@ namespace NEA.Classes //Split some stuff up into smaller subroutines in any algo
             mainAdjacencyList.AddEdge("F", "A", 5, false); //MST = 27 for {A, B, C, D, E, F}
 
 
-            Kruskals<string> kruskals = new Kruskals<string>(mainAdjacencyList);
-            Console.WriteLine("MST = ");
-            Console.WriteLine(kruskals.FindMST());
+            //Kruskals<string> kruskals = new Kruskals<string>(mainAdjacencyList);
+            //Console.WriteLine("MST = ");
+            //Console.WriteLine(kruskals.FindMST());
 
             Console.ReadLine();
         }

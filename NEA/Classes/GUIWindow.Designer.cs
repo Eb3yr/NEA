@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.AlgorithmListBox = new System.Windows.Forms.ListBox();
             this.HasWeightCheckBox = new System.Windows.Forms.CheckBox();
             this.IsDirectedCheckBox = new System.Windows.Forms.CheckBox();
             this.ListViewOfNodes = new System.Windows.Forms.ListView();
             this.SrcNodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.NoOfNodesLabel = new System.Windows.Forms.Label();
             this.SaveGraph = new System.Windows.Forms.Button();
             this.LoadGraph = new System.Windows.Forms.Button();
             this.FilePathLabel = new System.Windows.Forms.Label();
@@ -51,8 +51,8 @@
             this.DestNodeTextBox = new System.Windows.Forms.TextBox();
             this.SrcNodeTextBox = new System.Windows.Forms.TextBox();
             this.SaveFileDialogue = new System.Windows.Forms.SaveFileDialog();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.MSTSizeLabel = new System.Windows.Forms.Label();
+            this.NoOfEdgesLabel = new System.Windows.Forms.Label();
             this.UpdateAdjListButton = new System.Windows.Forms.Button();
             this.LoadFileDialogue = new System.Windows.Forms.OpenFileDialog();
             this.CheckBoxEditEdges = new System.Windows.Forms.CheckBox();
@@ -61,24 +61,30 @@
             this.CheckBoxUpdate = new System.Windows.Forms.CheckBox();
             this.CheckBoxAdd = new System.Windows.Forms.CheckBox();
             this.ShowGraphButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.RunAlgorithmButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ReLoadOriginalButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // DestNodesColumn
             // 
-            this.DestNodesColumn.Text = "Adjacent Nodes";
+            this.DestNodesColumn.Text = "Adjacent nodes";
             this.DestNodesColumn.Width = 296;
             // 
-            // listBox1
+            // AlgorithmListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Kruskals (NOT CURRENTLY FUNCTIONAL)",
+            this.AlgorithmListBox.FormattingEnabled = true;
+            this.AlgorithmListBox.Items.AddRange(new object[] {
+            "Kruskals",
             "Prims",
-            "Dijkstras (NOT CURRENTLY FUNCTIONAL)"});
-            this.listBox1.Location = new System.Drawing.Point(561, 34);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(227, 43);
-            this.listBox1.TabIndex = 0;
+            "Dijkstras"});
+            this.AlgorithmListBox.Location = new System.Drawing.Point(561, 34);
+            this.AlgorithmListBox.Name = "AlgorithmListBox";
+            this.AlgorithmListBox.Size = new System.Drawing.Size(227, 43);
+            this.AlgorithmListBox.TabIndex = 0;
+            this.AlgorithmListBox.SelectedIndexChanged += new System.EventHandler(this.AlgorithmListBox_SelectedIndexChanged);
             // 
             // HasWeightCheckBox
             // 
@@ -141,14 +147,14 @@
             this.label7.TabIndex = 20;
             this.label7.Text = "Algorithm list";
             // 
-            // label8
+            // NoOfNodesLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(558, 140);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(91, 13);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Number of nodes:";
+            this.NoOfNodesLabel.AutoSize = true;
+            this.NoOfNodesLabel.Location = new System.Drawing.Point(558, 140);
+            this.NoOfNodesLabel.Name = "NoOfNodesLabel";
+            this.NoOfNodesLabel.Size = new System.Drawing.Size(91, 13);
+            this.NoOfNodesLabel.TabIndex = 21;
+            this.NoOfNodesLabel.Text = "Number of nodes:";
             // 
             // SaveGraph
             // 
@@ -166,7 +172,7 @@
             this.LoadGraph.Name = "LoadGraph";
             this.LoadGraph.Size = new System.Drawing.Size(106, 23);
             this.LoadGraph.TabIndex = 24;
-            this.LoadGraph.Text = "Load Graph";
+            this.LoadGraph.Text = "Load graph";
             this.LoadGraph.UseVisualStyleBackColor = true;
             this.LoadGraph.Click += new System.EventHandler(this.LoadGraph_Click);
             // 
@@ -227,9 +233,9 @@
             this.UpdateMsgLabel.AutoSize = true;
             this.UpdateMsgLabel.Location = new System.Drawing.Point(132, 225);
             this.UpdateMsgLabel.Name = "UpdateMsgLabel";
-            this.UpdateMsgLabel.Size = new System.Drawing.Size(203, 13);
+            this.UpdateMsgLabel.Size = new System.Drawing.Size(215, 13);
             this.UpdateMsgLabel.TabIndex = 32;
-            this.UpdateMsgLabel.Text = "This states what the previous comand did";
+            this.UpdateMsgLabel.Text = "This will state what the previous comand did";
             // 
             // EdgeWeightLabel
             // 
@@ -282,23 +288,23 @@
             this.SaveFileDialogue.RestoreDirectory = true;
             this.SaveFileDialogue.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialogue_FileOk);
             // 
-            // label9
+            // MSTSizeLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(558, 192);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(127, 13);
-            this.label9.TabIndex = 41;
-            this.label9.Text = "Minimum Spanning Tree: ";
+            this.MSTSizeLabel.AutoSize = true;
+            this.MSTSizeLabel.Location = new System.Drawing.Point(558, 192);
+            this.MSTSizeLabel.Name = "MSTSizeLabel";
+            this.MSTSizeLabel.Size = new System.Drawing.Size(127, 13);
+            this.MSTSizeLabel.TabIndex = 41;
+            this.MSTSizeLabel.Text = "Minimum Spanning Tree: ";
             // 
-            // label16
+            // NoOfEdgesLabel
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(558, 166);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(94, 13);
-            this.label16.TabIndex = 42;
-            this.label16.Text = "Number of edges: ";
+            this.NoOfEdgesLabel.AutoSize = true;
+            this.NoOfEdgesLabel.Location = new System.Drawing.Point(558, 166);
+            this.NoOfEdgesLabel.Name = "NoOfEdgesLabel";
+            this.NoOfEdgesLabel.Size = new System.Drawing.Size(94, 13);
+            this.NoOfEdgesLabel.TabIndex = 42;
+            this.NoOfEdgesLabel.Text = "Number of edges: ";
             // 
             // UpdateAdjListButton
             // 
@@ -306,7 +312,7 @@
             this.UpdateAdjListButton.Name = "UpdateAdjListButton";
             this.UpdateAdjListButton.Size = new System.Drawing.Size(85, 23);
             this.UpdateAdjListButton.TabIndex = 43;
-            this.UpdateAdjListButton.Text = "Add Node";
+            this.UpdateAdjListButton.Text = "Add node";
             this.UpdateAdjListButton.UseVisualStyleBackColor = true;
             this.UpdateAdjListButton.Click += new System.EventHandler(this.UpdateAdjListButton_Click);
             // 
@@ -382,15 +388,70 @@
             this.ShowGraphButton.Name = "ShowGraphButton";
             this.ShowGraphButton.Size = new System.Drawing.Size(85, 23);
             this.ShowGraphButton.TabIndex = 49;
-            this.ShowGraphButton.Text = "Show Graph";
+            this.ShowGraphButton.Text = "Show graph";
             this.ShowGraphButton.UseVisualStyleBackColor = true;
             this.ShowGraphButton.Click += new System.EventHandler(this.ShowGraphButon_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(156, 321);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(555, 13);
+            this.label1.TabIndex = 50;
+            this.label1.Text = "Graph is directed checkbox WORKS for adding to graph, but there\'s nothing ensurin" +
+    "g it\'s actually true after flicking it.";
+            this.label1.Visible = false;
+            // 
+            // RunAlgorithmButton
+            // 
+            this.RunAlgorithmButton.Location = new System.Drawing.Point(561, 214);
+            this.RunAlgorithmButton.Name = "RunAlgorithmButton";
+            this.RunAlgorithmButton.Size = new System.Drawing.Size(91, 23);
+            this.RunAlgorithmButton.TabIndex = 52;
+            this.RunAlgorithmButton.Text = "Run algorithm";
+            this.RunAlgorithmButton.UseVisualStyleBackColor = true;
+            this.RunAlgorithmButton.Click += new System.EventHandler(this.RunAlgorithmButton_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(245, 253);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(271, 13);
+            this.label4.TabIndex = 53;
+            this.label4.Text = "Dijkstras needs its own interface as its between 2 nodes";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(245, 266);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(177, 13);
+            this.label5.TabIndex = 54;
+            this.label5.Text = "Just do Kruskals and Prims for now?";
+            // 
+            // ReLoadOriginalButton
+            // 
+            this.ReLoadOriginalButton.Location = new System.Drawing.Point(561, 244);
+            this.ReLoadOriginalButton.Name = "ReLoadOriginalButton";
+            this.ReLoadOriginalButton.Size = new System.Drawing.Size(88, 23);
+            this.ReLoadOriginalButton.TabIndex = 55;
+            this.ReLoadOriginalButton.Text = "Re-load original";
+            this.ReLoadOriginalButton.UseVisualStyleBackColor = true;
+            this.ReLoadOriginalButton.Visible = false;
+            this.ReLoadOriginalButton.Click += new System.EventHandler(this.ReLoadOriginalButton_Click);
             // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 483);
+            this.Controls.Add(this.ReLoadOriginalButton);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.RunAlgorithmButton);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ShowGraphButton);
             this.Controls.Add(this.CheckBoxEditEdges);
             this.Controls.Add(this.CheckBoxEditNodes);
@@ -398,8 +459,8 @@
             this.Controls.Add(this.CheckBoxUpdate);
             this.Controls.Add(this.CheckBoxAdd);
             this.Controls.Add(this.UpdateAdjListButton);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.NoOfEdgesLabel);
+            this.Controls.Add(this.MSTSizeLabel);
             this.Controls.Add(this.SrcNodeTextBox);
             this.Controls.Add(this.DestNodeTextBox);
             this.Controls.Add(this.EdgeWeightTextBox);
@@ -413,13 +474,13 @@
             this.Controls.Add(this.FilePathLabel);
             this.Controls.Add(this.LoadGraph);
             this.Controls.Add(this.SaveGraph);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.NoOfNodesLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ListViewOfNodes);
             this.Controls.Add(this.IsDirectedCheckBox);
             this.Controls.Add(this.HasWeightCheckBox);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.AlgorithmListBox);
             this.Name = "GUIWindow";
             this.Text = "GUIWindow";
             this.ResumeLayout(false);
@@ -429,14 +490,14 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox AlgorithmListBox;
         private System.Windows.Forms.CheckBox HasWeightCheckBox;
         private System.Windows.Forms.CheckBox IsDirectedCheckBox;
         private System.Windows.Forms.ListView ListViewOfNodes;
         private System.Windows.Forms.ColumnHeader SrcNodeColumn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label NoOfNodesLabel;
         private System.Windows.Forms.Button SaveGraph;
         private System.Windows.Forms.Button LoadGraph;
         private System.Windows.Forms.Label FilePathLabel;
@@ -451,8 +512,8 @@
         private System.Windows.Forms.TextBox DestNodeTextBox;
         private System.Windows.Forms.TextBox SrcNodeTextBox;
         private System.Windows.Forms.SaveFileDialog SaveFileDialogue;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label MSTSizeLabel;
+        private System.Windows.Forms.Label NoOfEdgesLabel;
         private System.Windows.Forms.Button UpdateAdjListButton;
         private System.Windows.Forms.OpenFileDialog LoadFileDialogue;
         private System.Windows.Forms.CheckBox CheckBoxEditEdges;
@@ -462,5 +523,10 @@
         private System.Windows.Forms.CheckBox CheckBoxAdd;
         private System.Windows.Forms.ColumnHeader DestNodesColumn;
         private System.Windows.Forms.Button ShowGraphButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button RunAlgorithmButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button ReLoadOriginalButton;
     }
 }
