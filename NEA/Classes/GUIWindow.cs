@@ -26,7 +26,8 @@ namespace NEA.Classes
             InitializeComponent();
 
             //It's setuppin' time
-            currentAdjList = new AdjacencyList<string>(); //Going with string for now, other types don't currently offer any advantage
+            currentAdjList = new AdjacencyList<string>();
+            MSTAdjList = new AdjacencyList<string>();
             graphWindow = new GraphWindow<string>();
             MST = -1;
         }
