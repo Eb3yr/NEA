@@ -10,6 +10,7 @@ namespace NEA.Classes.Algorithms
     {
         //Add another function so that you can return MST length and the MST graph
         AdjacencyMatrix<T> graph;
+        AdjacencyMatrix<T> MSTMatrix;
         AdjacencyList<T> adjList;
         AdjacencyList<T> minSpanTree;
         double MST;
@@ -36,11 +37,17 @@ namespace NEA.Classes.Algorithms
         }
         public double FindMST()
         {
+            minSpanTree = new AdjacencyList<T>();
             double MSTVal = 0;
             int rowToCross = 0;
             bool found = false, breakFlag = false;
             List<(int x, int y)> validNodes = new List<(int x, int y)>();
             (int x, int y) smallestNode = default;
+
+            foreach (var i in graph.nodeNames)
+            {
+                minSpanTree.AddNode(i);
+            }
 
             do
             {
@@ -65,6 +72,7 @@ namespace NEA.Classes.Algorithms
                 //Console.WriteLine("Smallest edge found is " + found + " & the coordinates are " + smallestNode); //Used for debugging
                 if (found == true)
                 {
+                    minSpanTree.AddEdge(graph.nodeNames[smallestNode.x], graph.nodeNames[smallestNode.y], graph.adjMatrix[smallestNode.x, smallestNode.y].weight, false);
                     MSTVal += graph.adjMatrix[smallestNode.x, smallestNode.y].weight;
                     graph.adjMatrix[smallestNode.x, smallestNode.y].exists = false; //Do this with a RemoveEdge method later in AdjacencyMatrix, but should remove the smallest node from the table
                     graph.adjMatrix[smallestNode.y, smallestNode.x].exists = false;
@@ -86,8 +94,7 @@ namespace NEA.Classes.Algorithms
 
 
             MST = MSTVal;
-            minSpanTree = graph.ToAdjList();
-            return MSTVal; //IT WORKS!!!!!
+            return MSTVal;
         }
         public double GetMST() //In case the MST is needed again and not saved to another variable, call this instea of running the algorithm again
         {

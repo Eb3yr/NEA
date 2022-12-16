@@ -214,7 +214,16 @@ namespace NEA.Classes
 
         public void MakeUndirected() //May result in a loss of data in graphs where there are connections from A -> B and B -> A with different weights. Add a disclaimer!
         {
-            //Not yet implemented
+            foreach (var i in adjList)
+            {
+                foreach (var f in i.Value)
+                {
+                    if (adjList[f.Key].ContainsKey(i.Key))
+                    {
+                        RemoveEdge(f.Key, i.Key);
+                    }
+                }
+            }
         }
         public List<(T root, T destination, double edgeWeight)> ToEdgeList() //Converts the adjacency list of this instance of the class into a list of edges. 
         {
