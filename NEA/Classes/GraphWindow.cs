@@ -20,6 +20,7 @@ namespace NEA.Classes
         protected Font textFont;
         protected Graphics g;
         protected int fontSize;
+        protected int nodeRadius;
         public GraphWindow()
         {
             InitializeComponent();
@@ -29,11 +30,12 @@ namespace NEA.Classes
 
             //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable sounds good.
             nodeDict = new Dictionary<T, Point>();
-            edgePen = new Pen(Color.Orange); //Edges are orange
+            edgePen = new Pen(Color.Orange, 3); //Edges are orange
             nodeBrush = new SolidBrush(Color.Red); //Nodes are red
-            textBrush = new SolidBrush(Color.DarkGray); //Text is dark gray
-            textFont = DefaultFont;
-            fontSize = 14; //A constant to define the size of node names and edge weights
+            textBrush = new SolidBrush(Color.Black); //Text is dark gray
+            fontSize = 12; //A constant to define the size of node names and edge weights
+            textFont = new Font(DefaultFont.Name, fontSize, DefaultFont.Style);
+            nodeRadius = 40;
             //Use an actual Font class for this later
             //Need alternate brushes for nodes and edges when they're selected
         }
@@ -60,6 +62,8 @@ namespace NEA.Classes
             g = e.Graphics;
             CalculateNodeCoords();
 
+            
+
             if (nodeDict.Count == 0)
             {
                 Console.WriteLine("Error: Add some nodes to the node dictionary in GraphWindow.cs!");
@@ -69,14 +73,28 @@ namespace NEA.Classes
                 DrawEdge(new Point(), new Point());
             }
 
+            foreach (var i in currentEdgeList)
+            {
+                Console.WriteLine("Drawing edge for: " + i);
+                Console.WriteLine("nodeDict[i.root] = " + nodeDict[i.root]);
+                Console.WriteLine("nodeDict[i.destination] = " + nodeDict[i.destination]);
+                DrawEdge(nodeDict[i.root], nodeDict[i.destination], i.edgeWeight); //Draws an edge for every edge in the current edge list
+            }
+
+            //Draw nodes after edges
+            foreach (var i in nodeDict)
+            {
+                DrawNode(i.Key.ToString(), i.Value, nodeRadius);
+                //Need to draw the name of each node as well in the centre
+            }
         }
         private void CalculateNodeCoords() //Turn individual coordinates to a Point struct, or pre-generate a Rectangle struct
         {
+            List<Point> nodeCoords = new List<Point>();
             int vertices = nodeDict.Count;
             int buffer = 50; //Use this somewhere :)
-            int radius = 360; //Radius of regular shape. Make this dependent on the size of the window - smallest of width or height, then some maths to make it fit
-            int nodeRadius = 40;
-            int xComponent = 0, yComponent = 0;
+            int radius = 260; //Radius of regular shape. Make this dependent on the size of the window - smallest of width or height, then some maths to make it fit
+            int xComponent, yComponent;
             double angle = (2 * Math.PI) / vertices; //angle between neighbouring vertices of a regular shape, in radians, of a given number of vertices
 
             Size centrePoint = new Size(Size.Width / 2, Size.Height / 2);
@@ -90,10 +108,24 @@ namespace NEA.Classes
                 yComponent = Convert.ToInt32(radius * Math.Sin(i));
                 Console.WriteLine("yComponent = " + yComponent);
 
-                //Remove DrawNode, call that in a separate more centralised class, CalculateNodeCoords should exclusively calculate, not cause it to draw
-                DrawNode(new Point((int)(centrePoint.Width / 1.2) + xComponent, (int)(centrePoint.Height / 1.2) + yComponent), nodeRadius); //Maths hard, make use of buffer to find borders
-                                                                                                                                            //1.2 is an arbitrary number I came up with to make it fit on the screen semi-reasonably. Make the maths work later
+                //Remove DrawNode later, call that in a separate more centralised class, CalculateNodeCoords should exclusively calculate, not cause it to draw
+                
+                //Assign node coordinates to the nodes, then draw the nodes with a foreach in the paint method
 
+                //Account for the radius of the node! It currently draws between each corner
+                nodeCoords.Add(new Point((int)(centrePoint.Width / 1.2) + xComponent, (int)(centrePoint.Height / 1.2) + yComponent));
+            }
+
+            for (int i = 0; i < nodeDict.Count; i++)
+            {
+                try
+                {
+                    nodeDict[nodeDict.ElementAt(i).Key] = nodeCoords[i]; //Assigns a Point location on the screen to each node, used for drawing stuff later
+                }
+                catch (Exception ex)
+                {
+                    //Just in case. Should be impossible as nodeCoords is dependent on nodeDict (int vertices being used for the for loop)
+                }
             }
 
         }
@@ -103,9 +135,16 @@ namespace NEA.Classes
 
             Point midPoint = new Point((start.X + end.X) / 2, (start.Y + end.Y) / 2);
             //Then offset midPoint depending on the length of the string, and the font size
-            g.DrawString("test", textFont, textBrush, midPoint); //big error here when drawing: null exception of Font. On instantiation all of these need to be generated!
         }
-        private void DrawNode(Point coords, int radius)
+        private void DrawEdge(Point start, Point end, double value) //Extra parameter for weights on lines. Use if graph is weighted
+        {
+            g.DrawLine(edgePen, start, end);
+
+            Point midPoint = new Point((start.X + end.X) / 2, (start.Y + end.Y) / 2);
+            //Then offset midPoint depending on the length of the string, and the font size
+            g.DrawString(value.ToString(), textFont, textBrush, midPoint);
+        }
+        private void DrawNode(string name, Point coords, int radius)
         {
             Rectangle rect = new Rectangle(coords.X - radius, coords.Y - radius, radius, radius);
             g.FillEllipse(nodeBrush, rect);
@@ -114,6 +153,7 @@ namespace NEA.Classes
 
             //Make a dictionary of nodes for this graph which gets refreshed every time there's a change in the number of nodes in the graph (updating only when the form is used)
             //Then I can draw the name of each node in the circles
+            g.DrawString(name, textFont, textBrush, coords);
 
 
             //Draw nodes on top of edges and labels on top of both or else things will go funky

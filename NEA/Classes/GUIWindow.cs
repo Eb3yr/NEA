@@ -472,7 +472,7 @@ namespace NEA.Classes
                         {
                             try
                             {
-                                currentAdjList.AddEdge(SrcNodeTextBox.Text, DestNodeTextBox.Text, double.Parse(EdgeWeightTextBox.Text), IsDirectedCheckBox.Checked);
+                                currentAdjList.AddEdge(SrcNodeTextBox.Text, DestNodeTextBox.Text, double.Parse(EdgeWeightTextBox.Text), IsEdgeDirectedCheckBox.Checked);
                             }
                             catch (Exception ex)
                             {
@@ -514,7 +514,7 @@ namespace NEA.Classes
                         {
                             try
                             {
-                                currentAdjList.RemoveEdge(SrcNodeTextBox.Text, DestNodeTextBox.Text, IsDirectedCheckBox.Checked);
+                                currentAdjList.RemoveEdge(SrcNodeTextBox.Text, DestNodeTextBox.Text, IsEdgeDirectedCheckBox.Checked);
                             }
                             catch (Exception ex)
                             {

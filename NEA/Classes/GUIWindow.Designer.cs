@@ -30,7 +30,7 @@
         {
             this.DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AlgorithmListBox = new System.Windows.Forms.ListBox();
-            this.IsDirectedCheckBox = new System.Windows.Forms.CheckBox();
+            this.IsEdgeDirectedCheckBox = new System.Windows.Forms.CheckBox();
             this.ListViewOfNodes = new System.Windows.Forms.ListView();
             this.SrcNodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
@@ -65,7 +65,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ReLoadOriginalButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.ContainsCyclesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -88,16 +87,15 @@
             this.AlgorithmListBox.TabIndex = 0;
             this.AlgorithmListBox.SelectedIndexChanged += new System.EventHandler(this.AlgorithmListBox_SelectedIndexChanged);
             // 
-            // IsDirectedCheckBox
+            // IsEdgeDirectedCheckBox
             // 
-            this.IsDirectedCheckBox.AutoSize = true;
-            this.IsDirectedCheckBox.Location = new System.Drawing.Point(328, 192);
-            this.IsDirectedCheckBox.Name = "IsDirectedCheckBox";
-            this.IsDirectedCheckBox.Size = new System.Drawing.Size(470, 17);
-            this.IsDirectedCheckBox.TabIndex = 4;
-            this.IsDirectedCheckBox.Text = "Edge is directed - need to handle this later, function to make graph undirected t" +
-    "hat overwrites?";
-            this.IsDirectedCheckBox.UseVisualStyleBackColor = true;
+            this.IsEdgeDirectedCheckBox.AutoSize = true;
+            this.IsEdgeDirectedCheckBox.Location = new System.Drawing.Point(328, 192);
+            this.IsEdgeDirectedCheckBox.Name = "IsEdgeDirectedCheckBox";
+            this.IsEdgeDirectedCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.IsEdgeDirectedCheckBox.TabIndex = 4;
+            this.IsEdgeDirectedCheckBox.Text = "Edge is directed";
+            this.IsEdgeDirectedCheckBox.UseVisualStyleBackColor = true;
             // 
             // ListViewOfNodes
             // 
@@ -411,6 +409,7 @@
             this.label4.Size = new System.Drawing.Size(271, 13);
             this.label4.TabIndex = 53;
             this.label4.Text = "Dijkstras needs its own interface as its between 2 nodes";
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -420,6 +419,7 @@
             this.label5.Size = new System.Drawing.Size(177, 13);
             this.label5.TabIndex = 54;
             this.label5.Text = "Just do Kruskals and Prims for now?";
+            this.label5.Visible = false;
             // 
             // ReLoadOriginalButton
             // 
@@ -431,15 +431,6 @@
             this.ReLoadOriginalButton.UseVisualStyleBackColor = true;
             this.ReLoadOriginalButton.Visible = false;
             this.ReLoadOriginalButton.Click += new System.EventHandler(this.ReLoadOriginalButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(370, 382);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(317, 13);
-            this.label3.TabIndex = 56;
-            this.label3.Text = "MST is giving the sum of every edge with prims, it\'s just broken AF";
             // 
             // ContainsCyclesLabel
             // 
@@ -456,7 +447,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 483);
             this.Controls.Add(this.ContainsCyclesLabel);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.ReLoadOriginalButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -488,7 +478,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ListViewOfNodes);
-            this.Controls.Add(this.IsDirectedCheckBox);
+            this.Controls.Add(this.IsEdgeDirectedCheckBox);
             this.Controls.Add(this.AlgorithmListBox);
             this.Name = "GUIWindow";
             this.Text = "GUIWindow";
@@ -500,7 +490,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox AlgorithmListBox;
-        private System.Windows.Forms.CheckBox IsDirectedCheckBox;
+        private System.Windows.Forms.CheckBox IsEdgeDirectedCheckBox;
         private System.Windows.Forms.ListView ListViewOfNodes;
         private System.Windows.Forms.ColumnHeader SrcNodeColumn;
         private System.Windows.Forms.Label label2;
@@ -536,7 +526,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button ReLoadOriginalButton;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label ContainsCyclesLabel;
     }
 }
