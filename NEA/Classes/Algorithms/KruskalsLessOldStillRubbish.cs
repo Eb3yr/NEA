@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace NEA.Classes.Algorithms
 {
-    public class KruskalsNew<T>
+    public class KruskalsLessOldStillRubbish<T>
     {
         AdjacencyList<T> graph; //Graph is the inputted graph
         AdjacencyList<T> minSpanTree; //This is the outputted graph
         double MST;
-        public KruskalsNew(AdjacencyList<T> inAdjList)
+        public KruskalsLessOldStillRubbish(AdjacencyList<T> inAdjList)
         {
             graph = inAdjList;
             minSpanTree = new AdjacencyList<T>();
@@ -55,7 +55,12 @@ namespace NEA.Classes.Algorithms
 
             graph.MakeUndirected();
             List<(T root, T destination, double edgeWeight)> listOfEdges = graph.ToEdgeList();
-            List<(T root, T destination, double edgeWeight)> tempListOfEdges = listOfEdges;
+            List<(T root, T destination, double edgeWeight)> tempListOfEdges = new List<(T root, T destination, double edgeWeight)>();
+            foreach (var i in listOfEdges)
+            {
+                tempListOfEdges.Add(i);
+            }
+
             List<(T root, T destination, double edgeWeight)> finalListOfEdges = new List<(T root, T destination, double edgeWeight)>();
             List<T> nodesToVisit = new List<T>();
             PopulateNodesToVisit(ref nodesToVisit);
@@ -66,13 +71,15 @@ namespace NEA.Classes.Algorithms
 
             T currentNode;
 
-            foreach (var i in tempListOfEdges)
-            {
-                Console.WriteLine(i);
-            }
+            Console.WriteLine("foreach (var i in tempListOfEdges)");
+            //foreach (var i in tempListOfEdges)
+            //{
+            //    Console.WriteLine(i);
+            //}
 
             do //It's only doing this once?
             {
+                Console.WriteLine("Do while start");
                 Console.WriteLine("iterating:");
                 foreach (var i in nodesToVisit)
                 {
@@ -80,8 +87,21 @@ namespace NEA.Classes.Algorithms
                 }
                 Console.WriteLine("|");
 
-                tempListOfEdges = listOfEdges; //Each cycle I'll do this and then remove the invalid edges
+                Console.WriteLine("foreach (var i in tempListOfEdges)");
+                tempListOfEdges = new List<(T root, T destination, double edgeWeight)>(); //Each cycle I'll do this and then remove the invalid edges
+                foreach (var i in listOfEdges)
+                {
+                    tempListOfEdges.Add(i);
+                }
+                foreach (var i in tempListOfEdges)
+                {
+                    Console.WriteLine(i);
+                }
+
+                //Doing that will prevent it from just passing reference and dying on the foreach() bit because it modifies itself
+
                 currentNode = nodesToVisit.First();
+                Console.WriteLine("CurrentNode is: " + currentNode);
                 nodesToVisit.Remove(currentNode); //Removing this so it doesn't interfere with removing invalid edges
 
                 foreach (var i in nodesToVisit)
@@ -93,19 +113,43 @@ namespace NEA.Classes.Algorithms
                 //Removing edges that aren't connected to nodes that've either been visited or the current node:
 
                 //The removing logic seems to be the source of all of my problems
+                Console.WriteLine("Before looping: listOfEdges contains: ");
                 foreach (var i in listOfEdges)
                 {
+                    Console.WriteLine(i);
+                }
+                Console.WriteLine("Before looping: tempListOfEdges contains: ");
+                foreach (var i in tempListOfEdges)
+                {
+                    Console.WriteLine(i);
+                }
+                foreach (var i in listOfEdges)
+                {
+                    Console.WriteLine("A: Lóóp");
                     //This needs to be more thorough
                     if (nodesToVisit.Contains(i.root) && nodesToVisit.Contains(i.destination))
                     {
                         //Removes only if both the source and destination node haven't been visited yet
+                        Console.WriteLine("A: removing: " + i.root + "," + i.destination + "," + i.edgeWeight + " from tempListOfEdges");
                         tempListOfEdges.Remove(i); //Reference stored, not copying everything over, leading to a collection modified error!!!!!!!
-                        Console.WriteLine("removing: " + i.root + "," + i.destination + "," + i.edgeWeight + " from tempListOfEdges");
+                        Console.WriteLine("B: removing: " + i.root + "," + i.destination + "," + i.edgeWeight + " from tempListOfEdges");
                     }
-                    Console.WriteLine("Lóóp");
+                    Console.WriteLine("B: Lóóp");
                     //Does 3 loops then breaks?
-                }
 
+                    //After removing one thing it loops back around but collection is modified so it up and dies
+                }
+                Console.WriteLine("End Lóóp");
+                Console.WriteLine("After looping: listOfEdges contains: ");
+                foreach (var i in listOfEdges)
+                {
+                    Console.WriteLine(i);
+                }
+                Console.WriteLine("After looping: tempListOfEdges contains: ");
+                foreach (var i in tempListOfEdges)
+                {
+                    Console.WriteLine(i);
+                }
                 //Never reaches beyond this point because an exception occurs, which is handled over in GUIWindow.cs
                 //COLLECTION WAS MODIFIED 
 
@@ -113,15 +157,19 @@ namespace NEA.Classes.Algorithms
                 foreach (var i in finalListOfEdges)
                 {
                     tempListOfEdges.Remove(i); //So it doesn't keep selecting previously-selected edges
+                    Console.WriteLine("A");
                     Console.WriteLine("removing previously selected: " + i.root + "," + i.destination + "," + i.edgeWeight + " from tempListOfEdges");
+                    Console.WriteLine("B");
                 }
 
                 Console.WriteLine("!!!!");
                 currentSmallestEdge = tempListOfEdges[0];
+                Console.WriteLine("Current smallest edge is: " + currentSmallestEdge.root + ", " + currentSmallestEdge.destination + ": " + currentSmallestEdge.edgeWeight);
                 foreach (var i in tempListOfEdges)
                 {
                     if (i.edgeWeight < currentSmallestEdge.edgeWeight)
                     {
+                        //Is this doing really annoying reference types maybe?
                         currentSmallestEdge = i; //Gets the smallest valid edge
                     }
                 }
@@ -144,7 +192,8 @@ namespace NEA.Classes.Algorithms
                     Console.WriteLine("Cycle detected");
                     minSpanTree.RemoveEdge(currentSmallestEdge.root, currentSmallestEdge.destination);
                 }
-                
+
+                Console.WriteLine("End of loop stats: \n");
                 foreach (var i in finalListOfEdges)
                 {
                     Console.WriteLine("in finalListOfEdges: " + i);
@@ -154,11 +203,26 @@ namespace NEA.Classes.Algorithms
                 {
                     Console.WriteLine("nodesToVisit contains: " + i);
                 }
-                Console.WriteLine(";"); //This one isn't happening?
+                Console.WriteLine(";\n\n\n");
 
             } while (nodesToVisit.Count > 0);
 
 
+
+            /*
+            new idea:
+                -Do away with tempListOfEdges. Don't need it, just keep cycling through the adjList and pick the smallest VALID edge.
+                 do this on a case-by-case basis for each edge each iteration, don't worry about efficiency losses because tempListOfEdges is already kinda inefficient if you think about it
+                
+                -This means I can do away with listOfEdges as well, and the (T, T, double) tuple I've been using and just go back to the AdjacencyList<T>.adjList thingymabob
+            
+             */
+
+            /*
+            
+            That isn't actually the problem, there's just something stupid going on with picking which node to go with? Hoh?
+
+            */
 
 
 

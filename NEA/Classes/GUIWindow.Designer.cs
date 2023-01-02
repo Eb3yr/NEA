@@ -30,7 +30,6 @@
         {
             this.DestNodesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AlgorithmListBox = new System.Windows.Forms.ListBox();
-            this.HasWeightCheckBox = new System.Windows.Forms.CheckBox();
             this.IsDirectedCheckBox = new System.Windows.Forms.CheckBox();
             this.ListViewOfNodes = new System.Windows.Forms.ListView();
             this.SrcNodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -66,6 +65,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ReLoadOriginalButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ContainsCyclesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestNodesColumn
@@ -79,34 +80,23 @@
             this.AlgorithmListBox.Items.AddRange(new object[] {
             "Kruskals",
             "Prims",
-            "Dijkstras"});
+            "Dijkstras",
+            "Cycle detection"});
             this.AlgorithmListBox.Location = new System.Drawing.Point(561, 34);
             this.AlgorithmListBox.Name = "AlgorithmListBox";
-            this.AlgorithmListBox.Size = new System.Drawing.Size(227, 43);
+            this.AlgorithmListBox.Size = new System.Drawing.Size(227, 56);
             this.AlgorithmListBox.TabIndex = 0;
             this.AlgorithmListBox.SelectedIndexChanged += new System.EventHandler(this.AlgorithmListBox_SelectedIndexChanged);
-            // 
-            // HasWeightCheckBox
-            // 
-            this.HasWeightCheckBox.AutoSize = true;
-            this.HasWeightCheckBox.Location = new System.Drawing.Point(561, 106);
-            this.HasWeightCheckBox.Name = "HasWeightCheckBox";
-            this.HasWeightCheckBox.Size = new System.Drawing.Size(655, 17);
-            this.HasWeightCheckBox.TabIndex = 3;
-            this.HasWeightCheckBox.Text = "Graph has weight - is this necessary? Maybe change it to toggle showing weights o" +
-    "n the visual graph (but not tabular, too much effort)";
-            this.HasWeightCheckBox.UseVisualStyleBackColor = true;
-            this.HasWeightCheckBox.Visible = false;
             // 
             // IsDirectedCheckBox
             // 
             this.IsDirectedCheckBox.AutoSize = true;
-            this.IsDirectedCheckBox.Location = new System.Drawing.Point(561, 83);
+            this.IsDirectedCheckBox.Location = new System.Drawing.Point(328, 192);
             this.IsDirectedCheckBox.Name = "IsDirectedCheckBox";
-            this.IsDirectedCheckBox.Size = new System.Drawing.Size(474, 17);
+            this.IsDirectedCheckBox.Size = new System.Drawing.Size(470, 17);
             this.IsDirectedCheckBox.TabIndex = 4;
-            this.IsDirectedCheckBox.Text = "Graph is directed - need to handle this later, function to make graph undirected " +
-    "that overwrites?";
+            this.IsDirectedCheckBox.Text = "Edge is directed - need to handle this later, function to make graph undirected t" +
+    "hat overwrites?";
             this.IsDirectedCheckBox.UseVisualStyleBackColor = true;
             // 
             // ListViewOfNodes
@@ -150,7 +140,7 @@
             // NoOfNodesLabel
             // 
             this.NoOfNodesLabel.AutoSize = true;
-            this.NoOfNodesLabel.Location = new System.Drawing.Point(558, 140);
+            this.NoOfNodesLabel.Location = new System.Drawing.Point(558, 118);
             this.NoOfNodesLabel.Name = "NoOfNodesLabel";
             this.NoOfNodesLabel.Size = new System.Drawing.Size(91, 13);
             this.NoOfNodesLabel.TabIndex = 21;
@@ -300,7 +290,7 @@
             // NoOfEdgesLabel
             // 
             this.NoOfEdgesLabel.AutoSize = true;
-            this.NoOfEdgesLabel.Location = new System.Drawing.Point(558, 166);
+            this.NoOfEdgesLabel.Location = new System.Drawing.Point(558, 144);
             this.NoOfEdgesLabel.Name = "NoOfEdgesLabel";
             this.NoOfEdgesLabel.Size = new System.Drawing.Size(94, 13);
             this.NoOfEdgesLabel.TabIndex = 42;
@@ -442,11 +432,31 @@
             this.ReLoadOriginalButton.Visible = false;
             this.ReLoadOriginalButton.Click += new System.EventHandler(this.ReLoadOriginalButton_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(370, 382);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(317, 13);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "MST is giving the sum of every edge with prims, it\'s just broken AF";
+            // 
+            // ContainsCyclesLabel
+            // 
+            this.ContainsCyclesLabel.AutoSize = true;
+            this.ContainsCyclesLabel.Location = new System.Drawing.Point(558, 169);
+            this.ContainsCyclesLabel.Name = "ContainsCyclesLabel";
+            this.ContainsCyclesLabel.Size = new System.Drawing.Size(87, 13);
+            this.ContainsCyclesLabel.TabIndex = 57;
+            this.ContainsCyclesLabel.Text = "Contains cycles: ";
+            // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 483);
+            this.Controls.Add(this.ContainsCyclesLabel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.ReLoadOriginalButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -479,7 +489,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ListViewOfNodes);
             this.Controls.Add(this.IsDirectedCheckBox);
-            this.Controls.Add(this.HasWeightCheckBox);
             this.Controls.Add(this.AlgorithmListBox);
             this.Name = "GUIWindow";
             this.Text = "GUIWindow";
@@ -491,7 +500,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox AlgorithmListBox;
-        private System.Windows.Forms.CheckBox HasWeightCheckBox;
         private System.Windows.Forms.CheckBox IsDirectedCheckBox;
         private System.Windows.Forms.ListView ListViewOfNodes;
         private System.Windows.Forms.ColumnHeader SrcNodeColumn;
@@ -528,5 +536,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button ReLoadOriginalButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label ContainsCyclesLabel;
     }
 }

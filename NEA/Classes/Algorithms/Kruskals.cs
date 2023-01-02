@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace NEA.Classes.Algorithms
 {
-    public class Kruskals<T> //Everything MUST be undirected, so make the MST tree undirected, and make the class not run if the graph is undirected.
+    public class Kruskals<T>
     {
-        //Add another function so that you can return MST length and the MST graph
-        AdjacencyList<T> graph;
-        AdjacencyList<T> minSpanTree;
+        AdjacencyList<T> graph; //Graph is the inputted graph
+        AdjacencyList<T> minSpanTree; //This is the outputted graph
+        double MST;
         public Kruskals(AdjacencyList<T> inAdjList)
         {
             graph = inAdjList;
             minSpanTree = new AdjacencyList<T>();
         }
 
-        private void PopulateNodesToVisit(ref List<T> nodesToVisit)
+        private void PopulateNodesToVisit(ref List<T> nodesToVisit) //Works from testnig
         {
             foreach (var i in graph.adjList.Keys)
             {
                 nodesToVisit.Add(i);
             }
         }
-        private void PopulateMSTAdjList()
+        private void PopulateMSTAdjList() //Adds each key to the adjList. Works from testing
         {
             foreach (var i in graph.adjList.Keys)
             {
@@ -47,98 +48,186 @@ namespace NEA.Classes.Algorithms
         {
             return minSpanTree;
         }
-        public double FindMST() //This code is copied from the scuffed Kruskals code from before summer holiday, may or may not work now that cycle detection is fixed
+
+        public double FindMST()
         {
+            /*
+                                  ...';clodxONWXkl,.       ..........;oocloxxxdlc:;'....                  ................                                     .
+                                  ...,:clodkNWKd;......    .........':dkkxxxdolc:;,......                ...................    ...                            .
+                                  ...,:cookNWKd;.... ...   ..........,lxkkkxl::;,,'.......            ........................  .....               .          .
+                                  ...,:coONWNkc,..     ..    .........:odxxolc;,''.......... ...    ...................  ............         ..              ..
+                                  ..';:cxNWXkc...      ..         ....';codolc;,''.... .            ...................... ......''.          ..              . 
+                                  ..,;:oXWKx;..                     ...',:ccc:;'''....               .................... .....',;,.                            
+       .,,.                      ...';cOWNOc'.... ...                ..''',:c:;,,'....                   ......................';:;.                           .
+        ,lc;'.                   ...,:l0WNk;....  ..........          .'''.',;,,,'....                     .............. .....,;c;.                ..          
+                                  .',:cdXW0c...       ..','..          .,,..''''''.....                     .............  ....',;,.              ...        .. 
+                                  ..,:coxKNKd:'.        ..'.            .','..........                      ....................''..                ..    ..... 
+                                 ..',clodxOXNXOo;...                      ''.'.........                      ...................''..                ..........  
+                                 ..,:clodkkO0000KKkxd,..                   .',..........                      .................'''..                 ...'...... 
+    .''''.                       .':clodxkkkOkxOXMW0O0xoc,...               .',.........                        ...............''''..              ....'...'''..
+    .;;,,.                       .';clodxkkOOkkKWMNkokKNKxl;'....             .''........                        ..............'''''..     ...    .....'..''''..
+                                 .';clodxkOOOO0NMMNXKKNNKOxl;''...             ...'.......                       ..............'''''''.. ......  ......'''''''..
+                                ..,;codxkOO0Ok0XNXNWWWNK0Okoc::cc:'.             ........                         ..... .......''''',,,......... ........''.....
+                                .';clodxkOOOOkddOO0KkxOKKOxo:,',:oddl'.           ......                          ...  .......'''',,',,,'.......................
+                             ....,:coddkkOOOOdc,;dkl,,dWMWNX0dc;:ccokkl,.          .,'..                          ..   .......',,''''',,'.......................
+                              ..',:loodkOO00Odc;..:oc,dNMMMWN0xoxkkxdkK0d,.         ;c'.                              ........'',,,'.',,'.......................
+                              ..';coooxkO000Oxl:;..,oockWMMWWKxc;;:' .:olcc;.       'dc.                                .......'''''''''.....     .........''...
+                               .,:ldxxkO0000Oxlc:'..'ldodxdoc,.           .:c;.......cx;.                               ........''''......         ......''''...
+                        .      .,:lddxkO0000Okd:,'. ..,lo;..                .:o:''::.'xd..                               .........'......           .....''''...
+                         ...  .,:coddxkk00K0Okxl;'. ....ok:.                  .okl::;,ox:.                                ...............           ......'''...
+                        .;.  .;lccloddxkO0K0Oko,.....:c..xo..                  .coc',,cxc..                                .............             ......''...
+                        ..   ..',:lodxkO0KK0Odl;....,:'  :kl'.                 .'od'..;l:'.                               .............              .......'...
+                             .',:loddxk0KXK0kdl:'....... ,0Ol,.               .,;xx....,;'.                               .............               ..........
+                             .';ldodxOOO0K0Oxdlc:;....'. .dKd,.               .cxOl.    ...                                ...........                 .........
+                           ...,ldooxO00O0KKkdlcc:,'.....  :Kk,.               .lXk,.     ...                                 ..........                 ........
+                          ....';codxOKK00K0ko::cc:,.....  ;K0:..              .xKo.       ..                                ...........                  .......
+                            .;:;cldxO0O00K0Odc:cll;.....  ;X0c..     ...      lkc,.        .                        .    .............                    ......
+                           'c:;;clxkxO0KKXK0ko:cdd:...    :Kx;..:dl,.........:k:..         ..                       .................                     ......
+                        . .'.';:cdOkk0K0KXK0kdodxo:,...   l0c'.'kWWX0OOOO0K000l.           ..                        ..........                            .....
+                      .''.  ..',codxOO000KKK000Od;'....   oO:'..cKWMWNXXXNNX0o.                                     .......                                  ...
+                     ....    ..';:ldkO00KKKKKXXKx;.       lKd:;.'ckKXNXK00XKo.                                   .......                                        
+                             .,;;:oxkkO00KKKKXNXx,.       :KKxo:',codk00OKXd.                                  .....                                            
+                             ,l:;cldxkOOO000KXNXk:.       .xNNWXO0XK00NWNKd'                                  .....                                             
+                            .:'.,:codxkOO000KXNXk;.        ,ONMWWWWWNNWXk:.                                   ...                                               
+                            ....,;codkkOO000KXXKOl,'.       'dKWWNNNX0xl,..                                  ..                                                 
+                           ....'';cldkkOOOO0XXXKkc,..       ...:xXWNX0dc:;,..                                                                                   
+                          .,..,'',cldxkkOOO0XNXKk:.             .OMMMWXOxl;'...                            ...'.                                                
+                         .'. ''.,;codxkOO00KXXXKO:.             .xMMMWWWXkl:'.........                  ..'..';cc;.                                             
+                             ...';:lodkO000KXXXKk:.              :XWMWWWN0xl,''.......                .,cc;,;cooll:,..                                          
+                             ...';:ldxkkO00KXXK0x:.              .dWMWWWN0xlc;,,'....               .;xXNKx:,:oxkkdl:,'..                                       
+                        ..    ..';cldxkkO00KNNKOd;.            .lONMMWWWWXOxo;'...                .cONNKXWWXkoccdO0Oxoc;'..                                     
+                       ..     ..,:cldxkO000KNNKOo'..         'dXWMMMMWNWWWN0o;...              ..,xXWWXodXWWX0xooxk0Okxl;,''...                                 
+                       .      ..,;cldxkO000KNNKOl,'.       .dXMMMMMMWWWWWWWNk:...          .,l:.;kKXWWOcdXKXWXOxddxkkkkxl::;;::,...                             
+                              ..,:codkkO00KKNNKkc''.     .lKWMMMWWMMWMNKKNWNO:....      .;oOXx,cO00NMXd:xNo;OWXOxooodxkkxddollllc:,...                          
+                              ..,:lodkkO00KKNX0k:.     .oKWMMMMMWWMMWXklo0XX0d:,,,',;;:d0KNWk;o0xkXWMKo;xNd.'kNXOdollodxkkkxdddooolc:,..                        
+                              ..,coddkkkO0KKNX0x:.    ;0WMMMMMMWWWMWKo:lk0XNWWXkddkK0llO0KNOcdOdxXWMW0l;xN0' 'OWKkdl:;;clolllooodxddxxl,..                      
+                              ..;clddxkO00KKXX0xc.   ;KMMMMMMMWNWMNkoclkO0NWMNOood0Nk:cdOXKdk0loXMMMW0l:dNNl  oWNKkoc;'..'',,;:coddxkOOxl,.                     
+                             ..';cldxxkO00KKXX0xc.  ,0MMMMMWWMWWMNk;'lxOOXWMWO:;:lOKx,,oKXO00c:0MMMMWKd:oKWK, ,KWN0xo:'.    ...,;::lodk0Kkc.                    
+                             ..'::coxxkO000KXKOd:. .xWMMMWNNWMWMWk,..o00XWMMKc.',:xOd,,xNNNXo.cXMMMMMNkclOXWk..xWWKkdl:'.       ....';:ok0Kd,.              ..  
+                              .;::lodxkOO00KXKOd;..lNMMMMNKXWWWWO;. 'kWWWMMXo...',oko,oXWWXo..xWMMMMMW0lcxKNWk.,xOxddolc,.        ....';lxKXx,.            .....
+                             .',,codxkOOO00KXKko,..kMMMMW0OXWMW0:. .:0WMMWXo'....'oxclKMWXl..:0MMMMWWMXx:ckKNWx'..',:::lc'...  ..   ...,cx0NXd;..  ...     ...,;
+                              .';cdxxkkOOO0KK0kl'.:XMMMMKxkXWMK:.  .lXWMMXd......;oddKMWKc..,xNMMMMWNWWKo;lOKWWO;  ...';:;'............;okKNKkxo;...''.......',;
+                              .';ldxkkkOO00K0Oxc.'OWMMMWOcdKWWo. ..,dXMMNx'   ..';lxXMWO:..,xXWMMMMWXXWW0o:lkKWWXo.  ..,;;;;,'........,lxOKN0k0KOo,.':c;,,',,;::
+                              .';lddxkOO00KKX0x:'dWMMMMNd;oKWK;  ..:kXMWO;.   .';:dKWWO:..'oKWWMMMMWKKWMN0o::d0NWN0c.  .';::,'.......,cxO0XNXKNWXOo:;lddlllooooo
+                              ..;lodxkkO00KXXKk:cKMMMMMK:'oXWk.  .':kXMKc..  .':cdKWNOc...cONWWMMMMWK0XWMN0o;;lOKNNN0l'....''.......':dO0KNWWWWWX0xoloxOkkOkOOOx
+                              ..,cloxxkkO00XXKxoOWMMMMWk,,dNNl.  .':kNNo..   .;dkKWXx:'..;xXWWMMMMWWKO0NMWN0xc:cdOKXNNKx:'. ........;ok000XWWWWWX0kxxkO0000KK00O
+                              .';:codxkkO00XX0xkNMMMMMNx,;xNK:   .'c0WO,..  .,lKWNKd;''.,lONWMMMMWWWXOOXWWNNXOdc;lxO0XXNN0d:'......,cdOOO0KXWWMWNK0O0000O0KKKK0k
+                              .',:loxOOOO00XX0kKMMMMMMNx;;xN0,   .,oKXc..  .'cOWWKd;',,,cxKWMMMMWWNNXOk0NWNXKXKOdc:cdk0KXNXK0xo:;;;;cdxxxkO0XWWWNXK000000KK0ko;.
+                              ..':dOOkkkkOKXX00NMMMMMMNk::xXO'   .,dNk.    .:kNXOd:;:c:;lkXWMMMMNNNNXOkOXWWXKKXXKko::codx0KKK0OxdddddxxxxxxkOKXXXXK00000Oxo;.   
+                               .':odxkkkkOKXXKXMMMMMMMWOc;dXO'   .:0K:.   .;kNKoc:;:lc;;o0NMMMMWNXXNXOkOKNWNXKKXXKOkxlc:;:oxkO0Okxxxk00K000000O00Okkkdc:,..     
+                              ..';codkkkkOKXK0NMMMMMMMMKl,lK0'   .oKd.   .,xNKl,',;cl:';xXWMMMMWXKKXX0xx0NWNXKKKKK00Oxxo:;;;:coxO0OO0KXXXKKK0Okxddl:,'..     ..'
+                               .,:codxxkkOKK00NMMMMMMMMNd,:0K;   ,k0;.   'dNXd,''';::,,l0WMMMMMNK00KX0doOXWWNKOkOOOOxxkxdlc:;;clodxxkO000000Oxdoc;,.......',;cc:
+                               .,;cdxxxkkOKXKKNMMMMWWMMWk,,xXl  .lKo.   'dNXd,....'',:lONMMMMMWN0kk0XOlckKNWNKOxkOkkxdoodollloxxxolodxkO00Okxdddlcl::ccccccc:;'.
+                              ..';cdxxxkkOKXXKNMMMMWWWMM0:.lKo  .kk,   'xNXd,......'cx0XWMMMMWNKOxk0XkccdOXWWXOxkOOxdlcllc::;:oxkxkkxdOOO0OOkkkOxodxdlcc;,'....'
+                              ..';clodxkkOKNXKNWWMMWWWWMNx';kd. ;0l.  .dNXd;......,oOXNWWMMMMWX0kxkO0klclxKNWNKkxk0Oxlc:cllc::cllldkkxkO00OOOkkxdlllc,',;;,',:dx
+                              ..':cldxxkkOKNX0XWWWMMWNWMMXc'ld. oO,  .lNNk;.....,;o0NNWWWWMMWN0OxxxxOklc:lONWWXOdx0Oxoocokxoccodolcodxk0K00000Okxddoodddo::cdOK0
+                              ..;:cldxkkkOKNKxOWWWMMWNWMWWk,,l'.kd.  ;KW0o;'...;ld0NNWWWWWMMWKOxddddxxlc:ckXWWNKkO0OxdodkOdlcccclc;:ldk0000KKKKKK0Okkkkdood0XX0o
+                              ..,;cldxkkkO0K0dxNWNWMMNNMWNXo,:';Oc. 'ONKkkd;..'cxONWNWWWWWMWN0dllccodxdl:cdKNWWX000kxxxkOd:;;,',;,,:ldkO000KKKKKK0KKOdodxOXNXkc,
+                              ..';codxxkkOKXKxxXWXWMMNXWWNX0o;,oO; .xN0x0Xk;..'oOKWWWWWNWWMWXklc:;:coxxl:cd0NWWNK0OkOOOxo,......,;;lxkO00K00KKKKXK00kdxOKNNXOl'.
+                               .';codxxkkO00KkkXWXXWMWK0NWX00d:xO'.oNXooKNx'..,kXNWWWWNXNMMWKxc;,,,;lxkdlox0NWWNX0OO00Ol'    .',;coxO000KK000KKK00kkOOKXXNKkl,';
+                               .';coddxxkOkkOdxXMN0XWMNxokXKO0OKk.;KWk,:KNd...c0NWMWWNXKNMMNOo;'..';oxkkddkKNWWWNK00K0o,.   ..;:ldkOO0KKKKK00000OOOO0XNNXKOo;;co
+                              ..';:oddxxkO0Od:lKMW0kKWMKc.lK0kKNx;xWXc.,0Wx'.,oXMMWNNXKKNMMXd;'...':x00Oxxk0XNWWWXKKKx;.    .,;lxkO0KXXKK000OOkkOO0XXXNXKkocclx0
+                              ..,;codddxk0K0xcoXMMNkd0WWK:.cKOkXkoKWk' .kWkcccoXMMNXXXKXWMWKo,....,lOKK0kxxOKXWWWNXXOc.     .':ok0KXXXXK0OOkkkkkO0XXKXK0OocldkKN
+                              ..,codxkkkk0Kkc;lKMWMXdlONWXl.:00K0kNWo. .kW0o:,lXMMNKKKXNWMW0c'....,dKXX0xddxOKNWWNNKx,      .'cx0XXXNX0OkxddxxkOOKKKKK0kolldOKNW
+                              ..,lxxkOOkxO0d,.,0MWWWNxcdXWXo';kNXKWNo. .xW0c,:kWMMN00KXNWMWk;.....:kXNXOo:cox0XWWWN0c.      .,d0XNNNNKkdxdoddxO0O0000OxllldOXWWM
+                              ..':ooddxxxk0x;.'OMWWMMNkclONNO:,kNXWNl  .kWOccxXWMWKO00XWMMNx,.....l0NNXkl:clx0XWMWNk;.      .:kXNWNNKOxddxxxxO000O0OxdlloxOXWWMW
+                              .',;cloddxkO0Ol',OMWNWMMWO::kXWKcoXNWNl  .kW0xxkXMMN0O00XWMMXd,....'dXWNXxc::cdOKNMWXx,       .l0NWWNXOxxxdkxdk0000OOkdllodOKNWWMN
+
+            */
+            //this ASCII art sums up exactly how I feel now that this works. Third time's the charm!
+            //Leaving debug WriteLines in just in case and also because I can't be bothered to remove them
+            //Just gonna disable the Console from appearing later in NEA.csproj
+
+            Console.WriteLine("Start FindMST");
             graph.MakeUndirected();
-            List<(T root, T destination, double edgeWeight)> listOfEdges = graph.ToEdgeList();
-            List<(T root, T destination, double edgeWeight)> tempListOfEdges = listOfEdges;
             List<T> nodesToVisit = new List<T>();
             PopulateNodesToVisit(ref nodesToVisit);
             PopulateMSTAdjList();
-            bool isEdgeFoundValid = false;
-            tempListOfEdges = graph.BubbleSortEdgeList(); //This is contributing to problem.
 
-            //PROBLEM: finding smallest nodes that are disconnected from visited nodes. FIX. IT. \ڊ^ڊ/
-            
-            nodesToVisit.Remove(tempListOfEdges[0].root);
-           
-            while (nodesToVisit.Count != 0)
+            List<(T root, T destination, double edgeWeight)> currentListOfEdges = new List<(T root, T destination, double edgeWeight)>();
+            (T root, T destination, double edgeWeight) currentSmallestEdge;
+            List<(T root, T destination, double edgeWeight)> blacklistListOfEdges = new List<(T root, T destination, double edgeWeight)>(); //Used to block edges from being selected. Good for edges that've already been added to the MST, and for edges that cause cycles
+            bool isDuplicate, swapOccurs; //Used later in selecting which edge to add to the MST
+
+            nodesToVisit.RemoveAt(0); //Removes the first node to visit so that the algorithm can get started with the selection bit, otherwise it removes everything
+            do 
             {
-                tempListOfEdges = listOfEdges;
-                do //If I stab every invalid element and THEN bubble sort it that could work
-                {
-                    foreach (var i in minSpanTree.adjList) //I don't wanna be starting at a ;-;
-                    {
-                        Console.WriteLine("Looping for i = " + i.Key);
-                        foreach (var f in i.Value.Keys) //If this is empty it will never reach the if statement
-                        {
-                            Console.WriteLine("Looping for i = " + i.Key + " and f = " + f);
-                            if (tempListOfEdges[0].root.Equals(i.Key) || tempListOfEdges[0].root.Equals(f) || tempListOfEdges[0].destination.Equals(i.Key) || tempListOfEdges[0].destination.Equals(f))
-                            {
-                                isEdgeFoundValid = true;
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Skeetering " + tempListOfEdges[0]);
-                                tempListOfEdges.Remove(tempListOfEdges[0]);
-                            }
-                        }
-                        if (tempListOfEdges[0].root.Equals(i.Key) || tempListOfEdges[0].destination.Equals(i.Key))
-                        {
-                            Console.WriteLine("True!");
-                            isEdgeFoundValid = true;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Skeetering " + tempListOfEdges[0]);
-                            tempListOfEdges.Remove(tempListOfEdges[0]);
-                        }
-                    }
+                //Thread.Sleep(1000);
+                Console.WriteLine("Do start");
+                //If smallestEdge contains something from nodesToVisit, roll with it, else ignore, and repeat iteratively
+                
+                currentListOfEdges = graph.BubbleSortEdgeList(); //Returns a sorted list of edges
 
-                } while (isEdgeFoundValid == false && tempListOfEdges.Count > 0);
-                isEdgeFoundValid = false;
+                //Removal logic here:
 
-                Console.WriteLine("Adding edge: " + tempListOfEdges[0]);
-                minSpanTree.adjList[tempListOfEdges[0].root].Add(tempListOfEdges[0].destination, tempListOfEdges[0].edgeWeight); //Adds smallest edge in list to the adjacency list
-                if (minSpanTree.AreCycles() == true)
+                foreach (var i in graph.ToEdgeList())
                 {
-                    minSpanTree.adjList[tempListOfEdges[0].root].Remove(tempListOfEdges[0].destination);
-                } //Wow this is janky huh, need a better system but it's not too important
-                else //The adjlist has a key thing is cycling still when doing the .remove
-                {
-                    try
+                    Console.WriteLine("a");
+                    if (nodesToVisit.Contains(i.root) && nodesToVisit.Contains(i.destination))
                     {
-                        nodesToVisit.Remove(tempListOfEdges[0].root);
-                        nodesToVisit.Remove(tempListOfEdges[0].destination);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Error removing nodes from the list of nodes left to visit: ");
-                        Console.WriteLine(e.ToString());
+                        //Removes only if both the source and destination node haven't been visited yet
+                        currentListOfEdges.Remove(i);
+                        Console.WriteLine("Removing " + i);
                     }
                 }
-                tempListOfEdges.RemoveAt(0);
-            }
+                Console.WriteLine("a1");
+                foreach (var i in blacklistListOfEdges)
+                {
+                    Console.WriteLine("b");
+                    currentListOfEdges.Remove(i); //So it doesn't keep selecting previously-selected edges
+                }
+                Console.WriteLine("b1");
+                //End of removal logic
 
-            double MSTLength = 0;
-            foreach (var i in minSpanTree.adjList.Values)
-            {
-                MSTLength += i.Values.Sum();
-            }
+                currentSmallestEdge = currentListOfEdges[0]; //Problem: currentListOfEdges is SHORT
+                Console.WriteLine("b2");
+                foreach (var i in currentListOfEdges)
+                {
+                    Console.WriteLine("c");
+                    if (i.edgeWeight < currentSmallestEdge.edgeWeight)
+                    {
 
-            Console.WriteLine("The minimum spanning tree is: ");
-            var edgeList = minSpanTree.ToEdgeList();
+                        currentSmallestEdge = i; //Gets the smallest valid edge
+                    }
+                    Console.WriteLine("Current smallest edge is: " + currentSmallestEdge.root + ", " + currentSmallestEdge.destination + ": " + currentSmallestEdge.edgeWeight);
+                }
+                Console.WriteLine("c1");
 
-            foreach (var i in edgeList)
-            {
-                Console.WriteLine(i.root + " ; " + i.destination + " ; " + i.edgeWeight);
-            }
+                minSpanTree.AddEdge(currentSmallestEdge.root, currentSmallestEdge.destination, currentSmallestEdge.edgeWeight, true);
+                if (!minSpanTree.AreCycles()) //No cycles present in testing so this works
+                {
+                    Console.WriteLine("d");
+                    //No cycles, keep it in the MST
+                    //Removes the nodes which will now certainly have been visited from nodesToVisit:
+                    nodesToVisit.Remove(currentSmallestEdge.root);
+                    nodesToVisit.Remove(currentSmallestEdge.destination);
 
-            return MSTLength;
+                    blacklistListOfEdges.Add(currentSmallestEdge); //Used in finding which edges are valid to select smallest edges from as the algorithm progresses 
+                }
+                else
+                {
+                    Console.WriteLine("d0");
+                    //Cycle, remove the added edge as it should not be a part of the MST
+                    Console.WriteLine("Cycle detected");
+                    minSpanTree.RemoveEdge(currentSmallestEdge.root, currentSmallestEdge.destination);
+                    blacklistListOfEdges.Add(currentSmallestEdge); //Blacklists edge that generates a cycle
+                }
+
+                Console.WriteLine("Do While ran once");
+                
+            } while (nodesToVisit.Count > 0);
+
+            Console.WriteLine("Oh hey you're out of the do while");
 
 
+            //At the end I could make the graph undirected again for returning it??
+
+            MST = SumOfMSTGraph();
+            return MST;
+        }
+        public double GetMST()
+        {
+            return MST;
         }
     }
 }

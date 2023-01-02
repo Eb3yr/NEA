@@ -625,9 +625,21 @@ namespace NEA.Classes
             switch (ShowGraphButton.Text.ToLower())
             {
                 case "show graph":
-                    graphWindow.UpdateAdjList(currentAdjList);
-                    graphWindow.Visible = true;
-                    ShowGraphButton.Text = "Hide graph";
+                    try
+                    {
+                        graphWindow.UpdateAdjList(currentAdjList);
+                        graphWindow.Visible = true;
+                        ShowGraphButton.Text = "Hide graph";
+                    }
+                    catch (Exception ex)
+                    {
+                        //Re-create a new graphWindow
+                        //Prevents an exception caused by the graphWindow being closed by the user and no longer existing
+                        graphWindow = new GraphWindow<string>();
+                        graphWindow.UpdateAdjList(currentAdjList);
+                        graphWindow.Visible = true;
+                        ShowGraphButton.Text = "Hide graph";
+                    }
                     break;
 
                 case "hide graph":
@@ -647,13 +659,14 @@ namespace NEA.Classes
                     switch (AlgorithmListBox.SelectedItem)
                     {
                         case "Kruskals":
-                            Console.WriteLine("Kruskals isn't implemented yet, sorry!");
-                            //KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
-                            //MST = KruskalsAlgorithm.FindMST();
-                            //SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
+                            //Console.WriteLine("isn't implemented yet, sorry!"); THE JOY I GET COMMENTING THIS OUT
+                            KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
+                            MST = KruskalsAlgorithm.FindMST();
+                            SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
                             break;
 
                         case "Prims":
+                            //Prims is broken!
                             PrimsAlgorithm = new Prims<string>(currentAdjList);
                             PrimsAlgorithm.SetAdjList(currentAdjList);
                             MST = PrimsAlgorithm.FindMST();
@@ -661,7 +674,17 @@ namespace NEA.Classes
                             break;
 
                         case "Dijkstras":
+                            //Dijkstras is broken!
                             Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
+                            break;
+
+                        case "Cycle detection":
+
+                            //Do a depth first search of the adjacency list, show a label that states if there is a cycle in the graph
+                            //This label needs to be updated if the graph is updated, eg by loading a new graph or by adding, updating or removing nodes or edges.
+                            MSTAdjList = currentAdjList.DeepCopy(); //PLEASE for the love of god work, I hate cloning in c# I hate cloning in c# i HATE CLONING IN C#
+                            ContainsCyclesLabel.Text = "Contains cycles: " + currentAdjList.AreCycles(); //This updates the current adjacency list, fix it!
+                            //AreCycles() isn't actually making the graph fully undirected. Get on this later!
                             break;
 
                         case null:
@@ -673,6 +696,8 @@ namespace NEA.Classes
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine("Error occured");
+                    Console.WriteLine(ex.Message);
                     Console.WriteLine("Reload the original graph!");
                 }
             }

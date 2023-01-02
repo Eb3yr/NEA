@@ -10,7 +10,7 @@ namespace NEA.Classes
     public class AdjacencyList<T>
     {
         public Dictionary<T, Dictionary<T, double>> adjList; //need to make this protected later and sort out all of that
-        bool isDirected;
+        bool isDirected; //This really ought to be protected but I'm abusing the fact that it isn't in AdjacencyList<T>.DeepCopy()
         public AdjacencyList()
         {
             adjList = new Dictionary<T, Dictionary<T, double>>();
@@ -288,14 +288,9 @@ namespace NEA.Classes
 
             return adjMatrixReal;
         }
-        private void SortAdjList()
-        {
-            //Should sort so that all source nodes are in alphabetical order, and the dictionary of edges should be in alphabetical order in respect to destination nodes
-            //May not be implemented, hence private. 
-        }
         public List<(T root, T destination, double edgeWeight)> BubbleSortEdgeList() //Bubble sorts an edge list and returns a List of edges, moved from the Kruskal class 
         {
-            var listOfEdges = ToEdgeList();
+            var listOfEdges = this.ToEdgeList();
             int swapsPerIteration;
             (T root, T destination, double edgeWeight) tempEdge;
             do
@@ -317,7 +312,24 @@ namespace NEA.Classes
         }
 
         #endregion
+        public AdjacencyList<T> DeepCopy() //Shallow copy won't work since adjList is a dictionary of dictionaries. Must do a deep copy.
+        {
+            AdjacencyList<T> tempAdjListClass = new AdjacencyList<T>();
+            Dictionary<T, Dictionary<T, double>> tempAdjList = new Dictionary<T, Dictionary<T, double>>();
+            Dictionary<T, double> tempValue;
 
+            foreach (var i in adjList)
+            {
+                tempValue = new Dictionary<T, double>();
+                foreach (var f in i.Value)
+                {
+                    tempValue.Add(f.Key, f.Value);
+                }
+                tempAdjListClass.adjList.Add(i.Key, tempValue);
+            }
+            tempAdjListClass.isDirected = isDirected;
+            return tempAdjListClass;
+        }
         public bool IsConnected()
         {
             return default;
@@ -347,22 +359,18 @@ namespace NEA.Classes
                 nodes.Add(i, false);
             }
 
+            //Deletes duplicate edges which make up an undirected graph for the sake of this algorithm.
+            //I think this is messing stuff up? I need to be careful with it. Make a new duplicate adjacencyList to edit!
 
+            //Make this into an independent method later
 
-            //Delete half of nodes: with adj lists say nodes can only be described in alphabetical order? Eg A->D but not D->A?
-            //Make this into an independent protected method later
-
-            T srcNode, destNode;
-            List<T> nodeList = nodes.Keys.ToList(); //Using exclusively for comparing indexes of nodes 
-            for (int i = 0; i < nodes.Count; i++)
+            foreach (var i in adjList)
             {
-                srcNode = adjList.ElementAt(i).Key; //Source node of edge
-                for (int j = 0; j < adjList[srcNode].Count; j++) //Count number of edges
+                foreach (var f in i.Value)
                 {
-                    destNode = adjList[srcNode].ElementAt(j).Key; //Destination node of edge
-                    if (nodeList.IndexOf(srcNode) > nodeList.IndexOf(destNode))
+                    if (adjList[f.Key].ContainsKey(i.Key))
                     {
-                        adjList[srcNode].Remove(destNode); //Removes duplicate edge
+                        adjList[f.Key].Remove(i.Key);
                     }
                 }
             }
