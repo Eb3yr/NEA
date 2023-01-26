@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using NEA.Classes.Algorithms;
+using System.Threading;
 
 namespace NEA.Classes
 {
-    public partial class GUIWindow : Form //Might make it generic and parse in String in Program.cs
-    { //Go through and organise methods into regions and put them in a sensible order to improve readability
+    public partial class GUIWindow : Form //Might make it generic and parse in String in Program.cs in the future. Right now it's hard-coded to use strings for node names
+    {
         protected AdjacencyList<string> currentAdjList, savedAdjList, tempAdjList, MSTAdjList;
         protected GraphWindow<string> graphWindow;
         protected Kruskals<string> KruskalsAlgorithm;
@@ -24,8 +25,6 @@ namespace NEA.Classes
         public GUIWindow()
         {
             InitializeComponent();
-
-            //It's setuppin' time
             currentAdjList = new AdjacencyList<string>();
             MSTAdjList = new AdjacencyList<string>();
             graphWindow = new GraphWindow<string>();
@@ -622,6 +621,8 @@ namespace NEA.Classes
 
         private void ShowGraphButton_Click(object sender, EventArgs e)
         {
+            //Is it necessary to run the graphWindow in a new thread? It seems to function fine without doing so
+
             switch (ShowGraphButton.Text.ToLower())
             {
                 case "show graph":
@@ -647,6 +648,8 @@ namespace NEA.Classes
                     ShowGraphButton.Text = "Show graph";
                     break;
             }
+
+            
         }
 
         private void RunAlgorithmButton_Click(object sender, EventArgs e)
@@ -659,7 +662,7 @@ namespace NEA.Classes
                     switch (AlgorithmListBox.SelectedItem)
                     {
                         case "Kruskals":
-                            //Console.WriteLine("isn't implemented yet, sorry!"); THE JOY I GET COMMENTING THIS OUT
+                            MSTAdjList = currentAdjList.DeepCopy();
                             KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
                             MST = KruskalsAlgorithm.FindMST();
                             SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
@@ -667,6 +670,7 @@ namespace NEA.Classes
 
                         case "Prims":
                             //Prims is broken!
+                            MSTAdjList = currentAdjList.DeepCopy();
                             PrimsAlgorithm = new Prims<string>(currentAdjList);
                             PrimsAlgorithm.SetAdjList(currentAdjList);
                             MST = PrimsAlgorithm.FindMST();
@@ -682,7 +686,7 @@ namespace NEA.Classes
 
                             //Do a depth first search of the adjacency list, show a label that states if there is a cycle in the graph
                             //This label needs to be updated if the graph is updated, eg by loading a new graph or by adding, updating or removing nodes or edges.
-                            MSTAdjList = currentAdjList.DeepCopy(); //PLEASE for the love of god work, I hate cloning in c# I hate cloning in c# i HATE CLONING IN C#
+                            MSTAdjList = currentAdjList.DeepCopy();
                             ContainsCyclesLabel.Text = "Contains cycles: " + currentAdjList.AreCycles(); //This updates the current adjacency list, fix it!
                             //AreCycles() isn't actually making the graph fully undirected. Get on this later!
                             break;

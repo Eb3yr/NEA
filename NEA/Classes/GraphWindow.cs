@@ -28,15 +28,14 @@ namespace NEA.Classes
             this.Location = new Point(0, 0);
             //this.Size = new Size(1600, 1250);
 
-            //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable sounds good.
+            //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable might work - talking about multithreading here
             nodeDict = new Dictionary<T, Point>();
             edgePen = new Pen(Color.Orange, 3); //Edges are orange
             nodeBrush = new SolidBrush(Color.Red); //Nodes are red
             textBrush = new SolidBrush(Color.Black); //Text is dark gray
             fontSize = 12; //A constant to define the size of node names and edge weights
             textFont = new Font(DefaultFont.Name, fontSize, DefaultFont.Style);
-            nodeRadius = 40;
-            //Use an actual Font class for this later
+            nodeRadius = 20;
             //Need alternate brushes for nodes and edges when they're selected
         }
 
@@ -52,17 +51,10 @@ namespace NEA.Classes
             currentEdgeList = inAdjList.ToEdgeList();
             this.Refresh();
         }
-
-        private void GraphWindow_Load(object sender, EventArgs e) //Does stuff on loading
-        {
-
-        }
         private void GraphWindow_Paint(object sender, PaintEventArgs e) //Keep things centralised around here
         {
             g = e.Graphics;
             CalculateNodeCoords();
-
-            
 
             if (nodeDict.Count == 0)
             {
@@ -146,17 +138,16 @@ namespace NEA.Classes
         }
         private void DrawNode(string name, Point coords, int radius)
         {
-            Rectangle rect = new Rectangle(coords.X - radius, coords.Y - radius, radius, radius);
+            Rectangle rect = new Rectangle(coords.X - radius, coords.Y - radius, 2 * radius, 2 * radius);
+            
+            StringFormat format = new StringFormat(); //Using to centre text over the node
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            format.Trimming = StringTrimming.EllipsisCharacter;
+            //Could add a method that automatically scales font size if the rectangle area is exceeded by the node name
+
             g.FillEllipse(nodeBrush, rect);
-
-            //Calculate the rectangle the contains the circle of centre xCoord, yCoord, and specified radius
-
-            //Make a dictionary of nodes for this graph which gets refreshed every time there's a change in the number of nodes in the graph (updating only when the form is used)
-            //Then I can draw the name of each node in the circles
-            g.DrawString(name, textFont, textBrush, coords);
-
-
-            //Draw nodes on top of edges and labels on top of both or else things will go funky
+            g.DrawString(name, textFont, textBrush, rect, format);
         }
         private void GraphWindow_Resize(object sender, EventArgs e)
         {

@@ -60,10 +60,7 @@
             this.CheckBoxUpdate = new System.Windows.Forms.CheckBox();
             this.CheckBoxAdd = new System.Windows.Forms.CheckBox();
             this.ShowGraphButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.RunAlgorithmButton = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.ReLoadOriginalButton = new System.Windows.Forms.Button();
             this.ContainsCyclesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -79,7 +76,6 @@
             this.AlgorithmListBox.Items.AddRange(new object[] {
             "Kruskals",
             "Prims",
-            "Dijkstras",
             "Cycle detection"});
             this.AlgorithmListBox.Location = new System.Drawing.Point(561, 34);
             this.AlgorithmListBox.Name = "AlgorithmListBox";
@@ -380,17 +376,6 @@
             this.ShowGraphButton.UseVisualStyleBackColor = true;
             this.ShowGraphButton.Click += new System.EventHandler(this.ShowGraphButton_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(156, 321);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(555, 13);
-            this.label1.TabIndex = 50;
-            this.label1.Text = "Graph is directed checkbox WORKS for adding to graph, but there\'s nothing ensurin" +
-    "g it\'s actually true after flicking it.";
-            this.label1.Visible = false;
-            // 
             // RunAlgorithmButton
             // 
             this.RunAlgorithmButton.Location = new System.Drawing.Point(561, 214);
@@ -400,26 +385,6 @@
             this.RunAlgorithmButton.Text = "Run algorithm";
             this.RunAlgorithmButton.UseVisualStyleBackColor = true;
             this.RunAlgorithmButton.Click += new System.EventHandler(this.RunAlgorithmButton_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(245, 253);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(271, 13);
-            this.label4.TabIndex = 53;
-            this.label4.Text = "Dijkstras needs its own interface as its between 2 nodes";
-            this.label4.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(245, 266);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(177, 13);
-            this.label5.TabIndex = 54;
-            this.label5.Text = "Just do Kruskals and Prims for now?";
-            this.label5.Visible = false;
             // 
             // ReLoadOriginalButton
             // 
@@ -448,10 +413,7 @@
             this.ClientSize = new System.Drawing.Size(803, 483);
             this.Controls.Add(this.ContainsCyclesLabel);
             this.Controls.Add(this.ReLoadOriginalButton);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.RunAlgorithmButton);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.ShowGraphButton);
             this.Controls.Add(this.CheckBoxEditEdges);
             this.Controls.Add(this.CheckBoxEditNodes);
@@ -521,10 +483,7 @@
         private System.Windows.Forms.CheckBox CheckBoxAdd;
         private System.Windows.Forms.ColumnHeader DestNodesColumn;
         private System.Windows.Forms.Button ShowGraphButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button RunAlgorithmButton;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button ReLoadOriginalButton;
         private System.Windows.Forms.Label ContainsCyclesLabel;
     }

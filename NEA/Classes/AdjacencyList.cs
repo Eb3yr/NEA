@@ -340,12 +340,6 @@ namespace NEA.Classes
         }
         public bool AreCycles() //Doing a depth first search that returns true if it detects a cycle
         {
-            //PROBLEM FOUND!
-            //Any use case will be using bidirectional edges, so I can assume every edge is bidirectional
-            //The source node is set to visited, then it finds an adjacent node. That adjacent node has an edge connection to the source node, sees it is visited,
-            //and will detect a cycle.
-            //Solution? Remove half of the edges, so that there is only one edge referring to each edge, instead of one for each direction.
-            //Solution worked!
 
             var nodes = new Dictionary<T, bool>(); //Dictionary of all nodes and boolean flag visited
 
@@ -423,7 +417,6 @@ namespace NEA.Classes
 
             }
         }  
-        private void ViewNodeInfo() { }//Placeholder, likely won't be used, hence private
         
         /////////////// SORT OUT ERROR HANDLING FOR ALL METHODS IN THIS CLASS LATER, DONT REMOVE UNTIL DONE (　o=^•ェ•)o　┏━┓
     }
