@@ -31,7 +31,7 @@ namespace NEA.Classes
             //currentEdgeList =; //Need to be able to import this. Maybe through a listener? A shared variable might work - talking about multithreading here
             nodeDict = new Dictionary<T, Point>();
             edgePen = new Pen(Color.Orange, 3); //Edges are orange
-            nodeBrush = new SolidBrush(Color.Red); //Nodes are red
+            nodeBrush = new SolidBrush(Color.OrangeRed); //Nodes are orange-red
             textBrush = new SolidBrush(Color.Black); //Text is dark gray
             fontSize = 12; //A constant to define the size of node names and edge weights
             textFont = new Font(DefaultFont.Name, fontSize, DefaultFont.Style);
