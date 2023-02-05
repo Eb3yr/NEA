@@ -398,6 +398,7 @@ namespace NEA.Classes
                         if (SrcNodeTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -419,6 +420,7 @@ namespace NEA.Classes
                         if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -445,6 +447,7 @@ namespace NEA.Classes
                         if (SrcNodeTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -463,9 +466,10 @@ namespace NEA.Classes
                         break;
 
                     case "Add Edge":
-                        if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                        if (SrcNodeTextBox.Text.Trim().Length == 0 | DestNodeTextBox.Text.Trim().Length == 0 | EdgeWeightTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -484,9 +488,10 @@ namespace NEA.Classes
                         break;
 
                     case "Update Edge":
-                        if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0 || EdgeWeightTextBox.Text.Trim().Length == 0)
+                        if (SrcNodeTextBox.Text.Trim().Length == 0 | DestNodeTextBox.Text.Trim().Length == 0 | EdgeWeightTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -505,9 +510,10 @@ namespace NEA.Classes
                         break;
 
                     case "Delete Edge":
-                        if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
+                        if (SrcNodeTextBox.Text.Trim().Length == 0 | DestNodeTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";
+                            success = false;
                         }
                         else
                         {
@@ -663,23 +669,26 @@ namespace NEA.Classes
                     {
                         case "Kruskals":
                             MSTAdjList = currentAdjList.DeepCopy();
-                            KruskalsAlgorithm = new Kruskals<string>(currentAdjList);
+                            KruskalsAlgorithm = new Kruskals<string>(currentAdjList.DeepCopy());
                             MST = KruskalsAlgorithm.FindMST();
                             SwitchCurrentAndSaved(KruskalsAlgorithm.GetMSTAdjList());
+                            graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
                         case "Prims":
                             //Prims is broken!
                             MSTAdjList = currentAdjList.DeepCopy();
-                            PrimsAlgorithm = new Prims<string>(currentAdjList);
+                            PrimsAlgorithm = new Prims<string>(currentAdjList.DeepCopy());
                             PrimsAlgorithm.SetAdjList(currentAdjList);
                             MST = PrimsAlgorithm.FindMST();
                             SwitchCurrentAndSaved(PrimsAlgorithm.GetMSTAdjList());
+                            graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
                         case "Dijkstras":
                             //Dijkstras is broken!
                             Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
+                            graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
                         case "Cycle detection":
@@ -688,7 +697,7 @@ namespace NEA.Classes
                             //This label needs to be updated if the graph is updated, eg by loading a new graph or by adding, updating or removing nodes or edges.
                             MSTAdjList = currentAdjList.DeepCopy();
                             ContainsCyclesLabel.Text = "Contains cycles: " + currentAdjList.AreCycles(); //This updates the current adjacency list, fix it!
-                            //AreCycles() isn't actually making the graph fully undirected. Get on this later!
+                            graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
                         case null:
@@ -712,12 +721,12 @@ namespace NEA.Classes
         }
         private void SwitchCurrentAndSaved(AdjacencyList<string> inAdjList)
         {
-            MSTAdjList = currentAdjList;
+            MSTAdjList = currentAdjList.DeepCopy();
             currentAdjList = inAdjList;
 
         }
 
-        private void AlgorithmListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void AlgorithmListBox_SelectedIndexChanged(object sender, EventArgs e) //Not implemented
         {
             if ((string)AlgorithmListBox.SelectedItem == "Dijkstras")
             {
@@ -731,10 +740,11 @@ namespace NEA.Classes
 
         private void ReLoadOriginalButton_Click(object sender, EventArgs e)
         {
-            currentAdjList = MSTAdjList;
+            currentAdjList = MSTAdjList.DeepCopy();
             ReLoadOriginalButton.Hide();
             UpdateListView();
             UpdateStats();
+            graphWindow.UpdateAdjList(currentAdjList);
         }
 
         #endregion

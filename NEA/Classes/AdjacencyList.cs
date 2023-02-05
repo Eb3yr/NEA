@@ -65,19 +65,24 @@ namespace NEA.Classes
         {
             adjList[srcNode][destNode] = newWeight;
         }
-        public void RemoveNode(T nodeKey) 
+        public void RemoveNode(T nodeKey)
         {
-            foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList)
+            //Foreach throws a collection modified error
+            //This workaround is janky and not the most efficient thing but it works very easily
+            AdjacencyList<T> tempAdjList = this.DeepCopy();
+            foreach (KeyValuePair<T, Dictionary<T, double>> i in tempAdjList.adjList)
             {
                 foreach (T f in i.Value.Keys) //Checking each list of adjacent nodes in adjacency list
                 {
                     if (f.Equals(nodeKey))
                     {
+                        Console.WriteLine("Removing i.Value.Keys once");
                         adjList[i.Key].Remove(f); //Removes any references to the node to be removed in the neighbouring nodes list of other nodes
                     }
                 }
                 if (i.Key.Equals(nodeKey)) //Checking each key in adjacency list
                 {
+                    Console.WriteLine("Removing i.key: " + nodeKey);
                     adjList.Remove(i.Key); //Removes the node in the adjacency list
                 }
             }
@@ -236,14 +241,10 @@ namespace NEA.Classes
 
             foreach (T i in adjList.Keys) //Populate list of nodes with boolean flag visited attached
             {
-                Console.WriteLine("adjlist has a key");
                 nodes.Add(i, false);
             }
 
             //Deletes duplicate edges which make up an undirected graph for the sake of this algorithm.
-            //I think this is messing stuff up? I need to be careful with it. Make a new duplicate adjacencyList to edit!
-
-            //Make this into an independent method later
 
             foreach (var i in adjList)
             {

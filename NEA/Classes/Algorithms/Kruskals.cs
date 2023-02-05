@@ -68,8 +68,6 @@ namespace NEA.Classes.Algorithms
             nodesToVisit.RemoveAt(0); //Removes the first node to visit so that the algorithm can get started with the selection bit, otherwise it removes everything
             do 
             {
-                //Thread.Sleep(1000);
-                //Console.WriteLine("Do start");
                 //If smallestEdge contains something from nodesToVisit, roll with it, else ignore, and repeat iteratively
                 
                 currentListOfEdges = graph.BubbleSortEdgeList(); //Returns a sorted list of edges
@@ -78,41 +76,32 @@ namespace NEA.Classes.Algorithms
 
                 foreach (var i in graph.ToEdgeList())
                 {
-                    //Console.WriteLine("a");
                     if (nodesToVisit.Contains(i.root) && nodesToVisit.Contains(i.destination))
                     {
                         //Removes only if both the source and destination node haven't been visited yet
                         currentListOfEdges.Remove(i);
-                        //Console.WriteLine("Removing " + i);
                     }
                 }
-                //Console.WriteLine("a1");
+
                 foreach (var i in blacklistListOfEdges)
                 {
-                    //Console.WriteLine("b");
                     currentListOfEdges.Remove(i); //So it doesn't keep selecting previously-selected edges
                 }
-                //Console.WriteLine("b1");
                 //End of removal logic
 
                 currentSmallestEdge = currentListOfEdges[0]; //Problem: currentListOfEdges is SHORT
-                //Console.WriteLine("b2");
                 foreach (var i in currentListOfEdges)
                 {
-                    //Console.WriteLine("c");
                     if (i.edgeWeight < currentSmallestEdge.edgeWeight)
                     {
 
                         currentSmallestEdge = i; //Gets the smallest valid edge
                     }
-                    //Console.WriteLine("Current smallest edge is: " + currentSmallestEdge.root + ", " + currentSmallestEdge.destination + ": " + currentSmallestEdge.edgeWeight);
                 }
-                //Console.WriteLine("c1");
 
                 minSpanTree.AddEdge(currentSmallestEdge.root, currentSmallestEdge.destination, currentSmallestEdge.edgeWeight, true);
                 if (!minSpanTree.AreCycles()) //No cycles present in testing so this works
                 {
-                    //Console.WriteLine("d");
                     //No cycles, keep it in the MST
                     //Removes the nodes which will now certainly have been visited from nodesToVisit:
                     nodesToVisit.Remove(currentSmallestEdge.root);
@@ -122,21 +111,12 @@ namespace NEA.Classes.Algorithms
                 }
                 else
                 {
-                    //Console.WriteLine("d0");
                     //Cycle, remove the added edge as it should not be a part of the MST
-                    //Console.WriteLine("Cycle detected");
                     minSpanTree.RemoveEdge(currentSmallestEdge.root, currentSmallestEdge.destination);
                     blacklistListOfEdges.Add(currentSmallestEdge); //Blacklists edge that generates a cycle
                 }
-
-               // Console.WriteLine("Do While ran once");
                 
             } while (nodesToVisit.Count > 0);
-
-            //Console.WriteLine("Oh hey you're out of the do while");
-
-
-            //At the end I could make the graph undirected again for returning it??
 
             MST = SumOfMSTGraph();
             return MST;
