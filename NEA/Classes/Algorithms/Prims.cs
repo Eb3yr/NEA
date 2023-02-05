@@ -41,7 +41,7 @@ namespace NEA.Classes.Algorithms
             double MSTVal = 0;
             int rowToCross = 0;
             bool found = false, breakFlag = false;
-            List<(int x, int y)> validNodes = new List<(int x, int y)>();
+            List<(int x, int y)> validEdges = new List<(int x, int y)>();
             (int x, int y) smallestNode = default;
 
             foreach (var i in graph.nodeNames)
@@ -55,7 +55,7 @@ namespace NEA.Classes.Algorithms
                 for (int i = 0; i < graph.nodeNames.Length; i++)
                 {
                     graph.adjMatrix[rowToCross, i].exists = false;
-                    validNodes.Remove((rowToCross, i));
+                    validEdges.Remove((rowToCross, i));
                 }
 
                 //Sausage: 
@@ -63,12 +63,13 @@ namespace NEA.Classes.Algorithms
                 {
                     if (graph.adjMatrix[i, rowToCross].exists == true) //Iterates down the column of the previously selected node. At start this is 0, or 'A'
                     {
-                        validNodes.Add((i, rowToCross));
+                        validEdges.Add((i, rowToCross));
                     }
                 }
 
                 //Circle:
                 smallestNode = graph.GetSmallestEdge(ref found);
+
                 //Console.WriteLine("Smallest edge found is " + found + " & the coordinates are " + smallestNode); //Used for debugging
                 if (found == true)
                 {

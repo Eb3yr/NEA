@@ -504,7 +504,7 @@ namespace NEA.Classes
                         }
                         break;
 
-                    case "Delete Ege":
+                    case "Delete Edge":
                         if (SrcNodeTextBox.Text.Trim().Length == 0 || DestNodeTextBox.Text.Trim().Length == 0)
                         {
                             UpdateMsgLabel.Text = "Please fill all necessary fields!";

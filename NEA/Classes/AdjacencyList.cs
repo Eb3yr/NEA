@@ -18,123 +18,10 @@ namespace NEA.Classes
         }
 
         #region Adding, Editing and Removing Nodes and Edges
-
-        //public void AddNode() //Make a new node from scratch with a simple UI. Obselete with the new GUI
-        //{
-        //    bool exit = false;
-        //    T nodeKey = default(T); //Prevents it from breaking if nodeKey is empty
-        //    Dictionary<T, double> adjacentNodes = new Dictionary<T, double>();
-        //    adjacentNodes = new Dictionary<T, double>();
-        //    do
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("1. Set name of new node\n2. Alter the list of neighbouring nodes\n3. Add the node with the set name and list of neighbours\n9. Exit without adding a node");
-        //        switch (int.Parse(Console.ReadLine()))
-        //        {
-        //            case 1:
-        //                while (true)
-        //                {
-        //                    try
-        //                    {
-        //                        Console.WriteLine("Please enter a name for the new node: ");
-        //                        nodeKey = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)); //Converts the input to the variable type of nodeKey
-        //                        break;
-        //                    }
-        //                    catch (Exception)
-        //                    {
-        //                        Console.WriteLine("That input was invalid! The data type of node names is " + typeof(T).Name + ".\n");
-        //                        //Thread.Sleep(2500);
-        //                        //Console.Clear();
-        //                    }
-        //                }
-        //                break;
-
-        //            case 2:
-
-        //                try
-        //                {
-        //                    Console.WriteLine("\n1. Add a neighbouring node\n2. Remove a neighbouring node\n3. View a list of neighbouring nodes\n9. Go back");
-        //                    int choice = int.Parse(Console.ReadLine());
-        //                    switch (choice)
-        //                    {
-        //                        case 1:
-        //                            Console.WriteLine("Please enter the name of the neighbouring node: ");
-        //                            T adjNode = (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
-
-        //                            Console.WriteLine("Please enter the weight of the connecting edge: ");
-        //                            double edgeWeight = double.Parse(Console.ReadLine());
-
-        //                            adjacentNodes.Add(adjNode, edgeWeight);
-        //                            break;
-
-        //                        case 2:
-        //                            Console.WriteLine("please enter the name of the neighbouring node to remove: ");
-        //                            adjNode = (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
-
-        //                            adjacentNodes.Remove(adjNode);
-        //                            break;
-
-        //                        case 3:
-        //                            Console.WriteLine("List of neighbouring nodes: ");
-        //                            foreach (KeyValuePair<T, double> i in adjacentNodes)
-        //                            {
-        //                                Console.WriteLine(i.Key + ", " + i.Value);
-        //                            }
-        //                            Console.WriteLine();
-        //                            break;
-
-        //                        case 9:
-        //                            break;
-
-        //                    }
-
-        //                }
-        //                catch (Exception)
-        //                {
-        //                    Console.WriteLine("Invalid input.\n");
-        //                }
-        //                break;
-
-        //            case 3:
-        //                adjList.Add(nodeKey, adjacentNodes);
-        //                Console.WriteLine("The new node has been added!\n");
-        //                Thread.Sleep(1000);
-        //                exit = true;
-        //                break;
-
-        //            case 9:
-        //                exit = true;
-        //                break;
-
-        //        }
-
-        //        Console.Clear();
-        //    } while (exit == false);
-        //}
         public void AddNode(T nodeKey) //Generates a new node from the input and an empty list of adjacent nodes
         {
             adjList.Add(nodeKey, new Dictionary<T, double>());
         }
-        //public void AddEdge() //Obsolete with new GUI
-        //{
-        //    Console.WriteLine("Input source node: ");
-        //    T srcNode = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)); //Converts input to var type T
-        //    Console.WriteLine("Input destination node: ");
-        //    T destNode = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)); //Converts input to var type T
-        //    Console.WriteLine("Input edge weight: ");
-        //    double edgeWeight = int.Parse(Console.ReadLine());
-        //    Console.WriteLine("Is the edge directed? Y/N"); //Make arrow key menu maybe? Unless figure out forms
-        //    bool hasDirection;
-        //    if (Console.ReadLine().ToUpper() == "Y")
-        //    {
-        //        hasDirection = true;
-        //    }
-        //    else
-        //    {
-        //        hasDirection = false;
-        //    }
-        //    AddEdge(srcNode, destNode, edgeWeight, hasDirection);
-        //}
         public void AddEdge(T nodeKey, T destinationNode, double weight, bool hasDirection)
         {
             adjList[nodeKey].Add(destinationNode, weight);
@@ -178,7 +65,7 @@ namespace NEA.Classes
         {
             adjList[srcNode][destNode] = newWeight;
         }
-        public void RemoveNode(T nodeKey) //I can't even remember if this works, check it lol
+        public void RemoveNode(T nodeKey) 
         {
             foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList)
             {
@@ -330,7 +217,7 @@ namespace NEA.Classes
             tempAdjListClass.isDirected = isDirected;
             return tempAdjListClass;
         }
-        public bool IsConnected()
+        public bool IsConnected() //Not implemented
         {
             return default;
         }
@@ -405,7 +292,7 @@ namespace NEA.Classes
             } while (dfsStack.Count() != 0);
             return cycleDetected;
         }      
-        public void PrintAdjList()
+        public void PrintAdjList() //For debugging purposes
         {
             Console.WriteLine("Printing adjacency list: ");
             foreach (var i in adjList)
