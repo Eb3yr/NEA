@@ -220,7 +220,9 @@ namespace NEA.Classes
         {
             if (IsSaveToVar.Checked == true)
             {
-                savedAdjList = currentAdjList;
+                savedAdjList = currentAdjList.DeepCopy();
+                UpdateListView();
+                graphWindow.UpdateAdjList(currentAdjList);
             }
             else
             {
@@ -249,16 +251,27 @@ namespace NEA.Classes
 
         private void LoadGraph_Click(object sender, EventArgs e)
         {
-            if (savedAdjList != null) //if instantiated
+            switch (IsSaveToVar.Checked)
             {
-                currentAdjList = savedAdjList;
+                case true:
+                    if (savedAdjList != null) //if instantiated
+                    {
+                        Console.WriteLine("Loading");
+                        currentAdjList = savedAdjList.DeepCopy();
+                        UpdateListView();
+                        graphWindow.UpdateAdjList(currentAdjList);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error loading from file!");
+                    }
+                    //Doesn't do anything if there's nothing in the saved adjacency list to prevent accidental data loss
+                    break;
+
+                case false:
+                    LoadFileDialogue.ShowDialog();
+                    break;
             }
-            else
-            {
-                Console.WriteLine("Erorr loading from file!");
-            }
-            //Doesn't do anything if there's nothing in the saved adjacency list to prevent accidental data loss
-            LoadFileDialogue.ShowDialog();
         }
         private void LoadFromFile()
         {
@@ -688,6 +701,9 @@ namespace NEA.Classes
                         case "Dijkstras":
                             //Dijkstras is broken!
                             Console.WriteLine("Dijkstras isn't implemented yet, sorry!");
+                            DijkstrasAlgorithm = new Dijkstras<string>(currentAdjList.DeepCopy());
+                            MST = DijkstrasAlgorithm.FindShortestPathLength(DijkstrasSRC.Text, DijkstrasDEST.Text);
+                            SwitchCurrentAndSaved(DijkstrasAlgorithm.ReturnShortestPathGraph());
                             graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
@@ -726,15 +742,21 @@ namespace NEA.Classes
 
         }
 
-        private void AlgorithmListBox_SelectedIndexChanged(object sender, EventArgs e) //Not implemented
+        private void AlgorithmListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if ((string)AlgorithmListBox.SelectedItem == "Dijkstras")
             {
-
+                DijkstrasSRC.Visible = true;
+                DijkstrasDEST.Visible = true;
+                DijkstrasSRCLabel.Visible = true;
+                DijkstrasDESTLabel.Visible = true;
             }
             else
             {
-                //Hide dijkstras-specific stuff
+                DijkstrasSRC.Visible = false;
+                DijkstrasDEST.Visible = false;
+                DijkstrasSRCLabel.Visible = false;
+                DijkstrasDESTLabel.Visible = false;
             }
         }
 

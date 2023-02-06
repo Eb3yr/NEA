@@ -63,6 +63,10 @@
             this.RunAlgorithmButton = new System.Windows.Forms.Button();
             this.ReLoadOriginalButton = new System.Windows.Forms.Button();
             this.ContainsCyclesLabel = new System.Windows.Forms.Label();
+            this.DijkstrasSRC = new System.Windows.Forms.TextBox();
+            this.DijkstrasDEST = new System.Windows.Forms.TextBox();
+            this.DijkstrasSRCLabel = new System.Windows.Forms.Label();
+            this.DijkstrasDESTLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestNodesColumn
@@ -76,6 +80,7 @@
             this.AlgorithmListBox.Items.AddRange(new object[] {
             "Kruskals",
             "Prims",
+            "Dijkstras",
             "Cycle detection"});
             this.AlgorithmListBox.Location = new System.Drawing.Point(561, 34);
             this.AlgorithmListBox.Name = "AlgorithmListBox";
@@ -406,11 +411,51 @@
             this.ContainsCyclesLabel.TabIndex = 57;
             this.ContainsCyclesLabel.Text = "Contains cycles: ";
             // 
+            // DijkstrasSRC
+            // 
+            this.DijkstrasSRC.Location = new System.Drawing.Point(651, 293);
+            this.DijkstrasSRC.Name = "DijkstrasSRC";
+            this.DijkstrasSRC.Size = new System.Drawing.Size(100, 20);
+            this.DijkstrasSRC.TabIndex = 58;
+            this.DijkstrasSRC.Visible = false;
+            // 
+            // DijkstrasDEST
+            // 
+            this.DijkstrasDEST.Location = new System.Drawing.Point(651, 319);
+            this.DijkstrasDEST.Name = "DijkstrasDEST";
+            this.DijkstrasDEST.Size = new System.Drawing.Size(100, 20);
+            this.DijkstrasDEST.TabIndex = 59;
+            this.DijkstrasDEST.Visible = false;
+            // 
+            // DijkstrasSRCLabel
+            // 
+            this.DijkstrasSRCLabel.AutoSize = true;
+            this.DijkstrasSRCLabel.Location = new System.Drawing.Point(558, 296);
+            this.DijkstrasSRCLabel.Name = "DijkstrasSRCLabel";
+            this.DijkstrasSRCLabel.Size = new System.Drawing.Size(68, 13);
+            this.DijkstrasSRCLabel.TabIndex = 60;
+            this.DijkstrasSRCLabel.Text = "Source node";
+            this.DijkstrasSRCLabel.Visible = false;
+            // 
+            // DijkstrasDESTLabel
+            // 
+            this.DijkstrasDESTLabel.AutoSize = true;
+            this.DijkstrasDESTLabel.Location = new System.Drawing.Point(558, 322);
+            this.DijkstrasDESTLabel.Name = "DijkstrasDESTLabel";
+            this.DijkstrasDESTLabel.Size = new System.Drawing.Size(87, 13);
+            this.DijkstrasDESTLabel.TabIndex = 61;
+            this.DijkstrasDESTLabel.Text = "Destination node";
+            this.DijkstrasDESTLabel.Visible = false;
+            // 
             // GUIWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 483);
+            this.Controls.Add(this.DijkstrasDESTLabel);
+            this.Controls.Add(this.DijkstrasSRCLabel);
+            this.Controls.Add(this.DijkstrasDEST);
+            this.Controls.Add(this.DijkstrasSRC);
             this.Controls.Add(this.ContainsCyclesLabel);
             this.Controls.Add(this.ReLoadOriginalButton);
             this.Controls.Add(this.RunAlgorithmButton);
@@ -486,5 +531,9 @@
         private System.Windows.Forms.Button RunAlgorithmButton;
         private System.Windows.Forms.Button ReLoadOriginalButton;
         private System.Windows.Forms.Label ContainsCyclesLabel;
+        private System.Windows.Forms.TextBox DijkstrasSRC;
+        private System.Windows.Forms.TextBox DijkstrasDEST;
+        private System.Windows.Forms.Label DijkstrasSRCLabel;
+        private System.Windows.Forms.Label DijkstrasDESTLabel;
     }
 }
