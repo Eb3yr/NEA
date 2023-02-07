@@ -41,7 +41,7 @@ namespace NEA.Classes
 
             //'in adjList.ToList()' instead of just 'in adjList' otherwise the collection is modified, which cannot happen in a foreach, and throws an exception
             bool found = false;
-            foreach (KeyValuePair<T, Dictionary<T, double>> i in adjList.ToList())
+            foreach (KeyValuePair<T, Dictionary<T, double>> i in this.DeepCopy().adjList.ToList())
             {
                 foreach (T f in i.Value.Keys) //Checking each list of adjacent nodes in adjacency list
                 {

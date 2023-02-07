@@ -42,6 +42,7 @@ namespace NEA.Classes.Algorithms
             foreach (var i in shortestPath.adjList.Keys)
             {
                 labelledNodes.Add(i, tempNode);
+                Console.WriteLine("Giving node + " + i + " an empty Node struct of orderLabel 0, workLabels 0, permaLabel 0");
             }
 
             int orderCounter = 1;

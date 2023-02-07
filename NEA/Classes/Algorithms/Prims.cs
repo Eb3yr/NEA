@@ -56,7 +56,9 @@ namespace NEA.Classes.Algorithms
                 {
                     graph.adjMatrix[rowToCross, i].exists = false;
                     validEdges.Remove((rowToCross, i));
+                    Console.WriteLine("Crossing out " + rowToCross + "," + i);
                 }
+                Console.WriteLine("End crossing out");
 
                 //Sausage: 
                 for (int i = 0; i < graph.nodeNames.Length; i++)
@@ -64,6 +66,7 @@ namespace NEA.Classes.Algorithms
                     if (graph.adjMatrix[i, rowToCross].exists == true) //Iterates down the column of the previously selected node. At start this is 0, or 'A'
                     {
                         validEdges.Add((i, rowToCross));
+                        Console.WriteLine("Adding " + i + "," + rowToCross + " to the set of valid edges");
                     }
                 }
 

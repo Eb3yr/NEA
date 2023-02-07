@@ -716,6 +716,11 @@ namespace NEA.Classes
                             graphWindow.UpdateAdjList(currentAdjList);
                             break;
 
+                        case "ToFromList":
+                            SwitchCurrentAndSaved(currentAdjList.toAdjMatrix().ToAdjList()); //Converts the current graph to an adjacency matrix and back to prove there are no errors
+                            graphWindow.UpdateAdjList(currentAdjList);
+                            break;
+
                         case null:
                             ReLoadOriginalButton.Hide();
                             Console.WriteLine("Please select an algorithm!");
@@ -750,6 +755,7 @@ namespace NEA.Classes
                 DijkstrasDEST.Visible = true;
                 DijkstrasSRCLabel.Visible = true;
                 DijkstrasDESTLabel.Visible = true;
+                MSTSizeLabel.Text = "Shortest path:";
             }
             else
             {
@@ -757,6 +763,7 @@ namespace NEA.Classes
                 DijkstrasDEST.Visible = false;
                 DijkstrasSRCLabel.Visible = false;
                 DijkstrasDESTLabel.Visible = false;
+                MSTSizeLabel.Text = "Minimum spanning tree:";
             }
         }
 

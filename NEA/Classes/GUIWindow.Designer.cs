@@ -81,7 +81,8 @@
             "Kruskals",
             "Prims",
             "Dijkstras",
-            "Cycle detection"});
+            "Cycle detection",
+            "ToFromList"});
             this.AlgorithmListBox.Location = new System.Drawing.Point(561, 34);
             this.AlgorithmListBox.Name = "AlgorithmListBox";
             this.AlgorithmListBox.Size = new System.Drawing.Size(227, 56);
@@ -282,9 +283,9 @@
             this.MSTSizeLabel.AutoSize = true;
             this.MSTSizeLabel.Location = new System.Drawing.Point(558, 192);
             this.MSTSizeLabel.Name = "MSTSizeLabel";
-            this.MSTSizeLabel.Size = new System.Drawing.Size(127, 13);
+            this.MSTSizeLabel.Size = new System.Drawing.Size(121, 13);
             this.MSTSizeLabel.TabIndex = 41;
-            this.MSTSizeLabel.Text = "Minimum Spanning Tree: ";
+            this.MSTSizeLabel.Text = "Minimum spanning tree: ";
             // 
             // NoOfEdgesLabel
             // 

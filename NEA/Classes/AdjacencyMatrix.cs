@@ -94,7 +94,7 @@ namespace NEA.Classes
             return smallestNode;
         }
         //Make more methods
-        public AdjacencyList<T> ToAdjList()
+        public AdjacencyList<T> ToAdjList() //BROKEN
         {
             AdjacencyList<T> adjList = new AdjacencyList<T>();
             //ahhhhhhhhhhhhhh
@@ -109,7 +109,7 @@ namespace NEA.Classes
             {
                 for (int f = 0; f < nodeNames.Length; f++)
                 {
-                    if (adjMatrix[i, f].exists == false) //There be problems: everything is set to false, even if it exists. Is this because of them being set to false while running the line sausage circle Prims algorithm?
+                    if (adjMatrix[i, f].exists != false) //There be problems: everything is set to false, even if it exists. Is this because of them being set to false while running the line sausage circle Prims algorithm?
                     {
                         adjList.AddEdge(nodeNames[i], nodeNames[f], adjMatrix[i, f].weight, true); //I really hope this is the right way round
                     }
